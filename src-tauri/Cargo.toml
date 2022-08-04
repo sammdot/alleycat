@@ -1,0 +1,25 @@
+[package]
+name = "alleycat"
+version = "0.1.0"
+description = "Free computer-aided transcription suite for stenographers"
+authors = ["Sammi de Guzman <sammi@sammdot.ca>"]
+license = ""
+repository = ""
+default-run = "alleycat"
+edition = "2021"
+rust-version = "1.57"
+
+[build-dependencies]
+tauri-build = { version = "1.0.4", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.0.5", features = ["api-all"] }
+
+[features]
+default = [ "custom-protocol" ]
+custom-protocol = [ "tauri/custom-protocol" ]
+
+[[bin]]
+name = "alleycat"
