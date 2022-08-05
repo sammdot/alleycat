@@ -1,14 +1,64 @@
 .ProseMirror {
-  @apply w-full h-full p-4 outline-none ring-0 font-mono leading-loose;
+  @apply w-full h-full p-4 outline-none ring-0 font-mono leading-loose break-words;
+}
 
-  overflow-wrap: anywhere;
-  word-break: break-word;
+.ProseMirror p {
+  @apply m-0;
+}
 
-  p {
-    @apply m-0;
-  }
+.ProseMirror strong {
+  @apply font-semibold;
+}
 
-  strong {
-    @apply font-semibold;
-  }
+/* Paragraph styles */
+
+.ProseMirror p[data-paragraph-style="question"],
+.ProseMirror p[data-paragraph-style="answer"] {
+  @apply indent-16;
+}
+
+.ProseMirror p[data-paragraph-style="question"]::before,
+.ProseMirror p[data-paragraph-style="answer"]::before {
+  @apply font-semibold -ml-10 mr-4;
+}
+
+.ProseMirror p[data-paragraph-style="question"]::before {
+  content: "Q.";
+}
+
+.ProseMirror p[data-paragraph-style="answer"]::before {
+  content: "A.";
+}
+
+.ProseMirror p[data-paragraph-style="colloquy"] {
+  @apply indent-24;
+}
+
+.ProseMirror p[data-paragraph-style="byline"] {
+  @apply font-semibold;
+}
+
+.ProseMirror p[data-paragraph-style="centered"] {
+  @apply text-center font-semibold;
+}
+
+.ProseMirror p[data-paragraph-style="paren"] {
+  @apply italic indent-40;
+}
+
+.ProseMirror p[data-paragraph-style="quoted"] {
+  @apply ml-32 pl-6;
+  border-left: 2px solid rgb(228, 226, 228);
+}
+
+/* Continuation styles */
+
+.ProseMirror
+  p[data-paragraph-style="question"]
+  + p[data-paragraph-style="question"]::before,
+.ProseMirror
+  p[data-paragraph-style="answer"]
+  + p[data-paragraph-style="answer"]::before {
+  content: "";
+  @apply m-0;
 }

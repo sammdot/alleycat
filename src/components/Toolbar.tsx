@@ -1,0 +1,126 @@
+import { BubbleMenu } from "@tiptap/react"
+import {
+  Button as BaseButton,
+  Separator as BaseSeparator,
+  Root as Toolbar,
+} from "@radix-ui/react-toolbar"
+
+import {
+  BoldIcon,
+  ItalicIcon,
+  RedoIcon,
+  UnderlineIcon,
+  UndoIcon,
+} from "src/components/Icon"
+import {
+  RadioToggleGroup,
+  ToggleGroup,
+  ToggleItem,
+} from "src/components/ToggleGroup"
+
+type Props = {
+  editor: any
+}
+
+function Button({ label, disabled, onClick, children }: any) {
+  return (
+    <BaseButton
+      aria-label={label}
+      onClick={onClick}
+      disabled={disabled}
+      className="text-sm disabled:text-slate-400 hover:bg-brand-100 disabled-hover:bg-transparent px-1 py-0.5 rounded"
+    >
+      {children}
+    </BaseButton>
+  )
+}
+
+function Separator() {
+  return <BaseSeparator className="inline border-[1px] mx-2.5" />
+}
+
+export function InlineToolbar({ editor }: Props) {
+  return (
+    <BubbleMenu editor={editor}>
+      <Toolbar className="bg-white flex p-2 shadow-md rounded-md">
+        <ToggleGroup
+          label="Text formatting"
+          value={{
+            bold: editor.isActive("bold"),
+            italic: editor.isActive("italic"),
+            underline: editor.isActive("underline"),
+          }}
+          onToggle={{
+            bold: () => editor.chain().focus().toggleBold().run(),
+            italic: () => editor.chain().focus().toggleItalic().run(),
+            underline: () => editor.chain().focus().toggleUnderline().run(),
+          }}
+        >
+          <ToggleItem name="bold" label="Bold">
+            <BoldIcon />
+          </ToggleItem>
+          <ToggleItem name="italic" label="Italic">
+            <ItalicIcon />
+          </ToggleItem>
+          <ToggleItem name="underline" label="Underline">
+            <UnderlineIcon />
+          </ToggleItem>
+        </ToggleGroup>
+      </Toolbar>
+    </BubbleMenu>
+  )
+}
+
+export function MainToolbar({ editor }: Props) {
+  return (
+    <Toolbar className="flex py-2 px-4">
+      <div className="space-x-1">
+        <Button
+          label="Undo"
+          onClick={() => editor.chain().undo().run()}
+          disabled={!editor.can().undo()}
+        >
+          <UndoIcon />
+        </Button>
+        <Button
+          label="Redo"
+          onClick={() => editor.chain().redo().run()}
+          disabled={!editor.can().redo()}
+        >
+          <RedoIcon />
+        </Button>
+      </div>
+      <Separator />
+      <RadioToggleGroup
+        label="Paragraph style"
+        value={editor.getAttributes("paragraph").style}
+        onToggle={(val) => editor.chain().focus().setParagraphStyle(val).run()}
+      >
+        <ToggleItem name="normal" label="Normal">
+          N
+        </ToggleItem>
+        <ToggleItem name="question" label="Question">
+          Q.
+        </ToggleItem>
+        <ToggleItem name="answer" label="Answer">
+          A.
+        </ToggleItem>
+        <ToggleItem name="colloquy" label="Colloquy">
+          Cq:
+        </ToggleItem>
+        <ToggleItem name="byline" label="Byline">
+          By
+        </ToggleItem>
+        <ToggleItem name="centered" label="Centered">
+          Ctr
+        </ToggleItem>
+        <ToggleItem name="paren" label="Parenthetical">
+          (P)
+        </ToggleItem>
+        <ToggleItem name="quoted" label="Quoted">
+          "Q"
+        </ToggleItem>
+      </RadioToggleGroup>
+    </Toolbar>
+  )
+}

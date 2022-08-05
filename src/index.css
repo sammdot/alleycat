@@ -14,3 +14,10 @@ body,
 body {
   @apply font-sans;
 }
+
+@layer utilities {
+  .break-words {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
