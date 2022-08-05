@@ -16,9 +16,12 @@ import { StenoNotesView } from "src/components/StenoNotesView"
 import { InlineToolbar, MainToolbar } from "src/components/Toolbar"
 import { Paragraph } from "src/extensions/paragraph"
 import { Stroke, Translation } from "src/extensions/steno"
+import { useNotes } from "src/hooks/notes"
 
 export function Editor() {
   const [mode, setMode] = useState<string>("edit")
+  const [strokes, positions, { updateNotes }] = useNotes()
+
   const editor: TiptapEditor | null = useEditor({
     extensions: [
       Document,
@@ -37,7 +40,12 @@ export function Editor() {
     autofocus: false,
     enableInputRules: false,
     enablePasteRules: false,
+    onTransaction({ editor, transaction: tr }) {
+      updateNotes(editor.state.doc, tr)
+    },
   })
+
+  ;(window as any).editor = editor
 
   return (
     <>
@@ -53,7 +61,11 @@ export function Editor() {
             {mode === "edit" ? (
               <>
                 <EditorView editor={editor} />
-                <StenoNotesView />
+                <StenoNotesView
+                  editor={editor}
+                  strokes={strokes}
+                  positions={positions}
+                />
               </>
             ) : (
               <>

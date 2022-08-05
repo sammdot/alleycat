@@ -25,12 +25,13 @@ type StrokeOptions = { HTMLAttributes: Record<string, any> }
 export const Stroke = Node.create<StrokeOptions>({
   name: "stroke",
   group: "inline",
-  content: "text*",
   marks: "",
   inline: true,
   selectable: true,
   draggable: false,
   atom: true,
+  locked: true,
+  isLeaf: true,
 
   addAttributes() {
     return {
