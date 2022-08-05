@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react"
 import { BubbleMenu } from "@tiptap/react"
 import {
   Button as BaseButton,
@@ -7,8 +8,11 @@ import {
 
 import {
   BoldIcon,
+  EditIcon,
   ItalicIcon,
+  PreviewIcon,
   RedoIcon,
+  ReviewIcon,
   UnderlineIcon,
   UndoIcon,
 } from "src/components/Icon"
@@ -18,14 +22,11 @@ import {
   ToggleItem,
 } from "src/components/ToggleGroup"
 
-type Props = {
-  editor: any
-}
-
 function Button({ label, disabled, onClick, children }: any) {
   return (
     <BaseButton
       aria-label={label}
+      title={label}
       onClick={onClick}
       disabled={disabled}
       className="text-sm disabled:text-slate-400 hover:bg-brand-100 disabled-hover:bg-transparent px-1 py-0.5 rounded"
@@ -39,7 +40,11 @@ function Separator() {
   return <BaseSeparator className="inline border-[1px] mx-2.5" />
 }
 
-export function InlineToolbar({ editor }: Props) {
+type InlineToolbarProps = {
+  editor: any
+}
+
+export function InlineToolbar({ editor }: InlineToolbarProps) {
   return (
     <BubbleMenu editor={editor}>
       <Toolbar className="bg-white flex p-2 shadow-md rounded-md">
@@ -71,56 +76,84 @@ export function InlineToolbar({ editor }: Props) {
   )
 }
 
-export function MainToolbar({ editor }: Props) {
+type MainToolbarProps = {
+  editor: any
+  mode: string
+  setMode: Dispatch<SetStateAction<string>>
+}
+
+export function MainToolbar({ editor, mode, setMode }: MainToolbarProps) {
   return (
     <Toolbar className="flex py-2 px-4">
-      <div className="space-x-1">
-        <Button
-          label="Undo"
-          onClick={() => editor.chain().undo().run()}
-          disabled={!editor.can().undo()}
-        >
-          <UndoIcon />
-        </Button>
-        <Button
-          label="Redo"
-          onClick={() => editor.chain().redo().run()}
-          disabled={!editor.can().redo()}
-        >
-          <RedoIcon />
-        </Button>
-      </div>
-      <Separator />
       <RadioToggleGroup
-        label="Paragraph style"
-        value={editor.getAttributes("paragraph").style}
-        onToggle={(val) => editor.chain().focus().setParagraphStyle(val).run()}
+        label="Display modes"
+        value={mode}
+        onToggle={(val) => setMode(val)}
       >
-        <ToggleItem name="normal" label="Normal">
-          N
+        <ToggleItem name="edit" label="Edit">
+          <EditIcon />
         </ToggleItem>
-        <ToggleItem name="question" label="Question">
-          Q.
+        <ToggleItem name="review" label="Review">
+          <ReviewIcon />
         </ToggleItem>
-        <ToggleItem name="answer" label="Answer">
-          A.
-        </ToggleItem>
-        <ToggleItem name="colloquy" label="Colloquy">
-          Cq:
-        </ToggleItem>
-        <ToggleItem name="byline" label="Byline">
-          By
-        </ToggleItem>
-        <ToggleItem name="centered" label="Centered">
-          Ctr
-        </ToggleItem>
-        <ToggleItem name="paren" label="Parenthetical">
-          (P)
-        </ToggleItem>
-        <ToggleItem name="quoted" label="Quoted">
-          "Q"
+        <ToggleItem name="preview" label="Preview">
+          <PreviewIcon />
         </ToggleItem>
       </RadioToggleGroup>
+      {mode === "edit" && (
+        <>
+          <Separator />
+          <div className="space-x-1">
+            <Button
+              label="Undo"
+              onClick={() => editor.chain().undo().run()}
+              disabled={!editor.can().undo()}
+            >
+              <UndoIcon />
+            </Button>
+            <Button
+              label="Redo"
+              onClick={() => editor.chain().redo().run()}
+              disabled={!editor.can().redo()}
+            >
+              <RedoIcon />
+            </Button>
+          </div>
+          <Separator />
+          <RadioToggleGroup
+            label="Paragraph style"
+            value={editor.getAttributes("paragraph").style}
+            onToggle={(val) =>
+              editor.chain().focus().setParagraphStyle(val).run()
+            }
+          >
+            <ToggleItem name="normal" label="Normal">
+              N
+            </ToggleItem>
+            <ToggleItem name="question" label="Question">
+              Q.
+            </ToggleItem>
+            <ToggleItem name="answer" label="Answer">
+              A.
+            </ToggleItem>
+            <ToggleItem name="colloquy" label="Colloquy">
+              Cq:
+            </ToggleItem>
+            <ToggleItem name="byline" label="Byline">
+              By
+            </ToggleItem>
+            <ToggleItem name="centered" label="Centered">
+              Ctr
+            </ToggleItem>
+            <ToggleItem name="paren" label="Parenthetical">
+              (P)
+            </ToggleItem>
+            <ToggleItem name="quoted" label="Quoted">
+              "Q"
+            </ToggleItem>
+          </RadioToggleGroup>
+        </>
+      )}
     </Toolbar>
   )
 }

@@ -1,7 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faBold,
+  faEye,
+  faHighlighter,
   faItalic,
+  faPenToSquare,
   faRotateLeft,
   faRotateRight,
   faUnderline,
@@ -11,12 +14,24 @@ export function BoldIcon() {
   return <FontAwesomeIcon icon={faBold} />
 }
 
+export function EditIcon() {
+  return <FontAwesomeIcon icon={faPenToSquare} />
+}
+
 export function ItalicIcon() {
   return <FontAwesomeIcon icon={faItalic} />
 }
 
+export function PreviewIcon() {
+  return <FontAwesomeIcon icon={faEye} />
+}
+
 export function RedoIcon() {
   return <FontAwesomeIcon icon={faRotateRight} />
+}
+
+export function ReviewIcon() {
+  return <FontAwesomeIcon icon={faHighlighter} />
 }
 
 export function UnderlineIcon() {

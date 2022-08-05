@@ -1,3 +1,4 @@
+import { useState } from "react"
 import Bold from "@tiptap/extension-bold"
 import BubbleMenu from "@tiptap/extension-bubble-menu"
 import Document from "@tiptap/extension-document"
@@ -16,6 +17,7 @@ import { InlineToolbar, MainToolbar } from "src/components/Toolbar"
 import Paragraph from "src/extensions/Paragraph"
 
 export function Editor() {
+  const [mode, setMode] = useState<string>("edit")
   const editor: TiptapEditor | null = useEditor({
     extensions: [
       Document,
@@ -39,14 +41,34 @@ export function Editor() {
       {editor && (
         <>
           <InlineToolbar editor={editor} />
-          <MainToolbar editor={editor} />
+          <MainToolbar editor={editor} mode={mode} setMode={setMode} />
         </>
       )}
       <div className="flex flex-row h-full">
-        {editor && (
+        {editor ? (
           <>
-            <EditorView editor={editor} />
-            <StenoNotesView />
+            {mode === "edit" ? (
+              <>
+                <EditorView editor={editor} />
+                <StenoNotesView />
+              </>
+            ) : (
+              <>
+                <div className="bg-gray-50 w-full h-full center flex flex-row justify-center items-center">
+                  <div className="italic text-gray-400 select-none">
+                    Sorry, {mode} mode is not yet supported.
+                  </div>
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="bg-gray-50 w-full h-full center flex flex-row justify-center items-center">
+              <div className="italic text-gray-400 select-none">
+                Loading document...
+              </div>
+            </div>
           </>
         )}
       </div>

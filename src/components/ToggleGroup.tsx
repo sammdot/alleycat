@@ -21,6 +21,7 @@ type ToggleItemProps = {
   name: string
   label?: string
   className?: string
+  disabled?: boolean
   children?: ReactNode
 }
 
@@ -80,13 +81,16 @@ export function ToggleItem({
   name,
   label,
   className,
+  disabled,
   children,
 }: ToggleItemProps) {
   return (
     <Toolbar.ToggleItem
       value={name}
       aria-label={label}
-      className={`grow-0 shrink-0 h-6 w-6 rounded hover:bg-brand-100 active:bg-brand-400 active:text-white ${className}`}
+      title={label}
+      disabled={disabled}
+      className={`grow-0 shrink-0 h-6 w-6 rounded disabled:text-slate-400 hover:bg-brand-100 active:bg-brand-400 disabled-hover:bg-transparent active:text-white ${className}`}
     >
       {children}
     </Toolbar.ToggleItem>
