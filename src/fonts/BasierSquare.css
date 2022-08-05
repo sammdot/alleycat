@@ -1,0 +1,51 @@
+@font-face {
+  font-family: BasierSquare;
+  font-weight: 700;
+  src: url("basiersquare-bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: BasierSquare;
+  font-weight: 700;
+  font-style: italic;
+  src: url("basiersquare-bolditalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: BasierSquare;
+  font-weight: 500;
+  src: url("basiersquare-medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: BasierSquare;
+  font-weight: 500;
+  font-style: italic;
+  src: url("basiersquare-mediumitalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: BasierSquare;
+  font-weight: 400;
+  src: url("basiersquare-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: BasierSquare;
+  font-weight: 400;
+  font-style: italic;
+  src: url("basiersquare-regularitalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: BasierSquare;
+  font-weight: 600;
+  src: url("basiersquare-semibold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: BasierSquare;
+  font-weight: 600;
+  font-style: italic;
+  src: url("basiersquare-semibolditalic.woff2") format("woff2");
+}
