@@ -31,12 +31,9 @@ export function StenoNotesView({
       .run()
   }
 
-  console.log(selection)
-
   return (
     <div className="bg-amber-50 shrink-0 basis-[270px] p-1 font-mono tracking-wider text-center whitespace-pre select-none">
       {sortedStrokes.map((strk) => {
-        console.log(strk)
         return (
           <div
             key={strk.timestamp.toString()}
