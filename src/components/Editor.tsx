@@ -20,7 +20,8 @@ import { useNotes } from "src/hooks/notes"
 
 export function Editor() {
   const [mode, setMode] = useState<string>("edit")
-  const [strokes, positions, { updateNotes }] = useNotes()
+  const { strokes, positions, selection, updateNotes, updateSelection } =
+    useNotes()
 
   const editor: TiptapEditor | null = useEditor({
     extensions: [
@@ -40,6 +41,9 @@ export function Editor() {
     autofocus: false,
     enableInputRules: false,
     enablePasteRules: false,
+    onSelectionUpdate({ editor }) {
+      updateSelection(editor.state.doc, editor.state.selection)
+    },
     onTransaction({ editor, transaction: tr }) {
       updateNotes(editor.state.doc, tr)
     },
@@ -65,6 +69,7 @@ export function Editor() {
                   editor={editor}
                   strokes={strokes}
                   positions={positions}
+                  selection={selection}
                 />
               </>
             ) : (

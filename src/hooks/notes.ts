@@ -1,5 +1,5 @@
 import { Node } from "prosemirror-model"
-import { Transaction } from "prosemirror-state"
+import { Selection, Transaction } from "prosemirror-state"
 import { useCallback, useState } from "react"
 
 import { replacedRanges } from "src/utils/transform"
@@ -14,6 +14,7 @@ export type PositionMap = { [key: string]: number }
 
 export function useNotes(): any {
   const [strokes, setStrokes] = useState<StrokeMap>({})
+  const [selection, setSelection] = useState<string[]>([])
   const [positions, setPositions] = useState<PositionMap>({})
 
   const updateNotes = useCallback(
@@ -68,5 +69,27 @@ export function useNotes(): any {
     [setStrokes, setPositions]
   )
 
-  return [strokes, positions, { updateNotes }]
+  const updateSelection = useCallback(
+    (doc: Node, sel: Selection) => {
+      let { from, to } = sel
+      let selected: string[] = []
+      doc.nodesBetween(from, to, (node) => {
+        if (node.type.name !== "translation") {
+          return
+        }
+
+        node.descendants((n) => {
+          if (n.type.name !== "stroke") {
+            return
+          }
+          selected.push(n.attrs.timestamp)
+        })
+      })
+
+      setSelection(selected)
+    },
+    [setSelection]
+  )
+
+  return { strokes, positions, selection, updateNotes, updateSelection }
 }
