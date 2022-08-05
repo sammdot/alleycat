@@ -10,6 +10,7 @@ export const Translation = Node.create<TranslationOptions>({
   selectable: true,
   draggable: false,
   atom: true,
+  locked: true,
 
   parseHTML() {
     return [{ tag: "acat-tl" }]
@@ -31,7 +32,6 @@ export const Stroke = Node.create<StrokeOptions>({
   draggable: false,
   atom: true,
   locked: true,
-  isLeaf: true,
 
   addAttributes() {
     return {
