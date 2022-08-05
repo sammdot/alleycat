@@ -1,14 +1,14 @@
 import BaseParagraph from "@tiptap/extension-paragraph"
 
-const Paragraph = BaseParagraph.extend({
+export const Paragraph = BaseParagraph.extend({
   addAttributes() {
     return {
       style: {
         default: "normal",
-        parseHTML: (element) => element.getAttribute("data-paragraph-style"),
-        renderHTML: (attributes) => {
+        parseHTML: (el) => el.getAttribute("acat-style"),
+        renderHTML: (attrs) => {
           return {
-            "data-paragraph-style": attributes.style,
+            "acat-style": attrs.style,
           }
         },
       },
@@ -25,5 +25,3 @@ const Paragraph = BaseParagraph.extend({
     }
   },
 })
-
-export default Paragraph

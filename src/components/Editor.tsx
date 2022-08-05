@@ -14,7 +14,8 @@ import { useEditor } from "@tiptap/react"
 import { EditorView } from "src/components/EditorView"
 import { StenoNotesView } from "src/components/StenoNotesView"
 import { InlineToolbar, MainToolbar } from "src/components/Toolbar"
-import Paragraph from "src/extensions/Paragraph"
+import { Paragraph } from "src/extensions/paragraph"
+import { Stroke, Translation } from "src/extensions/steno"
 
 export function Editor() {
   const [mode, setMode] = useState<string>("edit")
@@ -30,6 +31,8 @@ export function Editor() {
       Italic,
       Underline,
       Highlight,
+      Stroke,
+      Translation,
     ],
     autofocus: false,
     enableInputRules: false,
