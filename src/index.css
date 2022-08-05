@@ -4,3 +4,13 @@
 
 @import url("./fonts/BasierSquare.css");
 @import url("./fonts/BasierSquareMono.css");
+
+html,
+body,
+#root {
+  @apply w-full h-full;
+}
+
+body {
+  @apply font-sans;
+}

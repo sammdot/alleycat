@@ -1,0 +1,14 @@
+.ProseMirror {
+  @apply w-full h-full p-4 outline-none ring-0 font-mono leading-loose;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
+  p {
+    @apply m-0;
+  }
+
+  strong {
+    @apply font-semibold;
+  }
+}

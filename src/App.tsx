@@ -1,11 +1,15 @@
 import React from "react"
 
-import logo from "src/logo.svg"
+import { Editor } from "src/components/Editor"
+import { TitleBar } from "src/components/TitleBar"
 
 function App() {
   return (
-    <div className="app">
-      <img src={logo} alt="AlleyCAT" />
+    <div className="w-full h-full flex flex-col justify-start">
+      <TitleBar />
+      <div className="grow">
+        <Editor />
+      </div>
     </div>
   )
 }
