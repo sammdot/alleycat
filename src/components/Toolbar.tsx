@@ -37,7 +37,7 @@ function Button({ label, disabled, onClick, children }: any) {
 }
 
 function Separator() {
-  return <BaseSeparator className="inline border-[1px] mx-2.5" />
+  return <BaseSeparator className="inline border border-gray-200 mx-2.5" />
 }
 
 type InlineToolbarProps = {
@@ -84,7 +84,7 @@ type MainToolbarProps = {
 
 export function MainToolbar({ editor, mode, setMode }: MainToolbarProps) {
   return (
-    <Toolbar className="flex py-2 px-4">
+    <Toolbar className="flex py-2 px-4 border-b border-gray-200">
       <RadioToggleGroup
         label="Display modes"
         value={mode}
