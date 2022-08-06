@@ -53,7 +53,7 @@ type InlineToolbarProps = {
 export function InlineToolbar({ editor }: InlineToolbarProps) {
   return (
     <BubbleMenu editor={editor}>
-      <Toolbar className="bg-white dark:bg-gray-500 flex p-2 shadow-md rounded-md">
+      <Toolbar className="bg-white dark:bg-gray-500 flex p-2 shadow-md rounded-md select-none">
         <ToggleGroup
           label="Text formatting"
           value={{
@@ -96,7 +96,7 @@ export function MainToolbar({
   saveDocument,
 }: MainToolbarProps) {
   return (
-    <Toolbar className="grow-0 shrink flex py-2 px-4 border-b border-gray-200 dark:border-gray-400">
+    <Toolbar className="grow-0 shrink flex py-2 px-4 select-none border-b border-gray-200 dark:border-gray-400">
       <div className="space-x-1" aria-label="Export options">
         {tauri ? (
           <Button label="Save" onClick={() => saveDocument(true)}>

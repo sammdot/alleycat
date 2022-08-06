@@ -32,9 +32,9 @@ export function MainScreen({
     <>
       <div
         data-tauri-drag-region
-        className="w-full h-full grow flex flex-col justify-center items-center"
+        className="w-full h-full grow flex flex-col justify-center items-center select-none"
       >
-        <img src={logo} alt="AlleyCAT" className="h-16 mr-4 select-none" />
+        <img src={logo} alt="AlleyCAT" className="h-16 mr-4" />
         {documentLoaded ? (
           <div className="w-60 flex flex-col space-y-4 mt-8">
             <button
