@@ -72,10 +72,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 800,
         "resizable": true,
         "title": "AlleyCAT",
-        "width": 800
+        "width": 1280
       }
     ]
   }
