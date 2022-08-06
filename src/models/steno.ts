@@ -45,12 +45,12 @@ export function formatSteno(steno: string, table: StenoTable): string | null {
       .join("")
   }
 
-  if (str.includes("#")) {
+  if (str.includes(table.numberKey)) {
     hasNumbers = true
-    str = str.replaceAll("#", "")
+    str = str.replaceAll(table.numberKey, "")
   }
 
-  keys += hasNumbers ? "#" : " "
+  keys += hasNumbers ? table.numberKey : " "
 
   const { left, middle, right } = table.base
 
