@@ -71,7 +71,7 @@ export function Editor({
     if (loaded) {
       return
     }
-    editor.commands.setContent(content)
+    editor.chain().setContent(content).focus().run()
     setLoaded(true)
   }, [content, editor, loaded, setLoaded])
 
