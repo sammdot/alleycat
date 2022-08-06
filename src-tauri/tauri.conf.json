@@ -23,6 +23,11 @@
       },
       "path": {
         "all": true
+      },
+      "window": {
+        "maximize": true,
+        "startDragging": true,
+        "unmaximize": true
       }
     },
     "bundle": {

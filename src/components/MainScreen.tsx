@@ -30,7 +30,10 @@ export function MainScreen({
 
   return (
     <>
-      <div className="w-full h-full grow flex flex-col justify-center items-center">
+      <div
+        data-tauri-drag-region
+        className="w-full h-full grow flex flex-col justify-center items-center"
+      >
         <img src={logo} alt="AlleyCAT" className="h-16 mr-4 select-none" />
         {documentLoaded ? (
           <div className="w-60 flex flex-col space-y-4 mt-8">
