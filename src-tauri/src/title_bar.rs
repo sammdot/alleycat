@@ -1,7 +1,6 @@
 // https://github.com/tauri-apps/tauri/discussions/4088
 
 pub mod title_bar {
-  use cocoa::appkit::{NSWindow, NSWindowStyleMask};
   use tauri::{Runtime, Window};
 
   pub trait WindowExt {
@@ -12,7 +11,7 @@ pub mod title_bar {
   impl<R: Runtime> WindowExt for Window<R> {
     #[cfg(target_os = "macos")]
     fn set_transparent_titlebar(&self, transparent: bool) {
-      use cocoa::appkit::NSWindowTitleVisibility;
+      use cocoa::appkit::{NSWindow, NSWindowStyleMask, NSWindowTitleVisibility};
 
       unsafe {
         let id = self.ns_window().unwrap() as cocoa::base::id;
