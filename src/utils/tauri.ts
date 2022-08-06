@@ -1,5 +1,5 @@
-import { open } from "@tauri-apps/api/dialog"
-import { readTextFile } from "@tauri-apps/api/fs"
+import { open, save } from "@tauri-apps/api/dialog"
+import { readTextFile, writeTextFile } from "@tauri-apps/api/fs"
 import { basename, dirname, resolve, sep } from "@tauri-apps/api/path"
 
 export const tauri = !!(window as any).__TAURI__
@@ -20,6 +20,17 @@ export async function openDialog(): Promise<string | null> {
   return selected
 }
 
+export async function saveDialog(): Promise<string> {
+  return await save({
+    filters: [
+      {
+        name: "RTF Document",
+        extensions: ["rtf"],
+      },
+    ],
+  })
+}
+
 export async function splitPath(path: string): Promise<[string, string]> {
   const p = await resolve(path)
   const dir = await dirname(p)
@@ -28,7 +39,11 @@ export async function splitPath(path: string): Promise<[string, string]> {
 }
 
 export async function readFile(path: string): Promise<string> {
-  return readTextFile(path)
+  return await readTextFile(path)
+}
+
+export async function saveFile(path: string, contents: string): Promise<void> {
+  return await writeTextFile(path, contents)
 }
 
 export const pathSeparator = sep

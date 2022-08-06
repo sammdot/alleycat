@@ -9,10 +9,13 @@ import {
 import {
   BoldIcon,
   EditIcon,
+  ExportASCIIIcon,
+  ExportPDFIcon,
   ItalicIcon,
   PreviewIcon,
   RedoIcon,
   ReviewIcon,
+  SaveIcon,
   UnderlineIcon,
   UndoIcon,
 } from "src/components/Icon"
@@ -21,6 +24,7 @@ import {
   ToggleGroup,
   ToggleItem,
 } from "src/components/ToggleGroup"
+import { tauri } from "src/utils/tauri"
 
 function Button({ label, disabled, onClick, children }: any) {
   return (
@@ -80,11 +84,35 @@ type MainToolbarProps = {
   editor: any
   mode: string
   setMode: Dispatch<SetStateAction<string>>
+  saveDocument: (local: boolean) => void
 }
 
-export function MainToolbar({ editor, mode, setMode }: MainToolbarProps) {
+export function MainToolbar({
+  editor,
+  mode,
+  setMode,
+  saveDocument,
+}: MainToolbarProps) {
   return (
     <Toolbar className="flex py-2 px-4 border-b border-gray-200">
+      <div className="space-x-1" aria-label="Export options">
+        {tauri ? (
+          <Button label="Save" onClick={() => saveDocument(true)}>
+            <SaveIcon />
+          </Button>
+        ) : (
+          <Button label="Download" onClick={() => saveDocument(false)}>
+            <SaveIcon />
+          </Button>
+        )}
+        <Button label="Export to ASCII" disabled>
+          <ExportASCIIIcon />
+        </Button>
+        <Button label="Export to PDF" disabled>
+          <ExportPDFIcon />
+        </Button>
+      </div>
+      <Separator />
       <RadioToggleGroup
         label="Display modes"
         value={mode}

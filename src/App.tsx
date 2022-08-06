@@ -12,6 +12,8 @@ function App() {
     createEmptyDocument,
     loadWebDocument,
     loadLocalDocument,
+    saveWebDocument,
+    saveLocalDocument,
   } = useDocument()
 
   return (
@@ -20,7 +22,11 @@ function App() {
         <>
           <TitleBar document={document} />
           <div className="grow">
-            <Editor content={document.content} />
+            <Editor
+              content={document.content}
+              saveWebDocument={saveWebDocument}
+              saveLocalDocument={saveLocalDocument}
+            />
           </div>
         </>
       ) : (

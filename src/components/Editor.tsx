@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Bold from "@tiptap/extension-bold"
 import BubbleMenu from "@tiptap/extension-bubble-menu"
 import Document from "@tiptap/extension-document"
@@ -17,12 +17,16 @@ import { InlineToolbar, MainToolbar } from "src/components/Toolbar"
 import { Paragraph } from "src/extensions/paragraph"
 import { Stroke, Translation } from "src/extensions/steno"
 import { useNotes } from "src/hooks/notes"
+import { Content } from "src/models/document"
 
 type Props = {
   content: any | null
+  saveWebDocument: (content: Content) => void
+  saveLocalDocument: (content: Content) => void
 }
 
-export function Editor({ content }: Props) {
+export function Editor({ content, saveWebDocument, saveLocalDocument }: Props) {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const [mode, setMode] = useState<string>("edit")
   const { strokes, positions, selection, updateNotes, updateSelection } =
     useNotes()
@@ -57,16 +61,40 @@ export function Editor({ content }: Props) {
     if (!editor) {
       return
     }
+    if (loaded) {
+      return
+    }
     editor.commands.setContent(content)
-  }, [content, editor])
+    setLoaded(true)
+  }, [content, editor, loaded, setLoaded])
   ;(window as any).editor = editor
+
+  const saveDocument = useCallback(
+    (local: boolean) => {
+      if (!editor) {
+        return
+      }
+      const content: Content = editor.getJSON()
+      if (local) {
+        saveLocalDocument(content)
+      } else {
+        saveWebDocument(content)
+      }
+    },
+    [editor, saveLocalDocument, saveWebDocument]
+  )
 
   return (
     <>
       {editor && (
         <>
           <InlineToolbar editor={editor} />
-          <MainToolbar editor={editor} mode={mode} setMode={setMode} />
+          <MainToolbar
+            editor={editor}
+            mode={mode}
+            setMode={setMode}
+            saveDocument={saveDocument}
+          />
         </>
       )}
       <div className="flex flex-row h-full">

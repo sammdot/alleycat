@@ -1,7 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { IconProp } from "@fortawesome/fontawesome-svg-core"
 import {
   faBold,
+  faDownload,
   faEye,
+  faFileLines,
+  faFilePdf,
   faHighlighter,
   faItalic,
   faPenToSquare,
@@ -10,34 +14,16 @@ import {
   faUnderline,
 } from "@fortawesome/free-solid-svg-icons"
 
-export function BoldIcon() {
-  return <FontAwesomeIcon icon={faBold} />
-}
+const Icon = (name: IconProp) => () => <FontAwesomeIcon icon={name} />
 
-export function EditIcon() {
-  return <FontAwesomeIcon icon={faPenToSquare} />
-}
-
-export function ItalicIcon() {
-  return <FontAwesomeIcon icon={faItalic} />
-}
-
-export function PreviewIcon() {
-  return <FontAwesomeIcon icon={faEye} />
-}
-
-export function RedoIcon() {
-  return <FontAwesomeIcon icon={faRotateRight} />
-}
-
-export function ReviewIcon() {
-  return <FontAwesomeIcon icon={faHighlighter} />
-}
-
-export function UnderlineIcon() {
-  return <FontAwesomeIcon icon={faUnderline} />
-}
-
-export function UndoIcon() {
-  return <FontAwesomeIcon icon={faRotateLeft} />
-}
+export const BoldIcon = Icon(faBold)
+export const EditIcon = Icon(faPenToSquare)
+export const ExportASCIIIcon = Icon(faFileLines)
+export const ExportPDFIcon = Icon(faFilePdf)
+export const ItalicIcon = Icon(faItalic)
+export const PreviewIcon = Icon(faEye)
+export const RedoIcon = Icon(faRotateRight)
+export const ReviewIcon = Icon(faHighlighter)
+export const SaveIcon = Icon(faDownload)
+export const UnderlineIcon = Icon(faUnderline)
+export const UndoIcon = Icon(faRotateLeft)
