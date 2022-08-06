@@ -1,5 +1,5 @@
 .ProseMirror {
-  @apply w-full h-full p-4 outline-none ring-0 font-mono leading-loose break-words;
+  @apply w-full h-full p-4 outline-none ring-0 font-mono leading-loose break-words text-gray-600 bg-gray-50 dark:text-gray-200 dark:bg-gray-700;
 }
 
 .ProseMirror p {
@@ -7,11 +7,11 @@
 }
 
 .ProseMirror strong {
-  @apply font-semibold;
+  @apply font-semibold text-gray-800 dark:text-gray-50;
 }
 
 .ProseMirror-selectednode {
-  @apply bg-amber-100;
+  @apply text-gray-800 bg-brand-100 dark:text-gray-50 dark:bg-brand-400;
 }
 
 /* Paragraph styles */
@@ -23,7 +23,7 @@
 
 .ProseMirror p[acat-style="question"]::before,
 .ProseMirror p[acat-style="answer"]::before {
-  @apply font-semibold -ml-10 mr-4;
+  @apply font-semibold -ml-10 mr-4 text-gray-800 dark:text-gray-50;
 }
 
 .ProseMirror p[acat-style="question"]::before {
@@ -39,11 +39,11 @@
 }
 
 .ProseMirror p[acat-style="byline"] {
-  @apply font-semibold;
+  @apply font-semibold text-gray-800 dark:text-gray-50;
 }
 
 .ProseMirror p[acat-style="centered"] {
-  @apply text-center font-semibold;
+  @apply text-center font-semibold text-gray-800 dark:text-gray-50;
 }
 
 .ProseMirror p[acat-style="paren"] {
@@ -51,8 +51,7 @@
 }
 
 .ProseMirror p[acat-style="quoted"] {
-  @apply ml-32 pl-6;
-  border-left: 2px solid rgb(228, 226, 228);
+  @apply ml-32 pl-6 border-l-2 border-gray-200 dark:border-gray-400;
 }
 
 /* Continuation styles */

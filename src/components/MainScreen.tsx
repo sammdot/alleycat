@@ -38,13 +38,13 @@ export function MainScreen({
         {documentLoaded ? (
           <div className="w-60 flex flex-col space-y-4 mt-8">
             <button
-              className="text-center px-4 py-2 rounded-md font-semibold bg-brand-500 text-white hover:bg-brand-600 hover:shadow-md"
+              className="text-center px-4 py-2 rounded-md font-semibold bg-brand-500 text-white hover:bg-brand-600 dark:hover:bg-brand-400 hover:shadow-md"
               onClick={createEmptyDocument}
             >
               New Document
             </button>
             <button
-              className="text-center px-4 py-2 rounded-md bg-gray-300 hover:bg-gray-400 hover:shadow-md"
+              className="text-center px-4 py-2 rounded-md bg-gray-300 hover:bg-gray-400 dark:bg-gray-500 dark:text-white dark:hover:bg-gray-400 hover:shadow-md"
               onClick={showOpenDialog}
             >
               Open Document...

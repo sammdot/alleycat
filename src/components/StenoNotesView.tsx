@@ -35,12 +35,12 @@ export function StenoNotesView({
   }
 
   return (
-    <div className="bg-amber-50 shrink-0 basis-64 p-1 font-mono tracking-wider text-center whitespace-pre select-none h-full overflow-scroll">
+    <div className="bg-amber-50 dark:bg-gray-700 border-l dark:border-gray-400 shrink-0 basis-64 p-1 font-mono tracking-wider text-center whitespace-pre select-none h-full overflow-scroll">
       {sortedStrokes.map((strk) => {
         return (
           <div
             key={strk.timestamp.toString()}
-            className="hover:bg-amber-100 active:bg-amber-200 select-none rounded cursor-pointer"
+            className="hover:bg-amber-100 active:bg-amber-200 dark:hover:bg-brand-800 dark:active:bg-brand-600 dark:text-white select-none rounded cursor-pointer"
             acat-pos={positions[strk.timestamp]}
             data-state={
               selection.includes(strk.timestamp.toString()) ? "on" : undefined

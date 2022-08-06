@@ -90,7 +90,7 @@ export function ToggleItem({
       aria-label={label}
       title={label}
       disabled={disabled}
-      className={`grow-0 shrink-0 h-6 w-6 rounded disabled:text-slate-400 hover:bg-brand-100 active:bg-brand-400 disabled-hover:bg-transparent active:text-white ${className}`}
+      className={`grow-0 shrink-0 h-6 w-6 rounded dark:text-gray-50 disabled:text-slate-400 hover:bg-brand-100 dark:hover:bg-brand-700 active:bg-brand-400 dark:active:bg-brand-500 disabled-hover:bg-transparent active:text-white ${className}`}
     >
       {children}
     </Toolbar.ToggleItem>

@@ -12,7 +12,7 @@ body,
 }
 
 body {
-  @apply font-sans;
+  @apply font-sans dark:bg-gray-700 selection:bg-brand-100 selection:text-black dark:selection:bg-brand-400 dark:selection:text-white;
 }
 
 #root {

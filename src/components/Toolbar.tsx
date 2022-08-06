@@ -33,7 +33,7 @@ function Button({ label, disabled, onClick, children }: any) {
       title={label}
       onClick={onClick}
       disabled={disabled}
-      className="text-sm disabled:text-slate-400 hover:bg-brand-100 disabled-hover:bg-transparent px-1 py-0.5 rounded"
+      className="text-sm dark:text-gray-50 disabled:text-slate-400 dark:disabled:text-slate-500 hover:bg-brand-100 dark:hover:bg-brand-700 disabled-hover:bg-transparent px-1 py-0.5 rounded"
     >
       {children}
     </BaseButton>
@@ -41,7 +41,9 @@ function Button({ label, disabled, onClick, children }: any) {
 }
 
 function Separator() {
-  return <BaseSeparator className="inline border border-gray-200 mx-2.5" />
+  return (
+    <BaseSeparator className="inline border border-gray-200 dark:border-gray-400 mx-2.5" />
+  )
 }
 
 type InlineToolbarProps = {
@@ -51,7 +53,7 @@ type InlineToolbarProps = {
 export function InlineToolbar({ editor }: InlineToolbarProps) {
   return (
     <BubbleMenu editor={editor}>
-      <Toolbar className="bg-white flex p-2 shadow-md rounded-md">
+      <Toolbar className="bg-white dark:bg-gray-500 flex p-2 shadow-md rounded-md">
         <ToggleGroup
           label="Text formatting"
           value={{
@@ -94,7 +96,7 @@ export function MainToolbar({
   saveDocument,
 }: MainToolbarProps) {
   return (
-    <Toolbar className="grow-0 shrink flex py-2 px-4 border-b border-gray-200">
+    <Toolbar className="grow-0 shrink flex py-2 px-4 border-b border-gray-200 dark:border-gray-400">
       <div className="space-x-1" aria-label="Export options">
         {tauri ? (
           <Button label="Save" onClick={() => saveDocument(true)}>
