@@ -103,7 +103,7 @@ export function Editor({
           />
         </>
       )}
-      <div className="flex flex-row h-full">
+      <div className="flex flex-row h-[calc(100vh_-_6.25rem)]">
         {editor ? (
           <>
             {mode === "edit" ? (

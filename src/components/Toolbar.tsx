@@ -94,7 +94,7 @@ export function MainToolbar({
   saveDocument,
 }: MainToolbarProps) {
   return (
-    <Toolbar className="flex py-2 px-4 border-b border-gray-200">
+    <Toolbar className="grow-0 shrink flex py-2 px-4 border-b border-gray-200">
       <div className="space-x-1" aria-label="Export options">
         {tauri ? (
           <Button label="Save" onClick={() => saveDocument(true)}>

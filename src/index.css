@@ -8,11 +8,15 @@
 html,
 body,
 #root {
-  @apply w-full h-full;
+  @apply w-screen h-screen;
 }
 
 body {
   @apply font-sans;
+}
+
+#root {
+  @apply flex flex-col;
 }
 
 @layer utilities {

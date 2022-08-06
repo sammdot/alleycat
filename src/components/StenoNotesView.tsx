@@ -35,7 +35,7 @@ export function StenoNotesView({
   }
 
   return (
-    <div className="bg-amber-50 shrink-0 basis-[270px] p-1 font-mono tracking-wider text-center whitespace-pre select-none">
+    <div className="bg-amber-50 shrink-0 basis-64 p-1 font-mono tracking-wider text-center whitespace-pre select-none h-full overflow-scroll">
       {sortedStrokes.map((strk) => {
         return (
           <div

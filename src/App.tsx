@@ -17,11 +17,11 @@ function App() {
   } = useDocument()
 
   return (
-    <div className="w-full h-full flex flex-col justify-start">
+    <>
       {document && documentLoaded ? (
         <>
           <TitleBar document={document} />
-          <div className="grow">
+          <div className="flex flex-col">
             <Editor
               content={document.content}
               stenoTable={document.metadata.stenoTable}
@@ -38,7 +38,7 @@ function App() {
           loadLocalDocument={loadLocalDocument}
         />
       )}
-    </div>
+    </>
   )
 }
 

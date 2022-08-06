@@ -7,8 +7,8 @@ type Props = {
 
 export function EditorView({ editor }: Props) {
   return (
-    <div className="flex-1">
-      <EditorContent editor={editor} className="h-full w-full flex" />
+    <div className="grow">
+      <EditorContent editor={editor} className="h-full overflow-scroll" />
     </div>
   )
 }
