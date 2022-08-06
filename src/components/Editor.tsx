@@ -133,8 +133,8 @@ export function Editor({
               </>
             ) : (
               <>
-                <div className="bg-gray-50 w-full h-full center flex flex-row justify-center items-center">
-                  <div className="italic text-gray-400 select-none">
+                <div className="bg-gray-50 dark:bg-gray-700 w-full h-full center flex flex-row justify-center items-center">
+                  <div className="italic text-gray-400 dark:text-gray-500 select-none">
                     Sorry, {mode} mode is not yet supported.
                   </div>
                 </div>
@@ -143,8 +143,8 @@ export function Editor({
           </>
         ) : (
           <>
-            <div className="bg-gray-50 w-full h-full center flex flex-row justify-center items-center">
-              <div className="italic text-gray-400 select-none">
+            <div className="bg-gray-50 dark:bg-gray-700 w-full h-full center flex flex-row justify-center items-center">
+              <div className="italic text-gray-400 dark:text-gray-500 select-none">
                 Loading editor...
               </div>
             </div>

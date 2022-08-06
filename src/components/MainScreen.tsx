@@ -1,5 +1,7 @@
-import { tauri, openDialog } from "src/utils/tauri"
+import { useState } from "react"
 
+import { useFileDropEvent } from "src/hooks/window"
+import { tauri, openDialog } from "src/utils/tauri"
 import logo from "src/logo.svg"
 
 type Props = {
@@ -15,6 +17,8 @@ export function MainScreen({
   loadWebDocument,
   loadLocalDocument,
 }: Props) {
+  const [dragging, setDragging] = useState<boolean>(false)
+
   const showOpenDialog = () => {
     if (tauri) {
       openDialog().then((file) => {
@@ -28,12 +32,80 @@ export function MainScreen({
     }
   }
 
+  useFileDropEvent(
+    (paths) => {
+      let files = paths.filter((f: string) => f.endsWith(".rtf"))
+      if (files.length !== 1) {
+        return
+      }
+      setDragging(true)
+    },
+    () => {
+      setDragging(false)
+    },
+    (paths) => {
+      setDragging(false)
+      let files = paths.filter((f: string) => f.endsWith(".rtf"))
+      if (files.length !== 1) {
+        return
+      }
+      loadLocalDocument(files[0]!)
+    }
+  )
+
   return (
     <>
       <div
         data-tauri-drag-region
         className="w-full h-full grow flex flex-col justify-center items-center select-none"
+        onDragOver={(e) => {
+          if (tauri) {
+            return
+          }
+          e.stopPropagation()
+          e.preventDefault()
+        }}
+        onDragEnter={(e) => {
+          if (tauri) {
+            return
+          }
+          e.stopPropagation()
+          e.preventDefault()
+          setDragging(true)
+        }}
+        onDragLeave={(e) => {
+          if (tauri) {
+            return
+          }
+          e.stopPropagation()
+          e.preventDefault()
+          setDragging(false)
+        }}
+        onDrop={(e) => {
+          if (tauri) {
+            return
+          }
+          e.preventDefault()
+          setDragging(false)
+
+          let files = Array.from(e.dataTransfer.items)
+            .filter((item) => item.kind === "file")
+            .filter((item) => item.type === "text/rtf")
+            .map((item) => item.getAsFile())
+          if (files.length !== 1) {
+            return
+          }
+
+          loadWebDocument(files[0]!)
+        }}
       >
+        {dragging && (
+          <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur pointer-events-none">
+            <span className="text-center text-gray-800 dark:text-gray-200 text-xl font-semibold mb-12">
+              Drag and drop to open
+            </span>
+          </div>
+        )}
         <img src={logo} alt="AlleyCAT" className="h-16 mr-4" />
         {documentLoaded ? (
           <div className="w-60 flex flex-col space-y-4 mt-8">
@@ -49,6 +121,9 @@ export function MainScreen({
             >
               Open Document...
             </button>
+            <span className="text-center text-gray-800 dark:text-gray-400">
+              or drag and drop an .rtf file
+            </span>
             <input
               type="file"
               id="file-open"
