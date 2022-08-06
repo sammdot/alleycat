@@ -28,7 +28,7 @@ function App() {
   })
 
   useCloseRequested(() => {
-    if (saved) {
+    if (saved || !document) {
       closeWindow()
     } else {
       confirmClose()
