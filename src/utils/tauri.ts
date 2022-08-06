@@ -1,4 +1,4 @@
-import { open, save } from "@tauri-apps/api/dialog"
+import { message, open, save } from "@tauri-apps/api/dialog"
 import { readTextFile, writeTextFile } from "@tauri-apps/api/fs"
 import { basename, dirname, resolve, sep } from "@tauri-apps/api/path"
 
@@ -44,6 +44,10 @@ export async function readFile(path: string): Promise<string> {
 
 export async function saveFile(path: string, contents: string): Promise<void> {
   return await writeTextFile(path, contents)
+}
+
+export async function showError(err: string, title?: string): Promise<void> {
+  return await message(err, { title, type: "error" })
 }
 
 export const pathSeparator = sep
