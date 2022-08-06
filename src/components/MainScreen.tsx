@@ -106,7 +106,7 @@ export function MainScreen({
             </span>
           </div>
         )}
-        <img src={logo} alt="AlleyCAT" className="h-16 mr-4" />
+        <img src={logo} alt="AlleyCAT" className="h-16" />
         {documentLoaded ? (
           <div className="w-60 flex flex-col space-y-4 mt-8">
             <button
