@@ -20,7 +20,7 @@ export function TitleBar({ document }: Props) {
         ) : (
           <span className="text-gray-400 italic">untitled.rtf</span>
         )}
-        <span className="ml-3 px-1 py-0.5 bg-gray-300 text-white rounded text-sm font-semibold">
+        <span className="ml-3 px-1.5 py-0.5 bg-gray-400 text-white rounded text-sm font-semibold">
           <span className="uppercase mr-1">
             {document.metadata.docType.toString()}
           </span>
