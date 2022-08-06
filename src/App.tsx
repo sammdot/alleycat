@@ -1,9 +1,12 @@
-import React from "react"
+import { useState } from "react"
+import { useBeforeunload } from "react-beforeunload"
 
 import { Editor } from "src/components/Editor"
 import { MainScreen } from "src/components/MainScreen"
 import { TitleBar } from "src/components/TitleBar"
 import { useDocument } from "src/hooks/document"
+import { useCloseRequested } from "src/hooks/window"
+import { confirmClose, closeWindow } from "src/utils/tauri"
 
 function App() {
   const {
@@ -16,15 +19,32 @@ function App() {
     saveLocalDocument,
   } = useDocument()
 
+  const [saved, setSaved] = useState<boolean>(false)
+
+  useBeforeunload((e: any) => {
+    if (!saved) {
+      e.preventDefault()
+    }
+  })
+
+  useCloseRequested(() => {
+    if (saved) {
+      closeWindow()
+    } else {
+      confirmClose()
+    }
+  })
+
   return (
     <>
       {document && documentLoaded ? (
         <>
-          <TitleBar document={document} />
+          <TitleBar document={document} saved={saved} />
           <div className="flex flex-col">
             <Editor
               content={document.content}
               stenoTable={document.metadata.stenoTable}
+              setSaved={setSaved}
               saveWebDocument={saveWebDocument}
               saveLocalDocument={saveLocalDocument}
             />

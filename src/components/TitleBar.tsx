@@ -3,9 +3,10 @@ import logo from "src/logo.svg"
 
 type Props = {
   document: Document
+  saved: boolean
 }
 
-export function TitleBar({ document }: Props) {
+export function TitleBar({ document, saved }: Props) {
   return (
     <div
       data-tauri-drag-region
@@ -29,6 +30,11 @@ export function TitleBar({ document }: Props) {
           </span>
           v{(document.metadata.rtfcreVersion / 100).toFixed(2)}
         </span>
+        {!saved && (
+          <span className="ml-3 inline-block h-2 w-2 rounded bg-amber-400 translate-y-2">
+            &nbsp;
+          </span>
+        )}
       </div>
     </div>
   )

@@ -32,3 +32,15 @@ export const defaultMetadata: Metadata = {
   docType: DocumentType.transcript,
   stenoTable: defaultStenoTable,
 }
+
+export const defaultContent: Content = {
+  type: "doc",
+  content: [{ type: "paragraph", attrs: { style: "normal" } }],
+}
+
+export const defaultDocument: Document = {
+  name: null,
+  path: null,
+  metadata: defaultMetadata,
+  content: defaultContent,
+}

@@ -1,6 +1,7 @@
-import { message, open, save } from "@tauri-apps/api/dialog"
+import { ask, message, open, save } from "@tauri-apps/api/dialog"
 import { readTextFile, writeTextFile } from "@tauri-apps/api/fs"
 import { basename, dirname, resolve, sep } from "@tauri-apps/api/path"
+import { appWindow } from "@tauri-apps/api/window"
 
 export const tauri = !!(window as any).__TAURI__
 
@@ -48,6 +49,20 @@ export async function saveFile(path: string, contents: string): Promise<void> {
 
 export async function showError(err: string, title?: string): Promise<void> {
   return await message(err, { title, type: "error" })
+}
+
+export function confirmClose() {
+  ask("Unsaved changes may be lost. Are you sure you want to exit?", {
+    type: "warning",
+  }).then((quit) => {
+    if (quit) {
+      appWindow.close()
+    }
+  })
+}
+
+export function closeWindow() {
+  appWindow.close()
 }
 
 export const pathSeparator = sep

@@ -13,6 +13,7 @@
   "tauri": {
     "allowlist": {
       "dialog": {
+        "ask": true,
         "message": true,
         "open": true,
         "save": true
@@ -25,6 +26,7 @@
         "all": true
       },
       "window": {
+        "close": true,
         "maximize": true,
         "startDragging": true,
         "unmaximize": true

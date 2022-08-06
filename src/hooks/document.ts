@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { Content, defaultMetadata, Document } from "src/models/document"
+import { Content, defaultDocument, Document } from "src/models/document"
 import { fromRTF, toRTF } from "src/models/rtf"
 import {
   pathSeparator,
@@ -16,12 +16,7 @@ export function useDocument(): any {
   const [document, setDocument] = useState<Document | null>(null)
 
   const createEmptyDocument = () => {
-    setDocument({
-      name: null,
-      path: null,
-      metadata: defaultMetadata,
-      content: { type: "doc", content: [] },
-    })
+    setDocument(defaultDocument)
     setLoaded(true)
   }
 
@@ -68,6 +63,14 @@ export function useDocument(): any {
       })
   }
 
+  const saveDocument = (content: Content) => {
+    setDocument((prev) => {
+      let next = structuredClone(prev)
+      next.content = content
+      return next
+    })
+  }
+
   const saveWebDocument = (content: Content) => {
     if (!document || !document.metadata) {
       return
@@ -86,6 +89,7 @@ export function useDocument(): any {
       .catch((err) => {
         alert(err)
       })
+      .then(() => saveDocument(content))
   }
 
   const saveLocalDocument = (content: Content) => {
@@ -115,6 +119,7 @@ export function useDocument(): any {
       .catch((err) => {
         showError(err, "Error saving document")
       })
+      .then(() => saveDocument(content))
   }
 
   return {

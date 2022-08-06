@@ -1,0 +1,12 @@
+import { useEffect } from "react"
+import { appWindow } from "@tauri-apps/api/window"
+
+export function useCloseRequested(fn: () => void) {
+  ;(window as any).onCloseRequested = fn
+
+  useEffect(() => {
+    appWindow.listen("tauri://close-requested", (e) => {
+      ;(window as any).onCloseRequested?.()
+    })
+  }, [])
+}

@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useState } from "react"
+import deepEqual from "deep-equal"
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
 import Bold from "@tiptap/extension-bold"
 import BubbleMenu from "@tiptap/extension-bubble-menu"
 import Document from "@tiptap/extension-document"
@@ -23,6 +30,7 @@ import { StenoTable } from "src/models/steno"
 type Props = {
   content: Content
   stenoTable: StenoTable
+  setSaved: Dispatch<SetStateAction<boolean>>
   saveWebDocument: (content: Content) => void
   saveLocalDocument: (content: Content) => void
 }
@@ -30,6 +38,7 @@ type Props = {
 export function Editor({
   content,
   stenoTable,
+  setSaved,
   saveWebDocument,
   saveLocalDocument,
 }: Props) {
@@ -61,6 +70,9 @@ export function Editor({
     },
     onTransaction({ editor, transaction: tr }) {
       updateNotes(editor.state.doc, tr)
+      if (tr.steps.length !== 0) {
+        setSaved(deepEqual(content, editor.state.doc.toJSON()))
+      }
     },
   })
 
@@ -73,7 +85,8 @@ export function Editor({
     }
     editor.chain().setContent(content).focus().run()
     setLoaded(true)
-  }, [content, editor, loaded, setLoaded])
+    setSaved(true)
+  }, [content, editor, loaded, setLoaded, setSaved])
 
   const saveDocument = useCallback(
     (local: boolean) => {
@@ -86,8 +99,9 @@ export function Editor({
       } else {
         saveWebDocument(content)
       }
+      setSaved(true)
     },
-    [editor, saveLocalDocument, saveWebDocument]
+    [editor, saveLocalDocument, saveWebDocument, setSaved]
   )
 
   return (
