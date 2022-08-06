@@ -22,7 +22,7 @@ function App() {
   const [saved, setSaved] = useState<boolean>(false)
 
   useBeforeunload((e: any) => {
-    if (!saved) {
+    if (document && !saved) {
       e.preventDefault()
     }
   })
