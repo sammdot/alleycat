@@ -19,12 +19,12 @@ export function TitleBar({ document, saved }: Props) {
             {document.path && (
               <span className="text-gray-400 text-sm">{document.path}</span>
             )}
-            <span className="font-medium">{document.name}</span>
+            <span className="font-medium dark:text-white">{document.name}</span>
           </>
         ) : (
           <span className="text-gray-400 italic">untitled.rtf</span>
         )}
-        <span className="ml-3 px-1.5 py-0.5 bg-gray-400 text-white rounded text-sm font-semibold select-none">
+        <span className="ml-3 px-1.5 py-0.5 bg-gray-400 dark:bg-gray-500 text-white rounded text-sm font-semibold select-none">
           <span className="uppercase mr-1">
             {document.metadata.docType.toString()}
           </span>

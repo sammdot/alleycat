@@ -28,6 +28,7 @@
       "window": {
         "close": true,
         "maximize": true,
+        "setTitle": true,
         "startDragging": true,
         "unmaximize": true
       }

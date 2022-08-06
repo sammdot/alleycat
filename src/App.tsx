@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useBeforeunload } from "react-beforeunload"
 
 import { Editor } from "src/components/Editor"
 import { MainScreen } from "src/components/MainScreen"
 import { TitleBar } from "src/components/TitleBar"
 import { useDocument } from "src/hooks/document"
-import { useCloseRequested } from "src/hooks/window"
+import { useCloseRequested, useTitle } from "src/hooks/window"
 import { confirmClose, closeWindow } from "src/utils/tauri"
 
 function App() {
@@ -34,6 +34,10 @@ function App() {
       confirmClose()
     }
   })
+
+  const title = useMemo(() => document?.name || null, [document])
+
+  useTitle(title)
 
   return (
     <>
