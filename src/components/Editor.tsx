@@ -74,7 +74,6 @@ export function Editor({
     editor.commands.setContent(content)
     setLoaded(true)
   }, [content, editor, loaded, setLoaded])
-  ;(window as any).editor = editor
 
   const saveDocument = useCallback(
     (local: boolean) => {

@@ -95,6 +95,3 @@ export function formatSteno(steno: string, table: StenoTable): string | null {
 
   return keys
 }
-
-;(window as any).formatSteno = formatSteno
-;(window as any).defaultStenoTable = defaultStenoTable
