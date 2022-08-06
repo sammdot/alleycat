@@ -1,5 +1,7 @@
 import { JSONContent } from "@tiptap/core"
 
+import { defaultStenoTable, StenoTable } from "src/models/steno"
+
 export type Content = JSONContent
 
 export enum DocumentType {
@@ -14,6 +16,7 @@ export interface Metadata {
   rtfcreVersion: number
   systemName: string | null
   docType: DocumentType
+  stenoTable: StenoTable
 }
 
 export interface Document {
@@ -27,4 +30,5 @@ export const defaultMetadata: Metadata = {
   rtfcreVersion: 100,
   systemName: "AlleyCAT",
   docType: DocumentType.transcript,
+  stenoTable: defaultStenoTable,
 }

@@ -2,9 +2,11 @@ import { useMemo } from "react"
 import { Editor as TiptapEditor } from "@tiptap/core"
 
 import { StrokeMap, PositionMap } from "src/hooks/notes"
+import { formatSteno, StenoTable } from "src/models/steno"
 
 type Props = {
   editor: TiptapEditor
+  stenoTable: StenoTable
   strokes: StrokeMap
   positions: PositionMap
   selection: string[]
@@ -12,6 +14,7 @@ type Props = {
 
 export function StenoNotesView({
   editor,
+  stenoTable,
   strokes,
   positions,
   selection,
@@ -44,7 +47,7 @@ export function StenoNotesView({
             }
             onClick={() => highlightTranslationAt(positions[strk.timestamp])}
           >
-            {strk.steno}
+            {formatSteno(strk.steno, stenoTable) || "<INVALID>"}
           </div>
         )
       })}

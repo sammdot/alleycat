@@ -24,6 +24,7 @@ function App() {
           <div className="grow">
             <Editor
               content={document.content}
+              stenoTable={document.metadata.stenoTable}
               saveWebDocument={saveWebDocument}
               saveLocalDocument={saveLocalDocument}
             />

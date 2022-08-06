@@ -18,14 +18,21 @@ import { Paragraph } from "src/extensions/paragraph"
 import { Stroke, Translation } from "src/extensions/steno"
 import { useNotes } from "src/hooks/notes"
 import { Content } from "src/models/document"
+import { StenoTable } from "src/models/steno"
 
 type Props = {
-  content: any | null
+  content: Content
+  stenoTable: StenoTable
   saveWebDocument: (content: Content) => void
   saveLocalDocument: (content: Content) => void
 }
 
-export function Editor({ content, saveWebDocument, saveLocalDocument }: Props) {
+export function Editor({
+  content,
+  stenoTable,
+  saveWebDocument,
+  saveLocalDocument,
+}: Props) {
   const [loaded, setLoaded] = useState<boolean>(false)
   const [mode, setMode] = useState<string>("edit")
   const { strokes, positions, selection, updateNotes, updateSelection } =
@@ -105,6 +112,7 @@ export function Editor({ content, saveWebDocument, saveLocalDocument }: Props) {
                 <EditorView editor={editor} />
                 <StenoNotesView
                   editor={editor}
+                  stenoTable={stenoTable}
                   strokes={strokes}
                   positions={positions}
                   selection={selection}
