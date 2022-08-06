@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Bold from "@tiptap/extension-bold"
 import BubbleMenu from "@tiptap/extension-bubble-menu"
 import Document from "@tiptap/extension-document"
@@ -18,7 +18,11 @@ import { Paragraph } from "src/extensions/paragraph"
 import { Stroke, Translation } from "src/extensions/steno"
 import { useNotes } from "src/hooks/notes"
 
-export function Editor() {
+type Props = {
+  content: any | null
+}
+
+export function Editor({ content }: Props) {
   const [mode, setMode] = useState<string>("edit")
   const { strokes, positions, selection, updateNotes, updateSelection } =
     useNotes()
@@ -49,6 +53,12 @@ export function Editor() {
     },
   })
 
+  useEffect(() => {
+    if (!editor) {
+      return
+    }
+    editor.commands.setContent(content)
+  }, [content, editor])
   ;(window as any).editor = editor
 
   return (
@@ -86,7 +96,7 @@ export function Editor() {
           <>
             <div className="bg-gray-50 w-full h-full center flex flex-row justify-center items-center">
               <div className="italic text-gray-400 select-none">
-                Loading document...
+                Loading editor...
               </div>
             </div>
           </>
