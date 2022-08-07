@@ -8,7 +8,10 @@ type Props = {
 export function EditorView({ editor }: Props) {
   return (
     <div className="grow">
-      <EditorContent editor={editor} className="h-full overflow-scroll" />
+      <EditorContent
+        editor={editor}
+        className="h-full overflow-x-hidden overflow-y-scroll"
+      />
     </div>
   )
 }
