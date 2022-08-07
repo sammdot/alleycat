@@ -11,4 +11,4 @@ const fs = require("fs")
 // Tauri takes the version from "package.json" so provide the minimal required
 fs.writeFileSync("_version.json", JSON.stringify({ version }))
 // For env-cmd
-fs.writeFileSync(".env", "REACT_APP_VERSION=" + version)
+fs.writeFileSync(".env", "BROWSER=none\nREACT_APP_VERSION=" + version)

@@ -37,8 +37,8 @@
   },
   "scripts": {
     "ver": "node ./version.js",
-    "start": "env-cmd react-scripts start",
-    "build": "env-cmd react-scripts build",
+    "start": "yarn ver; env-cmd react-scripts start",
+    "build": "yarn ver; env-cmd react-scripts build",
     "startapp": "tauri dev",
     "buildapp": "tauri build"
   },
