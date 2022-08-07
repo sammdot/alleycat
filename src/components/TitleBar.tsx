@@ -1,4 +1,5 @@
 import { Document } from "src/models/document"
+import { windowDragAreaProps } from "src/platform"
 import logo from "src/logo.svg"
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
 export function TitleBar({ document, saved }: Props) {
   return (
     <div
-      data-tauri-drag-region
+      {...windowDragAreaProps}
       className="w-full p-4 pb-2 flex flex-row content-center"
     >
       <img src={logo} alt="AlleyCAT" className="h-8 mr-2 select-none" />

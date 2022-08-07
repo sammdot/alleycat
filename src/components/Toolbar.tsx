@@ -24,7 +24,6 @@ import {
   ToggleGroup,
   ToggleItem,
 } from "src/components/ToggleGroup"
-import { tauri } from "src/utils/tauri"
 
 function Button({ label, disabled, onClick, children }: any) {
   return (
@@ -98,15 +97,9 @@ export function MainToolbar({
   return (
     <Toolbar className="grow-0 shrink flex py-2 px-4 select-none border-b border-gray-200 dark:border-gray-400">
       <div className="space-x-1" aria-label="Export options">
-        {tauri ? (
-          <Button label="Save" onClick={() => saveDocument(true)}>
-            <SaveIcon />
-          </Button>
-        ) : (
-          <Button label="Download" onClick={() => saveDocument(false)}>
-            <SaveIcon />
-          </Button>
-        )}
+        <Button label="Save" onClick={saveDocument}>
+          <SaveIcon />
+        </Button>
         <Button label="Export to ASCII" disabled>
           <ExportASCIIIcon />
         </Button>

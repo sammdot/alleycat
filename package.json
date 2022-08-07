@@ -39,8 +39,8 @@
     "ver": "node ./version.js",
     "start": "yarn ver; env-cmd react-scripts start",
     "build": "yarn ver; env-cmd react-scripts build",
-    "startapp": "tauri dev",
-    "buildapp": "tauri build"
+    "startapp": "REACT_APP_DESKTOP=1 tauri dev",
+    "buildapp": "REACT_APP_DESKTOP=1 tauri build"
   },
   "eslintConfig": {
     "extends": [

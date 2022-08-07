@@ -31,17 +31,10 @@ type Props = {
   content: Content
   stenoTable: StenoTable
   setSaved: Dispatch<SetStateAction<boolean>>
-  saveWebDocument: (content: Content) => void
-  saveLocalDocument: (content: Content) => void
+  saveDocument: (content: Content) => void
 }
 
-export function Editor({
-  content,
-  stenoTable,
-  setSaved,
-  saveWebDocument,
-  saveLocalDocument,
-}: Props) {
+export function Editor({ content, stenoTable, setSaved, saveDocument }: Props) {
   const [loaded, setLoaded] = useState<boolean>(false)
   const [mode, setMode] = useState<string>("edit")
   const { strokes, positions, selection, updateNotes, updateSelection } =
@@ -88,21 +81,13 @@ export function Editor({
     setSaved(true)
   }, [content, editor, loaded, setLoaded, setSaved])
 
-  const saveDocument = useCallback(
-    (local: boolean) => {
-      if (!editor) {
-        return
-      }
-      const content: Content = editor.getJSON()
-      if (local) {
-        saveLocalDocument(content)
-      } else {
-        saveWebDocument(content)
-      }
-      setSaved(true)
-    },
-    [editor, saveLocalDocument, saveWebDocument, setSaved]
-  )
+  const _saveDocument = useCallback(() => {
+    if (!editor) {
+      return
+    }
+    saveDocument(editor.getJSON())
+    setSaved(true)
+  }, [editor, saveDocument, setSaved])
 
   return (
     <>
@@ -113,7 +98,7 @@ export function Editor({
             editor={editor}
             mode={mode}
             setMode={setMode}
-            saveDocument={saveDocument}
+            saveDocument={_saveDocument}
           />
         </>
       )}
