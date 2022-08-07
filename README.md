@@ -70,7 +70,7 @@ $ yarn start
 To start the desktop version for development:
 
 ```bash
-$ yarn tauri dev
+$ yarn startapp
 ```
 
 Both of these start a web server on [localhost:3000](http://localhost:3000). You should be able to access the web version from a browser even when running the desktop version.
@@ -88,7 +88,7 @@ The generated files for the web version will be in the `/build` directory. These
 To build the desktop version on your machine's platform:
 
 ```bash
-$ yarn tauri build
+$ yarn buildapp
 ```
 
 The generated files for the desktop version will be in the `/src-tauri/target/release` directory. This may include a standalone application binary, an application bundle, and/or an installer package, depending on the platform. These files can be installed on your system or distributed.

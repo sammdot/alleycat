@@ -93,7 +93,7 @@ jobs:
       - name: Build desktop application
         env:
           CI: true
-        run: yarn tauri build -b ${{ matrix.bundle_type }}
+        run: yarn buildapp -b ${{ matrix.bundle_type }}
 
       - name: Upload application bundle
         uses: shogo82148/actions-upload-release-asset@v1
