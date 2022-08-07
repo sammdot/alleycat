@@ -1,9 +1,11 @@
-<p align="center"><img alt="AlleyCAT" src="/src/logo.svg"></p>
+<p align="center"><img alt="AlleyCAT" src="/images/logo.png"></p>
 
-![Website](https://img.shields.io/website?url=https%3A%2F%2Falleycat.sammdot.ca)
-![GitHub release](https://img.shields.io/github/v/release/sammdot/alleycat)
-![Build status](https://img.shields.io/github/workflow/status/sammdot/alleycat/build)
-![GitHub license](https://img.shields.io/github/license/sammdot/alleycat)
+<p align="center">
+<a href="https://alleycat.sammdot.ca"><img src="https://img.shields.io/website?url=https%3A%2F%2Falleycat.sammdot.ca" alt="Website"></a>
+<img src="https://img.shields.io/github/v/release/sammdot/alleycat" alt="GitHub release">
+<img src="https://img.shields.io/github/workflow/status/sammdot/alleycat/build" alt="Build status">
+<img src="https://img.shields.io/github/license/sammdot/alleycat" alt="License">
+</p>
 
 **AlleyCAT** is a free, open-source computer-aided transcription (CAT) system for stenographers. It lets you write and edit documents such as court transcripts and translation dictionaries on both web and desktop. AlleyCAT originated as a free alternative to professional CAT software, which is proprietary and very expensive.
 
@@ -13,9 +15,9 @@ It is not intended to replace or compete with [Plover](https://github.com/openst
 
 ## Installation
 
-<!-- TODO: Add release downloads here -->
+Pre-built binaries for the latest stable version are available on the [releases page](https://github.com/sammdot/alleycat/releases/latest). Download the corresponding package for your platform: `.msi` for Windows, `.dmg` for macOS, and `.AppImage` for Linux.
 
-Once a release has been published, you will see links to download pre-built binaries and installers here, but for now, the only way to build it is from source. See the [Development](#development) section below for more information.
+You can also build a bleeding-edge version of AlleyCAT from the source code. See the [Development](#development) section below for more information.
 
 If you just want to try AlleyCAT without installing, a web version is also available at [alleycat.sammdot.ca](https://alleycat.sammdot.ca). There are couple of caveats to this:
 
