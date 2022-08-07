@@ -1,4 +1,4 @@
-<p align="center"><img alt="AlleyCAT" src="/images/logo.png"></p>
+<p align="center"><img alt="AlleyCAT" src="/images/logo.svg"></p>
 
 <p align="center">
 <a href="https://alleycat.sammdot.ca"><img src="https://img.shields.io/website?url=https%3A%2F%2Falleycat.sammdot.ca" alt="Website"></a>
