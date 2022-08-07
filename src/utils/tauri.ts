@@ -61,6 +61,15 @@ export function confirmClose() {
   })
 }
 
+export function confirmOpen(filename: string): Promise<boolean> {
+  return ask(
+    `Unsaved changes may be lost. Are you sure you want to open ${filename}?`,
+    {
+      type: "warning",
+    }
+  )
+}
+
 export function closeWindow() {
   appWindow.close()
 }
