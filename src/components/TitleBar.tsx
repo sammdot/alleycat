@@ -13,7 +13,7 @@ export function TitleBar({ document, saved }: Props) {
       className="w-full p-4 pb-2 flex flex-row content-center"
     >
       <img src={logo} alt="AlleyCAT" className="h-8 mr-2 select-none" />
-      <div className="px-2 pt-1">
+      <div className="px-2 pt-1 grow">
         {document.name ? (
           <>
             {document.path && (
@@ -35,6 +35,9 @@ export function TitleBar({ document, saved }: Props) {
             &nbsp;
           </span>
         )}
+      </div>
+      <div className="text-sm text-gray-400 dark:text-gray-500">
+        v{process.env.REACT_APP_VERSION}
       </div>
     </div>
   )

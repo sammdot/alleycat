@@ -1,6 +1,5 @@
 {
   "name": "alleycat",
-  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
@@ -37,8 +36,9 @@
     "typescript": "^4.4.2"
   },
   "scripts": {
-    "start": "cross-env BROWSER=none react-scripts start",
-    "build": "react-scripts build",
+    "ver": "node ./version.js",
+    "start": "env-cmd react-scripts start",
+    "build": "env-cmd react-scripts build",
     "startapp": "tauri dev",
     "buildapp": "tauri build"
   },
@@ -61,6 +61,6 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.5",
-    "cross-env": "^7.0.3"
+    "env-cmd": "^10.1.0"
   }
 }

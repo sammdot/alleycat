@@ -34,6 +34,9 @@ export function MainScreen({
         className="w-full h-full grow flex flex-col justify-center items-center select-none"
       >
         <img src={logo} alt="AlleyCAT" className="h-16" />
+        <div className="mt-2 text-sm text-gray-400 dark:text-gray-500">
+          v{process.env.REACT_APP_VERSION}
+        </div>
         {documentLoaded ? (
           <div className="w-60 flex flex-col space-y-4 mt-8">
             <button

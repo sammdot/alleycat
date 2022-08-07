@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "AlleyCAT",
-    "version": "0.1.0"
+    "version": "../_version.json"
   },
   "tauri": {
     "allowlist": {
