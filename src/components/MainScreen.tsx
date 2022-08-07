@@ -22,7 +22,7 @@ export function MainScreen({
       >
         <img src={logo} alt="AlleyCAT" className="h-16" />
         <div className="mt-2 text-sm text-gray-400 dark:text-gray-500">
-          v{process.env.REACT_APP_VERSION}
+          v{process.env.ACAT_VERSION}
         </div>
         {documentLoaded ? (
           <div className="w-60 flex flex-col space-y-4 mt-8">

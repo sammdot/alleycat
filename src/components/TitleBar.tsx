@@ -38,7 +38,7 @@ export function TitleBar({ document, saved }: Props) {
         )}
       </div>
       <div className="text-sm text-gray-400 dark:text-gray-500">
-        v{process.env.REACT_APP_VERSION}
+        v{process.env.ACAT_VERSION}
       </div>
     </div>
   )

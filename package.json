@@ -2,6 +2,7 @@
   "name": "alleycat",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.4.5",
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -37,10 +38,10 @@
   },
   "scripts": {
     "ver": "node ./version.js",
-    "start": "yarn ver; env-cmd react-scripts start",
-    "build": "yarn ver; env-cmd react-scripts build",
-    "startapp": "REACT_APP_DESKTOP=1 tauri dev",
-    "buildapp": "REACT_APP_DESKTOP=1 tauri build"
+    "start": "yarn ver; BROWSER=none craco start",
+    "build": "yarn ver; craco build",
+    "startapp": "yarn ver; tauri dev",
+    "buildapp": "yarn ver; tauri build"
   },
   "eslintConfig": {
     "extends": [
@@ -60,7 +61,6 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.5",
-    "env-cmd": "^10.1.0"
+    "@tauri-apps/cli": "^1.0.5"
   }
 }
