@@ -45,7 +45,7 @@ jobs:
     name: Build ${{ matrix.os_name }} application
     runs-on: ${{ matrix.os }}
     env:
-      BASE: src-tauri/target/release/bundle
+      BASE: app/target/release/bundle
     strategy:
       fail-fast: false
       matrix:

@@ -34,15 +34,15 @@ The repository has three main parts:
 
 ```
 alleycat (this repository)
+ ├─ app
+ │   └─ src
  ├─ public
- ├─ src
- └─ src-tauri
-     └─ src
+ └─ src
 ```
 
+- `/app/src`: Tauri application (desktop only)
 - `/public`: Static assets
 - `/src`: React application (web and desktop)
-- `/src-tauri/src`: Tauri application (desktop only)
 
 ### Building from Source
 
@@ -91,4 +91,4 @@ To build the desktop version on your machine's platform:
 $ yarn buildapp
 ```
 
-The generated files for the desktop version will be in the `/src-tauri/target/release` directory. This may include a standalone application binary, an application bundle, and/or an installer package, depending on the platform. These files can be installed on your system or distributed.
+The generated files for the desktop version will be in the `/app/target/release` directory. This may include a standalone application binary, an application bundle, and/or an installer package, depending on the platform. These files can be installed on your system or distributed.
