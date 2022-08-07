@@ -1,8 +1,18 @@
+import * as base from "src/platform/base"
+
 export const desktop = !!process.env.REACT_APP_DESKTOP
 
-const platform = process.env.REACT_APP_DESKTOP
-  ? require("src/platform/tauri")
-  : require("src/platform/web")
+let platform = base
+
+if (process.env.REACT_APP_DESKTOP) {
+  import(/* webpackChunkName: "tauri" */ "src/platform/tauri").then((p) => {
+    platform = p
+  })
+} else {
+  import(/* webpackChunkName: "web" */ "src/platform/web").then((p) => {
+    platform = p
+  })
+}
 
 export const showError = platform.showError
 export const setTitle = platform.setTitle

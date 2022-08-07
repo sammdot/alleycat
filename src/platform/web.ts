@@ -1,8 +1,10 @@
 import { Dispatch, SetStateAction } from "react"
 import { useBeforeunload } from "react-beforeunload"
 
-export function showError(err: string, title: string) {
-  alert(err)
+import { FileDropProps, FileOpenProps } from "src/platform/types"
+
+export function showError(err: any, title: string) {
+  alert(err.toString())
 }
 
 export function setTitle(title: string) {
@@ -28,12 +30,7 @@ export function usePreventClose(preventFn: () => boolean) {
 export function useFileDrop(
   setDragging: Dispatch<SetStateAction<boolean>>,
   fileDropped: (path: string, file: File | null) => void
-): {
-  onDragOver: (e: DragEvent) => void
-  onDragEnter: (e: DragEvent) => void
-  onDragLeave: (e: DragEvent) => void
-  onDrop: (e: DragEvent) => void
-} {
+): FileDropProps {
   const canOpenItem = (item: DataTransferItem) => item.type === "text/rtf"
 
   return {
@@ -74,28 +71,21 @@ export function useFileDrop(
   }
 }
 
-export async function useOpenDialog(
+export function useOpenDialog(
   openFn: (path: string, file: File | null) => void
-): Promise<{
-  onClick: () => void
-  onOpenFile: (e: { target: HTMLInputElement }) => void
-}> {
-  document.getElementById("file-open")?.click()
-
-  const onOpenFile = (e: { target: HTMLInputElement }) => {
-    let file = e.target.files?.[0]
-    if (!file) {
-      return
-    }
-
-    openFn(file.name, file)
-  }
-
+): FileOpenProps {
   return {
     onClick: () => {
       document.getElementById("file-open")?.click()
     },
-    onOpenFile,
+    onOpenFile: (e: { target: HTMLInputElement }) => {
+      let file = e.target.files?.[0]
+      if (!file) {
+        return
+      }
+
+      openFn(file.name, file)
+    },
   }
 }
 
@@ -115,7 +105,7 @@ export async function saveFile(
   name: string | null,
   directory: string | null,
   content: string
-): Promise<void> {
+): Promise<[string | null, string] | null> {
   const filename = name || "alleycat-export.rtf"
   const blob = new Blob([content], { type: "text/rtf" })
   const link = window.document.createElement("a")
@@ -123,6 +113,7 @@ export async function saveFile(
   link.href = URL.createObjectURL(blob)
   link.download = filename
   link.click()
+  return [null, filename]
 }
 
 export async function getFileContents(

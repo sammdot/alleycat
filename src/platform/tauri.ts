@@ -10,6 +10,8 @@ import { readTextFile, writeTextFile } from "@tauri-apps/api/fs"
 import { basename, dirname, resolve, sep } from "@tauri-apps/api/path"
 import { appWindow } from "@tauri-apps/api/window"
 
+import { FileDropProps, FileOpenProps } from "src/platform/types"
+
 const w: any = window
 
 const pathSeparator = sep
@@ -23,8 +25,8 @@ const fileSelectParams = {
   ],
 }
 
-export function showError(err: string, title?: string) {
-  message(err, { title, type: "error" })
+export function showError(err: any, title?: string) {
+  message(err.toString(), { title, type: "error" })
 }
 
 export function setTitle(title: string) {
@@ -67,7 +69,7 @@ export function usePreventClose(preventFn: () => boolean) {
 export function useFileDrop(
   setDragging: Dispatch<SetStateAction<boolean>>,
   fileDropped: (path: string, file: File | null) => void
-): {} {
+): FileDropProps {
   const canOpenFile = (path: string) => path.endsWith(".rtf")
 
   w.onFileDropHover = (paths: string[]) => {
@@ -102,20 +104,27 @@ export function useFileDrop(
     })
   }, [])
 
-  return {}
+  return {
+    onDragOver: (e) => {},
+    onDragEnter: (e) => {},
+    onDragLeave: (e) => {},
+    onDrop: (e) => {},
+  }
 }
 
-export async function useOpenDialog(
+export function useOpenDialog(
   openFn: (path: string, file: File | null) => void
-): Promise<{
-  onClick: () => void
-  onOpenFile: (e: { target: HTMLInputElement }) => void
-}> {
-  const selected = await openDialog(fileSelectParams)
-  if (selected !== null && !Array.isArray(selected)) {
-    openFn(selected, null)
+): FileOpenProps {
+  return {
+    onClick: () => {
+      openDialog(fileSelectParams).then((selected) => {
+        if (selected !== null && !Array.isArray(selected)) {
+          openFn(selected, null)
+        }
+      })
+    },
+    onOpenFile: (e) => {},
   }
-  return { onClick: () => {}, onOpenFile: (e) => {} }
 }
 
 export async function askBeforeOpenIf(
