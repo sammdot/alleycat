@@ -3,6 +3,8 @@ import { useBeforeunload } from "react-beforeunload"
 
 import { FileDropProps, FileOpenProps } from "src/platform/types"
 
+export const canOpenNewWindow = false
+
 export function showError(err: any, title: string) {
   alert(err.toString())
 }
@@ -19,7 +21,10 @@ export async function splitPath(
 
 export const windowDragAreaProps: {} = {}
 
-export function usePreventClose(preventFn: () => boolean) {
+export function usePreventClose(
+  preventFn: () => boolean,
+  backToMainScreen: () => boolean
+) {
   useBeforeunload((e: any) => {
     if (preventFn()) {
       e.preventDefault()

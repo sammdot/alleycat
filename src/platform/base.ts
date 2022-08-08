@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction } from "react"
 
 import { FileDropProps } from "src/platform/types"
 
+export const canOpenNewWindow = false
+
 export function showError(err: any, title: string) {}
 
 export function setTitle(title: string) {}
@@ -14,7 +16,10 @@ export async function splitPath(
 
 export const windowDragAreaProps: any = {}
 
-export function usePreventClose(preventFn: () => boolean) {}
+export function usePreventClose(
+  preventFn: () => boolean,
+  backToMainScreen: () => boolean
+) {}
 
 export function useFileDrop(
   setDragging: Dispatch<SetStateAction<boolean>>,
@@ -39,6 +44,10 @@ export function useOpenDialog(
     onOpenFile: () => {},
   }
 }
+
+export function useOpenEvent(fn: (path: string, file: File | null) => void) {}
+
+export async function openInNewWindow(path: string) {}
 
 export async function askBeforeOpenIf(
   askFn: () => boolean,

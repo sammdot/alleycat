@@ -13,6 +13,11 @@ export function useDocument(): any {
     setLoaded(true)
   }
 
+  const clearDocument = () => {
+    setDocument(null)
+    setLoaded(true)
+  }
+
   const updateDocumentState = (content: Content) => {
     setDocument((prev) => {
       let next = structuredClone(prev)
@@ -75,8 +80,7 @@ export function useDocument(): any {
     documentLoaded: loaded,
     document,
     createEmptyDocument,
-    // loadWebDocument,
-    // loadLocalDocument,
+    clearDocument,
     loadDocument,
     saveDocument,
   }

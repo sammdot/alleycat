@@ -27,8 +27,11 @@
       },
       "window": {
         "close": true,
+        "center": true,
+        "create": true,
         "maximize": true,
         "setTitle": true,
+        "show": true,
         "startDragging": true,
         "unmaximize": true
       }

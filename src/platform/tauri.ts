@@ -8,9 +8,11 @@ import {
 import { Event } from "@tauri-apps/api/event"
 import { readTextFile, writeTextFile } from "@tauri-apps/api/fs"
 import { basename, dirname, resolve, sep } from "@tauri-apps/api/path"
-import { appWindow } from "@tauri-apps/api/window"
+import { invoke } from "@tauri-apps/api/tauri"
+import { appWindow, getAll } from "@tauri-apps/api/window"
 
 import { FileDropProps, FileOpenProps } from "src/platform/types"
+import { queryString } from "src/utils/query"
 
 const w: any = window
 
@@ -24,6 +26,8 @@ const fileSelectParams = {
     },
   ],
 }
+
+export const canOpenNewWindow = true
 
 export function showError(err: any, title?: string) {
   message(err.toString(), { title, type: "error" })
@@ -44,16 +48,27 @@ export async function splitPath(
 
 export const windowDragAreaProps = { "data-tauri-drag-region": true }
 
-export function usePreventClose(preventFn: () => boolean) {
-  w.onCloseRequested = () => {
+export function usePreventClose(
+  preventFn: () => boolean,
+  backToMainScreen: () => boolean
+) {
+  w.onCloseRequested = async () => {
     if (preventFn()) {
-      ask("Unsaved changes may be lost. Are you sure you want to exit?", {
-        type: "warning",
-      }).then((quit) => {
-        if (quit) {
-          appWindow.close()
+      let quit = await ask(
+        "Unsaved changes may be lost. Are you sure you want to exit?",
+        {
+          type: "warning",
         }
-      })
+      )
+      if (!quit) {
+        return
+      }
+    }
+
+    if (getAll().length === 1) {
+      if (backToMainScreen()) {
+        appWindow.close()
+      }
     } else {
       appWindow.close()
     }
@@ -94,7 +109,7 @@ export function useFileDrop(
 
   useEffect(() => {
     appWindow.listen<Event<string[]>>("tauri://file-drop-hover", (e) => {
-      w.onFileDropHover?.()
+      w.onFileDropHover?.(e.payload)
     })
     appWindow.listen<Event<void>>("tauri://file-drop-cancelled", (e) => {
       w.onFileDropCancel?.()
@@ -116,30 +131,27 @@ export function useOpenDialog(
   openFn: (path: string, file: File | null) => void
 ): FileOpenProps {
   return {
-    onClick: () => {
-      openDialog(fileSelectParams).then((selected) => {
-        if (selected !== null && !Array.isArray(selected)) {
-          openFn(selected, null)
-        }
-      })
+    onClick: async () => {
+      const selected = await openDialog(fileSelectParams)
+      if (selected === null || Array.isArray(selected)) {
+        return
+      }
+
+      openFn(selected, null)
     },
     onOpenFile: (e) => {},
   }
+}
+
+export async function openInNewWindow(path: string) {
+  await invoke("new_window", { path: queryString(path) })
 }
 
 export async function askBeforeOpenIf(
   askFn: () => boolean,
   path: string
 ): Promise<boolean> {
-  if (askFn()) {
-    return await ask(
-      `Unsaved changes may be lost. Are you sure you want to open ${path}?`,
-      {
-        type: "warning",
-      }
-    )
-  }
-  return true
+  return false
 }
 
 export async function saveFile(

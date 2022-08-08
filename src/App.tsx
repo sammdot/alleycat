@@ -1,17 +1,25 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 import { Editor } from "src/components/Editor"
 import { MainScreen } from "src/components/MainScreen"
 import { TitleBar } from "src/components/TitleBar"
 import { useDocument } from "src/hooks/document"
 import { useTitle } from "src/hooks/window"
-import { askBeforeOpenIf, useFileDrop, usePreventClose } from "src/platform"
+import {
+  askBeforeOpenIf,
+  canOpenNewWindow,
+  openInNewWindow,
+  useFileDrop,
+  usePreventClose,
+} from "src/platform"
+import { getFileParam } from "src/utils/query"
 
 function App() {
   const {
     documentLoaded,
     document,
     createEmptyDocument,
+    clearDocument,
     loadDocument,
     saveDocument,
   } = useDocument()
@@ -22,16 +30,55 @@ function App() {
   const title = useMemo(() => document?.name || null, [document])
   useTitle(title)
 
-  usePreventClose(() => document && !saved)
+  useEffect(() => {
+    if (document) {
+      return
+    }
+
+    let fileParam = getFileParam()
+    if (!fileParam) {
+      return
+    }
+
+    if (canOpenNewWindow) {
+      if (fileParam === "alleycat://new") {
+        createEmptyDocument()
+      } else {
+        loadDocument(fileParam, null)
+      }
+    }
+  }, [document, loadDocument])
+
+  usePreventClose(
+    () => document && !saved,
+    () => {
+      if (!!document) {
+        clearDocument()
+        return false
+      }
+      return true
+    }
+  )
 
   const fileDropProps = useFileDrop(
     setDragging,
     (path: string, file: File | null) => {
-      askBeforeOpenIf(() => document && !saved, path).then((open: boolean) => {
-        if (open) {
-          loadDocument(path, file)
-        }
-      })
+      if (!document) {
+        loadDocument(path, file)
+        return
+      }
+
+      if (canOpenNewWindow) {
+        openInNewWindow(path)
+      } else {
+        askBeforeOpenIf(() => document && !saved, path).then(
+          (open: boolean) => {
+            if (open) {
+              loadDocument(path, file)
+            }
+          }
+        )
+      }
     }
   )
 
