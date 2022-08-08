@@ -92,6 +92,7 @@ function App() {
     () => {
       if (!!document) {
         clearDocument()
+        ;(window as any).location.search = null
         return false
       }
       return true
