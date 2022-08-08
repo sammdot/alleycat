@@ -35,6 +35,7 @@ export function useDocument(): any {
         metadata,
         content,
       })
+      setLoaded(true)
     } catch (err) {
       setLoaded(true)
       showError(err, "Error loading document")

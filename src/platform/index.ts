@@ -5,15 +5,11 @@ export const desktop = !!process.env.REACT_APP_DESKTOP
 let platform = base
 
 if (process.env.ACAT_DESKTOP) {
-  import(/* webpackChunkName: "tauri" */ "src/platform/tauri").then((p) => {
-    platform = p
-  })
+  platform = require("src/platform/tauri")
 }
 
 if (!process.env.ACAT_DESKTOP) {
-  import(/* webpackChunkName: "web" */ "src/platform/web").then((p) => {
-    platform = p
-  })
+  platform = require("src/platform/web")
 }
 
 export const showError = platform.showError
