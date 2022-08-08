@@ -142,7 +142,11 @@ function App() {
       )}
       {document && documentLoaded ? (
         <>
-          <TitleBar document={document} saved={saved} />
+          <TitleBar
+            document={document}
+            saved={saved}
+            clearDocument={clearDocument}
+          />
           <div className="flex flex-col">
             <Editor
               content={document.content}

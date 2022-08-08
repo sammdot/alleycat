@@ -1,18 +1,40 @@
+import { BackIcon } from "src/components/Icon"
 import { Document } from "src/models/document"
-import { windowDragAreaProps } from "src/platform"
+import {
+  askBeforeOpenIf,
+  canOpenNewWindow,
+  windowDragAreaProps,
+} from "src/platform"
 import logo from "src/logo.svg"
 
 type Props = {
   document: Document
   saved: boolean
+  clearDocument: () => void
 }
 
-export function TitleBar({ document, saved }: Props) {
+export function TitleBar({ document, saved, clearDocument }: Props) {
   return (
     <div
       {...windowDragAreaProps}
       className="w-full p-4 pb-2 flex flex-row content-center"
     >
+      {!canOpenNewWindow && (
+        <button
+          className="text-brand-500 text-xl h-8 w-8 leading-[2rem] hover:bg-brand-100 dark:hover:bg-brand-700 dark:hover:text-white mr-2 rounded-3xl"
+          onClick={() => {
+            askBeforeOpenIf(() => document && !saved, document.name!).then(
+              (open: boolean) => {
+                if (open) {
+                  clearDocument()
+                }
+              }
+            )
+          }}
+        >
+          <BackIcon />
+        </button>
+      )}
       <img src={logo} alt="AlleyCAT" className="h-8 mr-2 select-none" />
       <div className="px-2 pt-1 grow">
         {document.name ? (

@@ -101,7 +101,9 @@ export async function askBeforeOpenIf(
 ): Promise<boolean> {
   if (askFn()) {
     return window.confirm(
-      `Unsaved changes may be lost. Are you sure you want to open ${path}?`
+      "Unsaved changes may be lost. Are you sure you want to " +
+        (path ? `open ${path}` : "close this document") +
+        "?"
     )
   }
   return true

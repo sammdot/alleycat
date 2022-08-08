@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { IconProp } from "@fortawesome/fontawesome-svg-core"
 import {
+  faArrowLeft,
   faBold,
   faDownload,
   faEye,
@@ -17,6 +18,7 @@ import {
 
 const Icon = (name: IconProp) => () => <FontAwesomeIcon icon={name} />
 
+export const BackIcon = Icon(faArrowLeft)
 export const BoldIcon = Icon(faBold)
 export const EditIcon = Icon(faPenToSquare)
 export const ExportASCIIIcon = Icon(faFileLines)
