@@ -6,17 +6,28 @@ import {
   save as saveDialog,
 } from "@tauri-apps/api/dialog"
 import { Event } from "@tauri-apps/api/event"
-import { readTextFile, writeTextFile } from "@tauri-apps/api/fs"
-import { basename, dirname, resolve, sep } from "@tauri-apps/api/path"
+import { createDir, readTextFile, writeTextFile } from "@tauri-apps/api/fs"
+import {
+  basename,
+  configDir,
+  dirname,
+  join,
+  resolve,
+  sep,
+} from "@tauri-apps/api/path"
 import { invoke } from "@tauri-apps/api/tauri"
 import { appWindow, getAll } from "@tauri-apps/api/window"
 
+import { defaultSettings, Settings } from "src/models/settings"
 import { FileDropProps, FileOpenProps } from "src/platform/types"
 import { queryString } from "src/utils/query"
 
 const w: any = window
 
 const pathSeparator = sep
+
+let configPath: string
+const configFile = "config.json"
 
 const fileSelectParams = {
   filters: [
@@ -174,4 +185,39 @@ export async function getFileContents(
   file: File | null
 ): Promise<string> {
   return await readTextFile(path)
+}
+
+async function writeSettings(settings: Settings) {
+  await writeTextFile(configPath, JSON.stringify(settings, null, 2))
+}
+
+export async function ensureSettingsStorage(): Promise<void> {
+  const baseDir = await join(await configDir(), "AlleyCAT")
+  await createDir(baseDir, { recursive: true })
+  configPath = await join(baseDir, configFile)
+
+  try {
+    let text = await readTextFile(configPath)
+    w.settings = JSON.parse(text)
+  } catch (err) {
+    w.settings = defaultSettings
+    writeSettings(w.settings)
+  }
+}
+
+export async function getSetting<K extends keyof Settings>(
+  key: K
+): Promise<Settings[K]> {
+  return w?.settings?.[key] || defaultSettings[key]
+}
+
+export async function setSetting<K extends keyof Settings>(
+  key: K,
+  val: Settings[K]
+): Promise<void> {
+  if (!w.settings) {
+    return
+  }
+  w.settings[key] = val
+  writeSettings(w.settings)
 }

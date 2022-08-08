@@ -25,6 +25,7 @@ import { Paragraph } from "src/extensions/paragraph"
 import { Stroke, Translation } from "src/extensions/steno"
 import { useNotes } from "src/hooks/notes"
 import { Content } from "src/models/document"
+import { SettingsHooks } from "src/models/settings"
 import { StenoTable } from "src/models/steno"
 
 type Props = {
@@ -32,9 +33,16 @@ type Props = {
   stenoTable: StenoTable
   setSaved: Dispatch<SetStateAction<boolean>>
   saveDocument: (content: Content) => void
+  settings: SettingsHooks
 }
 
-export function Editor({ content, stenoTable, setSaved, saveDocument }: Props) {
+export function Editor({
+  content,
+  stenoTable,
+  setSaved,
+  saveDocument,
+  settings,
+}: Props) {
   const [loaded, setLoaded] = useState<boolean>(false)
   const [mode, setMode] = useState<string>("edit")
   const { strokes, positions, selection, updateNotes, updateSelection } =
@@ -99,6 +107,7 @@ export function Editor({ content, stenoTable, setSaved, saveDocument }: Props) {
             mode={mode}
             setMode={setMode}
             saveDocument={_saveDocument}
+            settings={settings}
           />
         </>
       )}

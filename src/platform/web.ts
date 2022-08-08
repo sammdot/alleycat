@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 import { useBeforeunload } from "react-beforeunload"
 
+import { defaultSettings, Settings } from "src/models/settings"
 import { FileDropProps, FileOpenProps } from "src/platform/types"
 
 export const canOpenNewWindow = false
@@ -126,4 +127,23 @@ export async function getFileContents(
   file: File | null
 ): Promise<string> {
   return await file!.text()
+}
+
+export async function ensureSettingsStorage() {}
+
+export async function getSetting<K extends keyof Settings>(
+  key: K
+): Promise<Settings[K]> {
+  let val = window.localStorage.getItem(key)
+  if (val === null) {
+    return defaultSettings[key]
+  }
+  return JSON.parse(val)
+}
+
+export async function setSetting<K extends keyof Settings>(
+  key: K,
+  val: Settings[K]
+): Promise<void> {
+  window.localStorage.setItem(key, JSON.stringify(val))
 }

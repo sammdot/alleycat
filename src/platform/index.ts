@@ -24,3 +24,6 @@ export const openInNewWindow = platform.openInNewWindow
 export const askBeforeOpenIf = platform.askBeforeOpenIf
 export const saveFile = platform.saveFile
 export const getFileContents = platform.getFileContents
+export const ensureSettingsStorage = platform.ensureSettingsStorage
+export const getSetting = platform.getSetting
+export const setSetting = platform.setSetting

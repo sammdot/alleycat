@@ -19,6 +19,9 @@
         "save": true
       },
       "fs": {
+        "scope": ["$APP/*", "$CONFIG/*"],
+        "createDir": true,
+        "readDir": true,
         "readFile": true,
         "writeFile": true
       },

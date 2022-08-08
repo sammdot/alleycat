@@ -16,6 +16,7 @@ import {
   RedoIcon,
   ReviewIcon,
   SaveIcon,
+  SettingsIcon,
   UnderlineIcon,
   UndoIcon,
 } from "src/components/Icon"
@@ -24,6 +25,7 @@ import {
   ToggleGroup,
   ToggleItem,
 } from "src/components/ToggleGroup"
+import { SettingsHooks } from "src/models/settings"
 
 function Button({ label, disabled, onClick, children }: any) {
   return (
@@ -43,6 +45,10 @@ function Separator() {
   return (
     <BaseSeparator className="inline border border-gray-200 dark:border-gray-400 mx-2.5" />
   )
+}
+
+function Spacer() {
+  return <div className="inline grow" />
 }
 
 type InlineToolbarProps = {
@@ -86,6 +92,7 @@ type MainToolbarProps = {
   mode: string
   setMode: Dispatch<SetStateAction<string>>
   saveDocument: (local: boolean) => void
+  settings: SettingsHooks
 }
 
 export function MainToolbar({
@@ -93,6 +100,7 @@ export function MainToolbar({
   mode,
   setMode,
   saveDocument,
+  settings,
 }: MainToolbarProps) {
   return (
     <Toolbar className="grow-0 shrink flex py-2 px-4 select-none border-b border-gray-200 dark:border-gray-400">
@@ -177,6 +185,10 @@ export function MainToolbar({
           </RadioToggleGroup>
         </>
       )}
+      <Spacer />
+      <Button label="Settings" disabled>
+        <SettingsIcon />
+      </Button>
     </Toolbar>
   )
 }

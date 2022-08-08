@@ -56,4 +56,5 @@ module.exports = {
       addVariant("disabled-hover", "&:disabled:hover")
     }),
   ],
+  darkMode: "class",
 }

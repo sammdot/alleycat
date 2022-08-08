@@ -11,6 +11,7 @@ import {
   faPenToSquare,
   faRotateLeft,
   faRotateRight,
+  faSliders,
   faUnderline,
 } from "@fortawesome/free-solid-svg-icons"
 
@@ -25,5 +26,6 @@ export const PreviewIcon = Icon(faEye)
 export const RedoIcon = Icon(faRotateRight)
 export const ReviewIcon = Icon(faHighlighter)
 export const SaveIcon = Icon(faDownload)
+export const SettingsIcon = Icon(faSliders)
 export const UnderlineIcon = Icon(faUnderline)
 export const UndoIcon = Icon(faRotateLeft)

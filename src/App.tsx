@@ -4,15 +4,19 @@ import { Editor } from "src/components/Editor"
 import { MainScreen } from "src/components/MainScreen"
 import { TitleBar } from "src/components/TitleBar"
 import { useDocument } from "src/hooks/document"
+import { useSetting } from "src/hooks/settings"
 import { useTitle } from "src/hooks/window"
 import {
   askBeforeOpenIf,
   canOpenNewWindow,
+  ensureSettingsStorage,
   openInNewWindow,
   useFileDrop,
   usePreventClose,
 } from "src/platform"
 import { getFileParam } from "src/utils/query"
+
+const root = document.documentElement
 
 function App() {
   const {
@@ -29,6 +33,40 @@ function App() {
 
   const title = useMemo(() => document?.name || null, [document])
   useTitle(title)
+
+  const [fontSize, setFontSize] = useSetting("fontSize")
+  useEffect(() => {
+    root.style.fontSize = `${fontSize}px`
+  }, [fontSize])
+
+  useEffect(() => {
+    ensureSettingsStorage()
+  })
+
+  const [theme, setTheme] = useSetting("theme")
+  useEffect(() => {
+    if (theme === "dark") {
+      root.classList.add("dark")
+    } else if (theme === "light") {
+      root.classList.remove("dark")
+    }
+  }, [theme])
+  useEffect(() => {
+    if (!!theme) {
+      return
+    }
+    const match = window.matchMedia("(prefers-color-scheme: dark)")
+    const handle = () => {
+      if (match.matches) root.classList.add("dark")
+      else root.classList.remove("dark")
+    }
+    handle()
+
+    match.addEventListener("change", handle)
+    return () => {
+      match.removeEventListener("change", handle)
+    }
+  })
 
   useEffect(() => {
     if (document) {
@@ -100,6 +138,10 @@ function App() {
               stenoTable={document.metadata.stenoTable}
               setSaved={setSaved}
               saveDocument={saveDocument}
+              settings={{
+                fontSize: [fontSize, setFontSize],
+                theme: [theme, setTheme],
+              }}
             />
           </div>
         </>
