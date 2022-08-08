@@ -6,6 +6,7 @@ import { TitleBar } from "src/components/TitleBar"
 import { useDocument } from "src/hooks/document"
 import { useSetting } from "src/hooks/settings"
 import { useTitle } from "src/hooks/window"
+import { SettingsHooks } from "src/models/settings"
 import {
   askBeforeOpenIf,
   canOpenNewWindow,
@@ -124,6 +125,12 @@ function App() {
     }
   )
 
+  const settings: SettingsHooks = {
+    fontSize: [fontSize, setFontSize],
+    theme: [theme, setTheme],
+    stenoNotesNumbers: [stenoNotesNumbers, setStenoNotesNumbers],
+  }
+
   return (
     <div className="w-full h-full" {...fileDropProps}>
       {dragging && (
@@ -142,11 +149,7 @@ function App() {
               stenoTable={document.metadata.stenoTable}
               setSaved={setSaved}
               saveDocument={saveDocument}
-              settings={{
-                fontSize: [fontSize, setFontSize],
-                theme: [theme, setTheme],
-                stenoNotesNumbers: [stenoNotesNumbers, setStenoNotesNumbers],
-              }}
+              settings={settings}
             />
           </div>
         </>
@@ -155,6 +158,7 @@ function App() {
           documentLoaded={documentLoaded}
           createEmptyDocument={createEmptyDocument}
           loadDocument={loadDocument}
+          settings={settings}
         />
       )}
     </div>

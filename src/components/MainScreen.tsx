@@ -1,3 +1,5 @@
+import { SettingsMenu } from "src/components/SettingsMenu"
+import { SettingsHooks } from "src/models/settings"
 import { useOpenDialog, windowDragAreaProps } from "src/platform"
 import logo from "src/logo.svg"
 
@@ -5,12 +7,14 @@ type Props = {
   documentLoaded: boolean
   createEmptyDocument: () => void
   loadDocument: (path: string, file: File | null) => void
+  settings: SettingsHooks
 }
 
 export function MainScreen({
   documentLoaded,
   createEmptyDocument,
   loadDocument,
+  settings,
 }: Props) {
   const { onClick, onOpenFile } = useOpenDialog(loadDocument)
 
@@ -21,9 +25,6 @@ export function MainScreen({
         className="w-full h-full grow flex flex-col justify-center items-center select-none"
       >
         <img src={logo} alt="AlleyCAT" className="h-16" />
-        <div className="mt-2 text-sm text-gray-400 dark:text-gray-500">
-          v{process.env.ACAT_VERSION}
-        </div>
         {documentLoaded ? (
           <div className="w-60 flex flex-col space-y-4 mt-8">
             <button
@@ -52,6 +53,10 @@ export function MainScreen({
         ) : (
           <></>
         )}
+        <div className="fixed top-3 right-4 text-sm text-gray-400 dark:text-gray-500">
+          v{process.env.ACAT_VERSION}
+        </div>
+        <SettingsMenu onMainScreen={true} settings={settings} />
       </div>
     </>
   )

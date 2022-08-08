@@ -15,10 +15,6 @@ import { Range, Root as BaseSlider, Thumb, Track } from "@radix-ui/react-slider"
 import { SettingsIcon } from "src/components/Icon"
 import { SettingsHooks } from "src/models/settings"
 
-type SettingsMenuProps = {
-  settings: SettingsHooks
-}
-
 function Separator() {
   return (
     <BaseSeparator className="border-b border-gray-200 dark:border-gray-400 mt-3 mb-1" />
@@ -121,7 +117,12 @@ function Slider({
   )
 }
 
-export function SettingsMenu({ settings }: SettingsMenuProps) {
+type SettingsMenuProps = {
+  onMainScreen: boolean
+  settings: SettingsHooks
+}
+
+export function SettingsMenu({ onMainScreen, settings }: SettingsMenuProps) {
   const {
     fontSize: [fontSize, setFontSize],
     theme: [theme, setTheme],
@@ -132,7 +133,11 @@ export function SettingsMenu({ settings }: SettingsMenuProps) {
       <Trigger
         aria-label="Settings"
         title="Settings"
-        className="text-sm dark:text-gray-50 disabled:text-slate-400 dark:disabled:text-slate-500 hover:bg-brand-100 dark:hover:bg-brand-700 disabled-hover:bg-transparent open:text-white open:bg-brand-400 dark:open:bg-brand-500 px-1 py-0.5 rounded grow-0 shrink-0 h-6 w-6"
+        className={
+          onMainScreen
+            ? "fixed right-6 bottom-6 text-xl w-12 h-12 rounded-3xl dark:text-gray-50 hover:bg-brand-100 dark:hover:bg-brand-700 open:text-white open:bg-brand-400 open:shadow-lg dark:open:bg-brand-500"
+            : "text-sm dark:text-gray-50 hover:bg-brand-100 dark:hover:bg-brand-700 open:text-white open:bg-brand-400 dark:open:bg-brand-500 px-1 py-0.5 rounded grow-0 shrink-0 h-6 w-6"
+        }
       >
         <SettingsIcon />
       </Trigger>
@@ -172,30 +177,34 @@ export function SettingsMenu({ settings }: SettingsMenuProps) {
                 </Group>
               </Setting>
             </SettingsGroup>
-            <Separator />
-            <SettingsGroup>
-              <Setting name="Number Key Display">
-                <Group
-                  value={JSON.stringify(stenoNotesNumbers)}
-                  onValueChange={(val) => {
-                    setStenoNotesNumbers(JSON.parse(val))
-                  }}
-                >
-                  <Item
-                    text="#STPH-RBGS"
-                    aria-label="No digits shown"
-                    value="false"
-                    className="font-mono"
-                  />
-                  <Item
-                    text="1234-RBGS"
-                    aria-label="Digits shown"
-                    value="true"
-                    className="font-mono"
-                  />
-                </Group>
-              </Setting>
-            </SettingsGroup>
+            {!onMainScreen && (
+              <>
+                <Separator />
+                <SettingsGroup>
+                  <Setting name="Number Key Display">
+                    <Group
+                      value={JSON.stringify(stenoNotesNumbers)}
+                      onValueChange={(val) => {
+                        setStenoNotesNumbers(JSON.parse(val))
+                      }}
+                    >
+                      <Item
+                        text="#STPH-RBGS"
+                        aria-label="No digits shown"
+                        value="false"
+                        className="font-mono"
+                      />
+                      <Item
+                        text="1234-RBGS"
+                        aria-label="Digits shown"
+                        value="true"
+                        className="font-mono"
+                      />
+                    </Group>
+                  </Setting>
+                </SettingsGroup>
+              </>
+            )}
           </div>
         </Content>
       </Portal>

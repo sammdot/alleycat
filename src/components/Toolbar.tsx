@@ -205,7 +205,7 @@ export function MainToolbar({
         </>
       )}
       <Spacer />
-      <SettingsMenu settings={settings} />
+      <SettingsMenu onMainScreen={false} settings={settings} />
     </Toolbar>
   )
 }
