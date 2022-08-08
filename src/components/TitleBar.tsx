@@ -37,7 +37,9 @@ export function TitleBar({ document, saved }: Props) {
           </span>
         )}
       </div>
-      <div className="text-sm text-gray-400">v{process.env.ACAT_VERSION}</div>
+      <div className="text-sm text-gray-400 select-none">
+        v{process.env.ACAT_VERSION}
+      </div>
     </div>
   )
 }
