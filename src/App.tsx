@@ -47,7 +47,7 @@ function App() {
         loadDocument(fileParam, null)
       }
     }
-  }, [document, loadDocument])
+  }, [createEmptyDocument, document, loadDocument])
 
   usePreventClose(
     () => document && !saved,
