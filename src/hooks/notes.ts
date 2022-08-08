@@ -1,6 +1,7 @@
 import { Node } from "prosemirror-model"
 import { Selection, Transaction } from "prosemirror-state"
 import { useCallback, useState } from "react"
+import { Editor } from "@tiptap/core"
 
 import { replacedRanges } from "src/utils/transform"
 
@@ -11,6 +12,35 @@ export type Stroke = {
 
 export type StrokeMap = { [key: string]: Stroke }
 export type PositionMap = { [key: string]: number }
+
+export function getSelectedStrokes(editor: Editor): string[] | null {
+  const { $from, $to } = editor.state.selection
+  let nodes: Node[] = []
+  editor.state.doc.nodesBetween($from.pos, $to.pos, (node) => {
+    if (node.type.name !== "translation") {
+      return
+    }
+    nodes.push(node)
+  })
+  if (nodes.length !== 1) {
+    return null
+  }
+
+  const node = nodes[0]
+  let strokes: string[] = []
+  node.descendants((n) => {
+    if (n.type.name !== "stroke") {
+      return
+    }
+    strokes.push(n.attrs.steno)
+  })
+
+  if (strokes.length === 0) {
+    return null
+  }
+
+  return strokes
+}
 
 export function useNotes(): any {
   const [strokes, setStrokes] = useState<StrokeMap>({})

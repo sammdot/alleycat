@@ -26,8 +26,6 @@ export function StenoNotesView({
     [strokes]
   )
 
-  console.log(showNumbers)
-
   const highlightTranslationAt = (position: number) => {
     let pos = editor.state.doc.resolve(position)
     editor

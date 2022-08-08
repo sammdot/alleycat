@@ -105,7 +105,11 @@ export function Editor({
     <>
       {editor && (
         <>
-          <InlineToolbar editor={editor} />
+          <InlineToolbar
+            editor={editor}
+            stenoTable={stenoTable}
+            showNumbers={showNumbers}
+          />
           <MainToolbar
             editor={editor}
             mode={mode}

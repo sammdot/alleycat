@@ -25,7 +25,9 @@ import {
   ToggleGroup,
   ToggleItem,
 } from "src/components/ToggleGroup"
+import { getSelectedStrokes } from "src/hooks/notes"
 import { SettingsHooks } from "src/models/settings"
+import { formatStenoInline, StenoTable } from "src/models/steno"
 
 function Button({ label, disabled, onClick, children }: any) {
   return (
@@ -53,12 +55,29 @@ function Spacer() {
 
 type InlineToolbarProps = {
   editor: any
+  stenoTable: StenoTable
+  showNumbers: boolean
 }
 
-export function InlineToolbar({ editor }: InlineToolbarProps) {
+export function InlineToolbar({
+  editor,
+  stenoTable,
+  showNumbers,
+}: InlineToolbarProps) {
+  let selectedOutline = getSelectedStrokes(editor)
+    ?.map((strk) => formatStenoInline(strk, stenoTable, showNumbers))
+    .join("/")
   return (
     <BubbleMenu editor={editor}>
       <Toolbar className="bg-white dark:bg-gray-500 flex p-2 shadow-md rounded-md select-none">
+        {selectedOutline && (
+          <>
+            <span className="font-mono pl-1 pr-0.5 text-gray-500 dark:text-gray-300">
+              {selectedOutline}
+            </span>
+            <Separator />
+          </>
+        )}
         <ToggleGroup
           label="Text formatting"
           value={{

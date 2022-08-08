@@ -29,6 +29,28 @@ function fullKeyList(lst: StenoKeyList): string {
   return left + middle + right
 }
 
+export function formatStenoInline(
+  steno: string,
+  table: StenoTable,
+  showNumbers: boolean = false
+): string {
+  let str = steno.slice()
+
+  const base = fullKeyList(table.base)
+  const shifted = fullKeyList(table.shifted)
+
+  if (/\d/.test(str) && !showNumbers) {
+    str =
+      "#" +
+      Array.from(str)
+        .map((c) => (/\d/.test(c) ? base[shifted.indexOf(c)] : c))
+        .join("")
+        .replace("#", "")
+  }
+
+  return str
+}
+
 export function formatSteno(
   steno: string,
   table: StenoTable,
