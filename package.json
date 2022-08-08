@@ -41,10 +41,13 @@
   },
   "scripts": {
     "ver": "node ./version.js",
-    "start": "yarn ver; BROWSER=none craco start",
-    "build": "yarn ver; craco build",
-    "startapp": "yarn ver; tauri dev",
-    "buildapp": "yarn ver; tauri build"
+    "_start": "BROWSER=none craco start",
+    "_build": "craco build",
+    "start": "yarn ver; yarn _start",
+    "build": "yarn ver; yarn _build",
+    "startapp": "yarn ver; ACAT_DESKTOP=1 tauri dev",
+    "buildapp": "yarn ver; ACAT_DESKTOP=1 tauri build",
+    "cibuildapp": "tauri build"
   },
   "eslintConfig": {
     "extends": [

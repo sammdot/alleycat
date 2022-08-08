@@ -18,17 +18,12 @@ jobs:
         run: |
           echo ::set-output name=tag::${GITHUB_REF##*/}
 
-      - name: Install Node dependencies
-        run: yarn install
-
       - name: Build web application
-        run: yarn build
-
-      - name: Bundle web assets
-        shell: bash
         env:
           ZIP_FILE: AlleyCAT-web-${{ steps.tag.outputs.tag }}.zip
         run: |
+          yarn install
+          yarn build
           zip -qq -r ${{ env.ZIP_FILE }} build/*
 
       - name: Upload assets
@@ -75,15 +70,12 @@ jobs:
         run: |
           echo ::set-output name=tag::${GITHUB_REF##*/}
 
-      - name: Install Node dependencies
-        run: yarn install
-
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
 
-      - name: Install library dependencies
+      - name: Install library dependencies (${{ matrix.os_name }})
         if: matrix.os == 'ubuntu-latest'
         shell: bash
         run: |
@@ -93,7 +85,12 @@ jobs:
       - name: Build desktop application
         env:
           CI: true
-        run: yarn buildapp -b ${{ matrix.bundle_type }}
+          ACAT_DESKTOP: true
+        shell: bash
+        run: |
+          yarn install
+          yarn ver
+          yarn cibuildapp -b ${{ matrix.bundle_type }}
 
       - name: Upload application bundle
         uses: shogo82148/actions-upload-release-asset@v1

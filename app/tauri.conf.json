@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "ACAT_DESKTOP=1 yarn build",
-    "beforeDevCommand": "ACAT_DESKTOP=1 yarn start",
+    "beforeBuildCommand": "yarn _build",
+    "beforeDevCommand": "yarn _start",
     "devPath": "http://localhost:3000",
     "distDir": "../build"
   },
