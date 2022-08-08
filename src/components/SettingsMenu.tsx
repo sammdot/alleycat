@@ -74,7 +74,7 @@ function Item({ label, value }: ItemProps) {
   return (
     <RadioItem
       value={value}
-      className="grow hover:bg-brand-200 dark:hover:bg-brand-700 checked-:bg-brand-500 dark:text-gray-100 checked-:text-white checked-:dark:text-white checked-:font-semibold px-2 py-1 first:rounded-l last:rounded-r"
+      className="grow checked-:bg-brand-400 dark:checked-:bg-brand-500 hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-100 checked-:text-white checked-:dark:text-white checked-:font-semibold px-2 py-1 first:rounded-l last:rounded-r"
     >
       {label}
     </RadioItem>
@@ -106,10 +106,10 @@ function Slider({
       onValueChange={(val) => onChange(val[0])}
       className="relative grow flex items-center select-none pointer-events-none h-5"
     >
-      <Track className="relative grow rounded h-1 bg-black dark:bg-gray-500">
-        <Range className="absolute bg-brand-500 rounded h-full" />
+      <Track className="relative grow rounded h-1 bg-gray-300 dark:bg-gray-500">
+        <Range className="absolute bg-brand-400 dark:bg-brand-500 rounded h-full" />
       </Track>
-      <Thumb className="block cursor-pointer w-5 h-5 bg-brand-500 shadow-lg rounded-3xl hover:bg-brand-300 focus:shadow-xl pointer-events-auto" />
+      <Thumb className="block cursor-pointer w-5 h-5 bg-brand-400 dark:bg-brand-500 hover:bg-brand-300 dark:hover:bg-brand-400 shadow-lg rounded-3xl focus:shadow-xl pointer-events-auto" />
     </BaseSlider>
   )
 }
