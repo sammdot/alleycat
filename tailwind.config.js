@@ -53,6 +53,8 @@ module.exports = {
   plugins: [
     plugin(({ addVariant }) => {
       addVariant("active", '&[data-state="on"]')
+      addVariant("checked-", '&[data-state="checked"]')
+      addVariant("open", '&[data-state="open"]')
       addVariant("disabled-hover", "&:disabled:hover")
     }),
   ],

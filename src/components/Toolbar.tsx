@@ -16,10 +16,10 @@ import {
   RedoIcon,
   ReviewIcon,
   SaveIcon,
-  SettingsIcon,
   UnderlineIcon,
   UndoIcon,
 } from "src/components/Icon"
+import { SettingsMenu } from "src/components/SettingsMenu"
 import {
   RadioToggleGroup,
   ToggleGroup,
@@ -34,7 +34,7 @@ function Button({ label, disabled, onClick, children }: any) {
       title={label}
       onClick={onClick}
       disabled={disabled}
-      className="text-sm dark:text-gray-50 disabled:text-slate-400 dark:disabled:text-slate-500 hover:bg-brand-100 dark:hover:bg-brand-700 disabled-hover:bg-transparent px-1 py-0.5 rounded"
+      className="text-sm dark:text-gray-50 disabled:text-slate-400 dark:disabled:text-slate-500 hover:bg-brand-100 dark:hover:bg-brand-700 disabled-hover:bg-transparent open:bg-brand-400 dark:open:bg-brand-500 px-1 py-0.5 rounded"
     >
       {children}
     </BaseButton>
@@ -186,9 +186,7 @@ export function MainToolbar({
         </>
       )}
       <Spacer />
-      <Button label="Settings" disabled>
-        <SettingsIcon />
-      </Button>
+      <SettingsMenu settings={settings} />
     </Toolbar>
   )
 }
