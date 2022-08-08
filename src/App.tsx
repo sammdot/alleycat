@@ -68,6 +68,9 @@ function App() {
     }
   })
 
+  const [stenoNotesNumbers, setStenoNotesNumbers] =
+    useSetting("stenoNotesNumbers")
+
   useEffect(() => {
     if (document) {
       return
@@ -142,6 +145,7 @@ function App() {
               settings={{
                 fontSize: [fontSize, setFontSize],
                 theme: [theme, setTheme],
+                stenoNotesNumbers: [stenoNotesNumbers, setStenoNotesNumbers],
               }}
             />
           </div>

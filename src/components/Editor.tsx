@@ -48,6 +48,10 @@ export function Editor({
   const { strokes, positions, selection, updateNotes, updateSelection } =
     useNotes()
 
+  const {
+    stenoNotesNumbers: [showNumbers],
+  } = settings
+
   const editor: TiptapEditor | null = useEditor({
     extensions: [
       Document,
@@ -123,6 +127,7 @@ export function Editor({
                   strokes={strokes}
                   positions={positions}
                   selection={selection}
+                  showNumbers={showNumbers}
                 />
               </>
             ) : (

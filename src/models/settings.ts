@@ -1,6 +1,7 @@
 export type Settings = {
   theme: "light" | "dark" | null
   fontSize: number
+  stenoNotesNumbers: boolean
 }
 
 export type SettingsHooks = {
@@ -10,4 +11,5 @@ export type SettingsHooks = {
 export const defaultSettings: Settings = {
   theme: null,
   fontSize: 16,
+  stenoNotesNumbers: false,
 }

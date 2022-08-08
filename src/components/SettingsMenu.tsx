@@ -66,17 +66,24 @@ function Group({ value, onValueChange, children }: RadioGroupProps) {
 }
 
 type ItemProps = {
-  label: string
+  text: string
+  label?: string
   value: string
+  className?: string
 }
 
-function Item({ label, value }: ItemProps) {
+function Item({ text, label, value, className }: ItemProps) {
   return (
     <RadioItem
       value={value}
-      className="grow checked-:bg-brand-400 dark:checked-:bg-brand-500 hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-100 checked-:text-white checked-:dark:text-white checked-:font-semibold px-2 py-1 first:rounded-l last:rounded-r"
+      title={label || text}
+      aria-label={label || text}
+      className={
+        "grow checked-:bg-brand-400 dark:checked-:bg-brand-500 hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-100 checked-:text-white checked-:dark:text-white checked-:font-semibold px-2 py-1 first:rounded-l last:rounded-r " +
+        className
+      }
     >
-      {label}
+      {text}
     </RadioItem>
   )
 }
@@ -118,6 +125,7 @@ export function SettingsMenu({ settings }: SettingsMenuProps) {
   const {
     fontSize: [fontSize, setFontSize],
     theme: [theme, setTheme],
+    stenoNotesNumbers: [stenoNotesNumbers, setStenoNotesNumbers],
   } = settings
   return (
     <DropdownMenu>
@@ -158,9 +166,33 @@ export function SettingsMenu({ settings }: SettingsMenuProps) {
                     }
                   }}
                 >
-                  <Item label="Light" value="light" />
-                  <Item label="Dark" value="dark" />
-                  <Item label="System" value="system" />
+                  <Item text="Light" value="light" />
+                  <Item text="Dark" value="dark" />
+                  <Item text="System" value="system" />
+                </Group>
+              </Setting>
+            </SettingsGroup>
+            <Separator />
+            <SettingsGroup>
+              <Setting name="Number Key Display">
+                <Group
+                  value={JSON.stringify(stenoNotesNumbers)}
+                  onValueChange={(val) => {
+                    setStenoNotesNumbers(JSON.parse(val))
+                  }}
+                >
+                  <Item
+                    text="#STPH-RBGS"
+                    aria-label="No digits shown"
+                    value="false"
+                    className="font-mono"
+                  />
+                  <Item
+                    text="1234-RBGS"
+                    aria-label="Digits shown"
+                    value="true"
+                    className="font-mono"
+                  />
                 </Group>
               </Setting>
             </SettingsGroup>

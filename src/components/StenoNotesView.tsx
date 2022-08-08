@@ -10,6 +10,7 @@ type Props = {
   strokes: StrokeMap
   positions: PositionMap
   selection: string[]
+  showNumbers: boolean
 }
 
 export function StenoNotesView({
@@ -18,11 +19,14 @@ export function StenoNotesView({
   strokes,
   positions,
   selection,
+  showNumbers,
 }: Props) {
   const sortedStrokes = useMemo(
     () => Array.from(Object.values(strokes)).sort((strk) => strk.timestamp),
     [strokes]
   )
+
+  console.log(showNumbers)
 
   const highlightTranslationAt = (position: number) => {
     let pos = editor.state.doc.resolve(position)
@@ -47,7 +51,7 @@ export function StenoNotesView({
             }
             onClick={() => highlightTranslationAt(positions[strk.timestamp])}
           >
-            {formatSteno(strk.steno, stenoTable) || "<INVALID>"}
+            {formatSteno(strk.steno, stenoTable, showNumbers) || "<INVALID>"}
           </div>
         )
       })}

@@ -29,7 +29,11 @@ function fullKeyList(lst: StenoKeyList): string {
   return left + middle + right
 }
 
-export function formatSteno(steno: string, table: StenoTable): string | null {
+export function formatSteno(
+  steno: string,
+  table: StenoTable,
+  showNumbers: boolean = false
+): string | null {
   let str = steno.slice()
 
   const base = fullKeyList(table.base)
@@ -91,6 +95,17 @@ export function formatSteno(steno: string, table: StenoTable): string | null {
 
   if (str.length !== 0) {
     return null
+  }
+
+  if (hasNumbers && showNumbers) {
+    let shiftedWithNumbers = table.numberKey + shifted
+    keys = Array.from(keys)
+      .map((c, i) =>
+        /\d/.test(shiftedWithNumbers[i]) && c !== " "
+          ? shiftedWithNumbers[i]
+          : c
+      )
+      .join("")
   }
 
   return keys
