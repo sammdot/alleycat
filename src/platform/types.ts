@@ -24,3 +24,13 @@ export type PloverLink = {
   connect: () => void
   disconnect: () => void
 }
+
+type OutputItem =
+  | { string: string }
+  | { backspaces: number }
+  | { key_combo: string }
+
+export interface PloverLinkData {
+  stroked: string
+  sent: OutputItem[]
+}

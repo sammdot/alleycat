@@ -2,20 +2,21 @@ import { useEffect, useState } from "react"
 import { listen } from "@tauri-apps/api/event"
 import { invoke } from "@tauri-apps/api/tauri"
 
-import { ConnectionState, PloverLink } from "src/platform/types"
+import { ConnectionState, PloverLink, PloverLinkData } from "src/platform/types"
 
-export function usePloverLink(): PloverLink {
+export function usePloverLink(
+  handler: (data: PloverLinkData) => void
+): PloverLink {
   const [connectionState, setConnectionState] = useState<ConnectionState>(
     ConnectionState.disconnected
   )
 
   const connect = () => {
-    setConnectionState(ConnectionState.connecting)
     invoke("start_link", {})
   }
 
   const disconnect = () => {
-    setConnectionState(ConnectionState.disconnected)
+    invoke("close_link", {})
   }
 
   useEffect(() => {
@@ -27,11 +28,21 @@ export function usePloverLink(): PloverLink {
         await listen<void>("acat://connected", (e) => {
           setConnectionState(ConnectionState.connected)
         }),
-        await listen<void>("acat://connect-failed", (e) => {
+        await listen<void>("acat://disconnected", (e) => {
           setConnectionState(ConnectionState.disconnected)
         }),
         await listen<any>("acat://stroked", (e) => {
-          // TODO
+          let payload = e.payload.trim()
+          if (!payload) {
+            return
+          }
+
+          try {
+            const data = JSON.parse(payload) as PloverLinkData
+            handler(data)
+          } catch (e) {
+            return
+          }
         }),
       ]
     }
@@ -45,7 +56,7 @@ export function usePloverLink(): PloverLink {
         })
       )
     }
-  }, [])
+  }, [handler])
 
   return {
     canConnect: true,

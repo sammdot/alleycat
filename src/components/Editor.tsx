@@ -28,6 +28,7 @@ import { Content } from "src/models/document"
 import { SettingsHooks } from "src/models/settings"
 import { StenoTable } from "src/models/steno"
 import { usePloverLink } from "src/platform"
+import { PloverLinkData } from "src/platform/types"
 
 type Props = {
   content: Content
@@ -49,7 +50,10 @@ export function Editor({
   const { strokes, positions, selection, updateNotes, updateSelection } =
     useNotes()
 
-  const plover = usePloverLink()
+  const ploverHandler = useCallback((data: PloverLinkData) => {
+    // TODO
+  }, [])
+  const plover = usePloverLink(ploverHandler)
 
   const {
     stenoNotesNumbers: [showNumbers],

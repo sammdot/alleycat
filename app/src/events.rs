@@ -16,7 +16,7 @@ impl _LinkEvents for Window {
 pub trait LinkEvents: Sync + Send {
   fn did_start_connecting(&self);
   fn did_connect(&self);
-  fn did_fail_to_connect(&self);
+  fn did_disconnect(&self);
   fn did_stroke(&self, payload: String);
 }
 
@@ -29,8 +29,8 @@ impl LinkEvents for Window {
     self._emit("connected", ());
   }
 
-  fn did_fail_to_connect(&self) {
-    self._emit("connect-failed", ());
+  fn did_disconnect(&self) {
+    self._emit("disconnected", ());
   }
 
   fn did_stroke(&self, payload: String) {

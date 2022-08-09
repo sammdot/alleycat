@@ -11,7 +11,6 @@ mod title_bar;
 use tauri::{LogicalSize, Manager, Size, Window};
 use uuid::Uuid;
 
-use crate::events::LinkEvents;
 use crate::link::Link;
 
 #[tauri::command]
@@ -39,16 +38,21 @@ fn new_window(handle: tauri::AppHandle, path: String) {
 }
 
 #[tauri::command]
-async fn start_link(window: Window) {
-  window.did_start_connecting();
-  if let Ok(mut link) = Link::new().await {
-    link.start(&window).await;
-  } else {
-    window.did_fail_to_connect();
-  }
+async fn start_link(app: Window) -> Result<(), ()> {
+  let link = app.state::<Link>();
+  link.start(&app).await;
+  Ok(())
 }
 
-fn main() {
+#[tauri::command]
+async fn close_link(app: Window) -> Result<(), ()> {
+  let link = app.state::<Link>();
+  link.close().await;
+  Ok(())
+}
+
+#[tokio::main]
+async fn main() -> Result<(), ()> {
   env_logger::Builder::new().filter(None, log::LevelFilter::Info).init();
   tauri::Builder::default()
     .setup(move |app| {
@@ -60,7 +64,9 @@ fn main() {
 
       Ok(())
     })
-    .invoke_handler(tauri::generate_handler![new_window, start_link])
+    .manage(Link::new())
+    .invoke_handler(tauri::generate_handler![new_window, start_link, close_link])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
+  Ok(())
 }
