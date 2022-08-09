@@ -2,8 +2,8 @@
 
 <p align="center">
 <a href="https://alleycat.sammdot.ca"><img src="https://img.shields.io/website?url=https%3A%2F%2Falleycat.sammdot.ca" alt="Website"></a>
-<img src="https://img.shields.io/github/v/release/sammdot/alleycat" alt="GitHub release">
-<img src="https://img.shields.io/pypi/v/alleycat-link" alt="Python package">
+<a href="https://github.com/sammdot/alleycat/releases/latest"><img src="https://img.shields.io/github/v/release/sammdot/alleycat" alt="GitHub release"></a>
+<a href="https://pypi.org/project/alleycat-link"><img src="https://img.shields.io/pypi/v/alleycat-link" alt="Python package"></a>
 <img src="https://img.shields.io/github/workflow/status/sammdot/alleycat/build" alt="Build status">
 <img src="https://img.shields.io/github/license/sammdot/alleycat" alt="License">
 </p>
