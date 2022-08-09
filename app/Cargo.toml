@@ -1,10 +1,10 @@
 [package]
 name = "alleycat"
-version = "0.1.0"
-description = "Free computer-aided transcription suite for stenographers"
+version = "0.0.0"
+description = "Free computer-aided transcription system for stenographers"
 authors = ["Sammi de Guzman <sammi@sammdot.ca>"]
-license = ""
-repository = ""
+license = "MIT"
+repository = "https://github.com/sammdot/alleycat"
 default-run = "alleycat"
 edition = "2021"
 rust-version = "1.57"
