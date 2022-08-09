@@ -103,3 +103,36 @@ jobs:
           asset_path: ${{ env.BUNDLE_PATH }}
           asset_name: ${{ env.ASSET_PATH }}
           asset_content_type: application/octet-stream
+
+  build_link:
+    name: Build alleycat-link Plover plugin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python_version: "3.10"
+
+      - name: Build source distribution and binary wheel
+        shell: bash
+        run: |
+          yarn ver
+          python -m pip install --user build
+          python -m build --sdist --wheel
+
+      - name: Upload to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages_dir: dist/
+
+      - name: Upload application bundle
+        uses: shogo82148/actions-upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: dist/*

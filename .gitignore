@@ -13,6 +13,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+/dist
 __pycache__/
 *.egg-info/
 
