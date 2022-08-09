@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react"
 import { useBeforeunload } from "react-beforeunload"
 
 import { defaultSettings, Settings } from "src/models/settings"
-import { FileDropProps, FileOpenProps, PloverLink } from "src/platform/types"
+import { FileDropProps, FileOpenProps } from "src/platform/types"
 
 export const canOpenNewWindow = false
 
