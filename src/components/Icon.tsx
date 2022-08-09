@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { IconProp } from "@fortawesome/fontawesome-svg-core"
 import {
   faArrowLeft,
+  faAsterisk,
   faBold,
   faDownload,
   faEye,
@@ -24,6 +25,7 @@ export const EditIcon = Icon(faPenToSquare)
 export const ExportASCIIIcon = Icon(faFileLines)
 export const ExportPDFIcon = Icon(faFilePdf)
 export const ItalicIcon = Icon(faItalic)
+export const PloverIcon = Icon(faAsterisk)
 export const PreviewIcon = Icon(faEye)
 export const RedoIcon = Icon(faRotateRight)
 export const ReviewIcon = Icon(faHighlighter)

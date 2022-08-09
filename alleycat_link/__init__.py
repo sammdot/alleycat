@@ -1,0 +1,1 @@
+from alleycat_link.extension import AlleyCATLinkExtension

@@ -13,6 +13,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+__pycache__/
+*.egg-info/
+
 *.sublime-*
 
 _version.json

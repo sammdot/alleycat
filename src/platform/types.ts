@@ -11,3 +11,16 @@ export type FileOpenProps = {
   onClick: () => void
   onOpenFile: (e: { target: HTMLInputElement }) => void
 }
+
+export enum ConnectionState {
+  disconnected = "disconnected",
+  connecting = "connecting",
+  connected = "connected",
+}
+
+export type PloverLink = {
+  canConnect: boolean
+  connectionState: ConnectionState
+  connect: () => void
+  disconnect: () => void
+}

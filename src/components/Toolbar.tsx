@@ -19,6 +19,7 @@ import {
   UnderlineIcon,
   UndoIcon,
 } from "src/components/Icon"
+import { PloverMenu } from "src/components/PloverMenu"
 import { SettingsMenu } from "src/components/SettingsMenu"
 import {
   RadioToggleGroup,
@@ -28,6 +29,7 @@ import {
 import { getSelectedStrokes } from "src/hooks/notes"
 import { SettingsHooks } from "src/models/settings"
 import { formatStenoInline, StenoTable } from "src/models/steno"
+import { PloverLink } from "src/platform/types"
 
 function Button({ label, disabled, onClick, children }: any) {
   return (
@@ -112,6 +114,7 @@ type MainToolbarProps = {
   setMode: Dispatch<SetStateAction<string>>
   saveDocument: (local: boolean) => void
   settings: SettingsHooks
+  plover: PloverLink
 }
 
 export function MainToolbar({
@@ -120,6 +123,7 @@ export function MainToolbar({
   setMode,
   saveDocument,
   settings,
+  plover,
 }: MainToolbarProps) {
   return (
     <Toolbar className="grow-0 shrink flex py-2 px-4 select-none border-b border-gray-200 dark:border-gray-400">
@@ -205,6 +209,7 @@ export function MainToolbar({
         </>
       )}
       <Spacer />
+      <PloverMenu plover={plover} />
       <SettingsMenu onMainScreen={false} settings={settings} />
     </Toolbar>
   )

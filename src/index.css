@@ -24,4 +24,19 @@ body {
     overflow-wrap: anywhere;
     word-break: break-word;
   }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 30%;
+      animation-timing-function: cubic-bezier(0.75, 0, 1, 1);
+    }
+    50% {
+      opacity: 80%;
+      animation-timing-function: cubic-bezier(0, 0, 0.25, 1);
+    }
+  }
+  .animate-blink {
+    animation: blink 1s linear infinite;
+  }
 }

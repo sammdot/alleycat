@@ -27,6 +27,7 @@ import { useNotes } from "src/hooks/notes"
 import { Content } from "src/models/document"
 import { SettingsHooks } from "src/models/settings"
 import { StenoTable } from "src/models/steno"
+import { usePloverLink } from "src/platform"
 
 type Props = {
   content: Content
@@ -47,6 +48,8 @@ export function Editor({
   const [mode, setMode] = useState<string>("edit")
   const { strokes, positions, selection, updateNotes, updateSelection } =
     useNotes()
+
+  const plover = usePloverLink()
 
   const {
     stenoNotesNumbers: [showNumbers],
@@ -116,6 +119,7 @@ export function Editor({
             setMode={setMode}
             saveDocument={_saveDocument}
             settings={settings}
+            plover={plover}
           />
         </>
       )}

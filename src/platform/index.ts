@@ -5,7 +5,11 @@ export const desktop = !!process.env.REACT_APP_DESKTOP
 let platform = base
 
 if (process.env.ACAT_DESKTOP) {
-  platform = require("src/platform/tauri")
+  let { usePloverLink } = require("src/platform/link")
+  platform = {
+    usePloverLink,
+    ...require("src/platform/tauri"),
+  }
 }
 
 if (!process.env.ACAT_DESKTOP) {
@@ -27,3 +31,4 @@ export const getFileContents = platform.getFileContents
 export const ensureSettingsStorage = platform.ensureSettingsStorage
 export const getSetting = platform.getSetting
 export const setSetting = platform.setSetting
+export const usePloverLink = platform.usePloverLink
