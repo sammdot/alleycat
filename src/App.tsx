@@ -42,7 +42,7 @@ function App() {
 
   useEffect(() => {
     ensureSettingsStorage()
-  })
+  }, [])
 
   const [theme, setTheme] = useSetting("theme")
   useEffect(() => {
