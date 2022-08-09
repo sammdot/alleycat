@@ -1,4 +1,4 @@
-<p align="center"><img alt="AlleyCAT" src="/images/logo.svg"></p>
+<p align="center"><img alt="AlleyCAT" src="https://raw.githubusercontent.com/sammdot/alleycat/main/images/logo.svg"></p>
 
 <p align="center">
 <a href="https://alleycat.sammdot.ca"><img src="https://img.shields.io/website?url=https%3A%2F%2Falleycat.sammdot.ca" alt="Website"></a>
@@ -10,7 +10,7 @@
 
 **AlleyCAT** is a free, open-source computer-aided transcription (CAT) system for stenographers. It lets you write and edit documents such as court transcripts and translation dictionaries on both web and desktop. AlleyCAT originated as a free alternative to professional CAT software, which is proprietary and very expensive.
 
-![Screenshot of AlleyCAT running on macOS](/images/screenshot.png)
+![Screenshot of AlleyCAT running on macOS](https://raw.githubusercontent.com/sammdot/alleycat/main/images/screenshot.png)
 
 It is not intended to replace or compete with [Plover](https://github.com/openstenoproject/plover), the open-source stenography engine; instead, it connects to Plover to leverage its existing ecosystem, such as the ability to use several brands of hobbyist, student, and professional steno writers, and plugins contributed by the community.
 
@@ -30,8 +30,8 @@ If you just want to try AlleyCAT without installing, a web version is also avail
 AlleyCAT is a hybrid web-desktop application built with [Tauri](https://tauri.app), [React](https://reactjs.org), [TipTap](https://tiptap.dev), and [TypeScript](https://www.typescriptlang.org). Building the desktop app from source requires Node v16+ and Rust v1.64+; the web version requires only Node. Ensure `yarn` and `cargo` are installed before proceeding.
 
 In order to connect AlleyCAT with Plover, you will also need a full Plover
-4.0.0-dev10+ installation with the `alleycat_link` plugin, included in this
-repository.
+4.0.0-dev10+ installation with the [`alleycat_link` plugin](https://pypi.org/project/alleycat-link), included in this
+repository, or installed through `pip` or Plover's plugins manager.
 
 ### Project Structure
 
