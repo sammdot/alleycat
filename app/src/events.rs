@@ -7,10 +7,7 @@ trait _LinkEvents {
 
 impl _LinkEvents for Window {
   fn _emit<S: Serialize + Clone>(&self, event: &str, payload: S) {
-    match self.emit(
-      format!("acat://{}", event.to_string()).as_str(),
-      serde_json::to_string(&payload).unwrap(),
-    ) {
+    match self.emit(format!("acat://{}", event.to_string()).as_str(), payload) {
       _ => {}
     };
   }
