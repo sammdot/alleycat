@@ -35,10 +35,10 @@ export interface LinkData {
   timecode: string
   stroked: string
   is_correction: boolean
-  outline?: {
+  outline: {
     steno: string
     translation: string | null
-  }
+  } | null
   translated: {
     old: TranslationAction[]
     new: TranslationAction[]
