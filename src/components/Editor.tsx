@@ -25,10 +25,10 @@ import { Paragraph } from "src/extensions/paragraph"
 import { Stroke, Translation } from "src/extensions/steno"
 import { useNotes } from "src/hooks/notes"
 import { Content } from "src/models/document"
+import { LinkData } from "src/models/link"
 import { SettingsHooks } from "src/models/settings"
 import { StenoTable } from "src/models/steno"
 import { usePloverLink } from "src/platform"
-import { PloverLinkData } from "src/platform/types"
 
 type Props = {
   content: Content
@@ -54,8 +54,9 @@ export function Editor({
   const { strokes, positions, selection, updateNotes, updateSelection } =
     useNotes()
 
-  const ploverHandler = useCallback((data: PloverLinkData) => {
+  const ploverHandler = useCallback((data: LinkData) => {
     // TODO
+    console.log(data)
   }, [])
   const plover = usePloverLink(ploverHandler)
 

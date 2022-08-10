@@ -24,15 +24,3 @@ export type PloverLink = {
   connect: () => void
   disconnect: () => void
 }
-
-type OutputItem =
-  | { string: string }
-  | { backspaces: number }
-  | { key_combo: string }
-
-export interface PloverLinkData {
-  timestamp: number
-  timecode: string
-  stroked: string
-  sent: OutputItem[]
-}

@@ -2,11 +2,10 @@ import { useEffect, useState } from "react"
 import { listen } from "@tauri-apps/api/event"
 import { invoke } from "@tauri-apps/api/tauri"
 
-import { ConnectionState, PloverLink, PloverLinkData } from "src/platform/types"
+import { LinkData } from "src/models/link"
+import { ConnectionState, PloverLink } from "src/platform/types"
 
-export function usePloverLink(
-  handler: (data: PloverLinkData) => void
-): PloverLink {
+export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
   const [connectionState, setConnectionState] = useState<ConnectionState>(
     ConnectionState.disconnected
   )
@@ -38,7 +37,7 @@ export function usePloverLink(
           }
 
           try {
-            const data = JSON.parse(payload) as PloverLinkData
+            const data = JSON.parse(payload) as LinkData
             handler(data)
           } catch (e) {
             return

@@ -1,12 +1,8 @@
 import { Dispatch, SetStateAction } from "react"
 
+import { LinkData } from "src/models/link"
 import { defaultSettings, Settings } from "src/models/settings"
-import {
-  ConnectionState,
-  FileDropProps,
-  PloverLink,
-  PloverLinkData,
-} from "src/platform/types"
+import { ConnectionState, FileDropProps, PloverLink } from "src/platform/types"
 
 export const canOpenNewWindow = false
 
@@ -90,9 +86,7 @@ export async function setSetting<K extends keyof Settings>(
   val: Settings[K]
 ): Promise<void> {}
 
-export function usePloverLink(
-  handler: (data: PloverLinkData) => void
-): PloverLink {
+export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
   return {
     canConnect: false,
     connectionState: ConnectionState.disconnected,
