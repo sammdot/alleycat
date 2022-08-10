@@ -31,6 +31,8 @@ type OutputItem =
   | { key_combo: string }
 
 export interface PloverLinkData {
+  timestamp: number
+  timecode: string
   stroked: string
   sent: OutputItem[]
 }

@@ -1,7 +1,8 @@
+from datetime import datetime
 from plover import log
 
 from alleycat_link.link import Link
-from alleycat_link.utils import jsonify
+from alleycat_link.utils import jsonify, timecode
 
 
 class AlleyCATLinkExtension:
@@ -17,6 +18,8 @@ class AlleyCATLinkExtension:
 
   def _reset(self):
     self._to_send = {
+      "timestamp": None,
+      "timecode": None,
       "stroked": None,
       "translated": None,
       "sent": [],
@@ -57,5 +60,10 @@ class AlleyCATLinkExtension:
 
   def _on_stroked(self, stroke):
     self._to_send["stroked"] = stroke.rtfcre
+
+    now = datetime.now()
+    self._to_send["timestamp"] = round(now.timestamp() * 100)
+    self._to_send["timecode"] = timecode(now)
+
     self._link.send(self._to_send)
     self._reset()
