@@ -1,0 +1,40 @@
+[project]
+name = "alleycat-link"
+description = "Plover plugin for communication with AlleyCAT"
+readme = "README.md"
+requires-python = ">= 3.7"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Sammi de Guzman", email = "sammi@sammdot.ca" },
+]
+keywords = [
+  "plover",
+  "plover_plugin",
+]
+classifiers = [
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+  "plover >= 4.0.0.dev10",
+]
+dynamic = ["version"]
+
+[project.urls]
+repository = "https://github.com/sammdot/alleycat"
+homepage = "https://alleycat.sammdot.ca"
+documentation = "https://alleycat.readthedocs.io"
+
+[tool.setuptools.dynamic]
+version = { file = "_version.txt" }
+
+[build-system]
+requires = [
+  "setuptools >= 61.0.0",
+  "wheel",
+]
+
+[project.entry-points."plover.extension"]
+alleycat_link = "alleycat_link:AlleyCATLinkExtension"

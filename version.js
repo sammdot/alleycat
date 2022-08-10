@@ -8,3 +8,5 @@ const version = require("child_process")
 const fs = require("fs")
 // Tauri takes the version from "package.json" so provide the minimal required
 fs.writeFileSync("_version.json", JSON.stringify({ version }))
+// pyproject.toml takes the version from a text file
+fs.writeFileSync("_version.txt", version)

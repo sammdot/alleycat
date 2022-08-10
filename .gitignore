@@ -19,4 +19,4 @@ __pycache__/
 
 *.sublime-*
 
-_version.json
+_version.*
