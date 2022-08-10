@@ -2,15 +2,26 @@ use std::io::{ErrorKind, Result};
 use std::mem::{drop, replace};
 use std::str::from_utf8;
 use tauri::async_runtime::RwLock;
+#[cfg(target_os = "windows")]
 use tokio::net::{TcpSocket, TcpStream};
+#[cfg(not(target_os = "windows"))]
+use tokio::net::UnixStream;
 
 use crate::events::LinkEvents;
 
+// Until both asyncio and Tokio support Unix domain sockets on Windows,
+// Windows connectivity will have to be over TCP.
+#[cfg(target_os = "windows")]
 const ADDRESS: &str = "127.0.0.1:2228";
+#[cfg(not(target_os = "windows"))]
+const PATH: &str = "/tmp/alleycat-link.sock";
 
 #[derive(Debug)]
 pub struct Link {
+  #[cfg(target_os = "windows")]
   socket: RwLock<Option<TcpStream>>,
+  #[cfg(not(target_os = "windows"))]
+  socket: RwLock<Option<UnixStream>>,
   running: RwLock<bool>,
 }
 
@@ -29,11 +40,19 @@ impl Link {
 
     app.did_start_connecting();
 
+    #[cfg(target_os = "windows")]
     {
       if let Ok(sock) = TcpSocket::new_v4() {
         if let Ok(stream) = sock.connect(ADDRESS.parse().unwrap()).await {
           *(self.socket.write().await) = Some(stream);
         }
+      }
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    {
+      if let Ok(stream) = UnixStream::connect(PATH).await {
+        *(self.socket.write().await) = Some(stream);
       }
     }
 

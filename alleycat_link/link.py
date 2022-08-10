@@ -1,9 +1,15 @@
 import asyncio
 import json
+import os
+import os.path
+import sys
 import threading
 
 
-ADDRESS = ("127.0.0.1", 2228)
+# Until both asyncio and Tokio support Unix domain sockets on Windows,
+# Windows connectivity will have to be over TCP.
+TCP_ADDRESS = ("127.0.0.1", 2228)
+UNIX_ADDRESS = "/tmp/alleycat-link.sock"
 
 
 class LinkHandler:
@@ -32,9 +38,16 @@ class Link:
     self._thread.start()
 
   async def _start_server(self):
-    self._server = await asyncio.start_server(
-      LinkHandler(self._clients), *ADDRESS
-    )
+    if sys.platform == "win32":
+      self._server = await asyncio.start_server(
+        LinkHandler(self._clients), *TCP_ADDRESS
+      )
+    else:
+      if os.path.exists(UNIX_ADDRESS):
+        os.remove(UNIX_ADDRESS)
+      self._server = await asyncio.start_unix_server(
+        LinkHandler(self._clients), UNIX_ADDRESS
+      )
     async with self._server:
       await self._server.serve_forever()
 
