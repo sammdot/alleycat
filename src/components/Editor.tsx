@@ -56,7 +56,6 @@ export function Editor({
 
   const ploverHandler = useCallback((data: LinkData) => {
     // TODO
-    console.log(data)
   }, [])
   const plover = usePloverLink(ploverHandler)
 
