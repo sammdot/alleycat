@@ -46,6 +46,17 @@ export const Stroke = Node.create<StrokeOptions>({
           return { steno: attrs.steno }
         },
       },
+      timecode: {
+        default: null,
+        parseHTML: (el) => el.getAttribute("time-code"),
+        renderHTML: (attrs) => {
+          if (!attrs.timecode) {
+            return {}
+          }
+
+          return { "time-code": attrs.timecode }
+        },
+      },
       timestamp: {
         default: null,
         parseHTML: (el) => el.getAttribute("time"),
