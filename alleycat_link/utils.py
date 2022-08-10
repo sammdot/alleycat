@@ -32,9 +32,9 @@ def last_outline(tls):
     return None
 
   strokes = []
-  for (stroke, old_actions, _) in reversed(tls):
+  (_, _, actions) = tls[-1]
+  for (stroke, old_actions, new_actions) in reversed(tls):
     strokes.append(stroke)
-    if old_actions == 0:
-      break
-
-  return tuple(reversed(strokes))
+    actions -= new_actions - old_actions
+    if old_actions == 0 and actions <= 0:
+      return tuple(reversed(strokes))

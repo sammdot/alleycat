@@ -72,22 +72,34 @@ class AlleyCATLinkExtension:
     self._to_send["stroked"] = stroke.rtfcre
     self._to_send["is_correction"] = stroke.is_correction
 
-    next_translation = (
-      stroke.rtfcre,
-      len(self._to_send["translated"]["old"]),
-      len(self._to_send["translated"]["new"]),
-    )
-    self._translations.append(next_translation)
+    if stroke.is_correction:
+      if self._translations:
+        self._translations.pop()
 
-    outline = last_outline(self._translations)
-    try:
-      translation = self._engine.lookup(outline)
-    except KeyError:
-      translation = None
-    self._to_send["outline"] = {
-      "steno": STROKE_SEPARATOR.join(outline),
-      "translation": translation,
-    }
+      self._to_send["outline"] = {
+        "steno": stroke.rtfcre,
+        "translation": self._engine.lookup((stroke.rtfcre,)),
+      }
+    else:
+      next_translation = (
+        stroke.rtfcre,
+        len(self._to_send["translated"]["old"]),
+        len(self._to_send["translated"]["new"]),
+      )
+      self._translations.append(next_translation)
+
+      outline = last_outline(self._translations)
+      if outline:
+        try:
+          translation = self._engine.lookup(outline)
+        except KeyError:
+          translation = None
+        self._to_send["outline"] = {
+          "steno": STROKE_SEPARATOR.join(outline),
+          "translation": translation,
+        }
+      else:
+        self._to_send["outline"] = None
 
     now = datetime.now()
     self._to_send["timestamp"] = round(now.timestamp() * 100)
