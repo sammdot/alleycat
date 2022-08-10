@@ -159,12 +159,12 @@ export function MainToolbar({
           label="New"
           onClick={() => {
             if (canOpenNewWindow) {
-              openInNewWindow("alleycat://new")
+              openInNewWindow("acat://new")
             } else {
               askBeforeOpenIf(() => !saved, null).then((open: boolean) => {
                 if (open) {
                   // TODO
-                  // loadDocument("alleycat://new", null)
+                  // loadDocument("acat://new", null)
                 }
               })
             }

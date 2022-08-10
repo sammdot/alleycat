@@ -83,7 +83,7 @@ function App() {
     }
 
     if (canOpenNewWindow) {
-      if (fileParam === "alleycat://new") {
+      if (fileParam === "acat://new") {
         createEmptyDocument()
       } else {
         loadDocument(fileParam, null)

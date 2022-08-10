@@ -29,7 +29,7 @@ export function useDocument(): any {
   const loadDocument = async (path: string, file: File | null) => {
     setLoaded(false)
 
-    if (path === "alleycat://new" && file === null) {
+    if (path === "acat://new" && file === null) {
       // TODO
       return
     }
