@@ -57,7 +57,7 @@ export async function openInNewWindow(path: string) {}
 
 export async function askBeforeOpenIf(
   askFn: () => boolean,
-  path: string
+  path: string | null
 ): Promise<boolean> {
   return true
 }

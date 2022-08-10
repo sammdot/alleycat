@@ -33,16 +33,20 @@ import { PloverLinkData } from "src/platform/types"
 type Props = {
   content: Content
   stenoTable: StenoTable
+  saved: boolean
   setSaved: Dispatch<SetStateAction<boolean>>
   saveDocument: (content: Content) => void
+  loadDocument: (path: string, file: File | null) => Promise<void>
   settings: SettingsHooks
 }
 
 export function Editor({
   content,
   stenoTable,
+  saved,
   setSaved,
   saveDocument,
+  loadDocument,
   settings,
 }: Props) {
   const [loaded, setLoaded] = useState<boolean>(false)
@@ -121,7 +125,9 @@ export function Editor({
             editor={editor}
             mode={mode}
             setMode={setMode}
+            saved={saved}
             saveDocument={_saveDocument}
+            loadDocument={loadDocument}
             settings={settings}
             plover={plover}
           />

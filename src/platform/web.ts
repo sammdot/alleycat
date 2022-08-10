@@ -97,7 +97,7 @@ export function useOpenDialog(
 
 export async function askBeforeOpenIf(
   askFn: () => boolean,
-  path: string
+  path: string | null
 ): Promise<boolean> {
   if (askFn()) {
     return window.confirm(

@@ -29,6 +29,11 @@ export function useDocument(): any {
   const loadDocument = async (path: string, file: File | null) => {
     setLoaded(false)
 
+    if (path === "alleycat://new" && file === null) {
+      // TODO
+      return
+    }
+
     try {
       const text = await getFileContents(path, file)
       const [content, metadata] = await fromRTF(text)

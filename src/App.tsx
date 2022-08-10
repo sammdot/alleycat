@@ -151,7 +151,9 @@ function App() {
             <Editor
               content={document.content}
               stenoTable={document.metadata.stenoTable}
+              saved={saved}
               setSaved={setSaved}
+              loadDocument={loadDocument}
               saveDocument={saveDocument}
               settings={settings}
             />
