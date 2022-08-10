@@ -26,7 +26,7 @@ jobs:
           yarn build
           zip -qq -r ${{ env.ZIP_FILE }} build/*
 
-      - name: Upload assets
+      - name: Upload web application bundle
         uses: shogo82148/actions-upload-release-asset@v1
         env:
           TAG: ${{ steps.tag.outputs.tag }}
@@ -75,7 +75,7 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Install library dependencies (${{ matrix.os_name }})
+      - name: Install library dependencies (Linux only)
         if: matrix.os == 'ubuntu-latest'
         shell: bash
         run: |
@@ -114,7 +114,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v2
         with:
-          python_version: "3.10"
+          python-version: "3.10"
 
       - name: Build source distribution and binary wheel
         shell: bash
@@ -129,7 +129,7 @@ jobs:
           password: ${{ secrets.PYPI_API_TOKEN }}
           packages_dir: dist/
 
-      - name: Upload application bundle
+      - name: Upload source distribution and wheel
         uses: shogo82148/actions-upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
