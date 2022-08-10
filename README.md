@@ -30,7 +30,7 @@ If you just want to try AlleyCAT without installing, a web version is also avail
 AlleyCAT is a hybrid web-desktop application built with [Tauri](https://tauri.app), [React](https://reactjs.org), [TipTap](https://tiptap.dev), and [TypeScript](https://www.typescriptlang.org). Building the desktop app from source requires Node v16+ and Rust v1.64+; the web version requires only Node. Ensure `yarn` and `cargo` are installed before proceeding.
 
 In order to connect AlleyCAT with Plover, you will also need a full Plover
-4.0.0-dev10+ installation with the [`alleycat_link` plugin](https://pypi.org/project/alleycat-link), included in this
+4.0.0-dev10+ installation with the [`alleycat-link` plugin](https://pypi.org/project/alleycat-link), included in this
 repository, or installed through `pip` or Plover's plugins manager.
 
 ### Project Structure
