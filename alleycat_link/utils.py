@@ -1,6 +1,8 @@
 import json
 
 FRAMES_PER_SECOND = 30
+MAX_TRANSLATIONS = 5000
+STROKE_SEPARATOR = "/"
 
 
 def jsonify(obj):
@@ -23,3 +25,16 @@ def timecode(dt):
   sec = dt.strftime("%H:%M:%S")
   frame = round(dt.microsecond * FRAMES_PER_SECOND // 1e6)
   return f"{sec}:{frame:02}"
+
+
+def last_outline(tls):
+  if not tls:
+    return None
+
+  strokes = []
+  for (stroke, old_actions, _) in reversed(tls):
+    strokes.append(stroke)
+    if old_actions == 0:
+      break
+
+  return tuple(reversed(strokes))

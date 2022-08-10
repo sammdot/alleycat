@@ -34,6 +34,11 @@ export interface LinkData {
   timestamp: number
   timecode: string
   stroked: string
+  is_correction: boolean
+  outline: {
+    steno: string
+    translation: string | null
+  }
   translated: {
     old: TranslationAction[]
     new: TranslationAction[]

@@ -1,13 +1,21 @@
+from collections import deque
 from datetime import datetime
 from plover import log
 
 from alleycat_link.link import Link
-from alleycat_link.utils import jsonify, timecode
+from alleycat_link.utils import (
+  jsonify,
+  last_outline,
+  MAX_TRANSLATIONS,
+  STROKE_SEPARATOR,
+  timecode,
+)
 
 
 class AlleyCATLinkExtension:
   def __init__(self, engine):
     self._engine = engine
+    self._translations = deque(maxlen=MAX_TRANSLATIONS)
     engine._alleycat_link = self
 
   def start(self):
@@ -21,6 +29,8 @@ class AlleyCATLinkExtension:
       "timestamp": None,
       "timecode": None,
       "stroked": None,
+      "is_correction": None,
+      "outline": None,
       "translated": None,
       "sent": [],
     }
@@ -60,10 +70,30 @@ class AlleyCATLinkExtension:
 
   def _on_stroked(self, stroke):
     self._to_send["stroked"] = stroke.rtfcre
+    self._to_send["is_correction"] = stroke.is_correction
+
+    next_translation = (
+      stroke.rtfcre,
+      len(self._to_send["translated"]["old"]),
+      len(self._to_send["translated"]["new"]),
+    )
+    self._translations.append(next_translation)
+
+    outline = last_outline(self._translations)
+    try:
+      translation = self._engine.lookup(outline)
+    except KeyError:
+      translation = None
+    self._to_send["outline"] = {
+      "steno": STROKE_SEPARATOR.join(outline),
+      "translation": translation,
+    }
 
     now = datetime.now()
     self._to_send["timestamp"] = round(now.timestamp() * 100)
     self._to_send["timecode"] = timecode(now)
+
+    log.debug(f"Sending to AlleyCAT Link: {self._to_send}")
 
     self._link.send(self._to_send)
     self._reset()
