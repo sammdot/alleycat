@@ -1,4 +1,5 @@
 import { BackIcon } from "src/components/Icon"
+import { Version } from "src/components/Version"
 import { Document } from "src/models/document"
 import {
   askBeforeOpenIf,
@@ -59,9 +60,7 @@ export function TitleBar({ document, saved, clearDocument }: Props) {
           </span>
         )}
       </div>
-      <div className="text-sm text-gray-400 select-none">
-        v{process.env.ACAT_VERSION}
-      </div>
+      <Version />
     </div>
   )
 }

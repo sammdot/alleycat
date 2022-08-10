@@ -5,8 +5,10 @@ const { EnvironmentPlugin } = require("webpack")
 const { version } = require("./_version.json")
 const desktop = !!process.env.ACAT_DESKTOP
 
-const platform = desktop ? process.platform : "web"
-const versionString = `AlleyCAT v${version} (${platform})`
+const osName =
+  { win32: "win", darwin: "mac" }[process.platform] || process.platform
+const platform = desktop ? osName : "web"
+const versionString = `alleycat-${platform} v${version}`
 
 module.exports = {
   webpack: {
@@ -15,6 +17,7 @@ module.exports = {
         new EnvironmentPlugin({
           ACAT_VERSION: version,
           ACAT_DESKTOP: desktop,
+          ACAT_PLATFORM: platform,
         }),
         {
           apply(compiler) {

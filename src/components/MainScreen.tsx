@@ -1,4 +1,5 @@
 import { SettingsMenu } from "src/components/SettingsMenu"
+import { Version } from "src/components/Version"
 import { SettingsHooks } from "src/models/settings"
 import { useOpenDialog, windowDragAreaProps } from "src/platform"
 import logo from "src/logo.svg"
@@ -53,9 +54,7 @@ export function MainScreen({
         ) : (
           <></>
         )}
-        <div className="fixed top-3 right-4 text-sm text-gray-400 dark:text-gray-500">
-          v{process.env.ACAT_VERSION}
-        </div>
+        <Version />
         <SettingsMenu onMainScreen={true} settings={settings} />
       </div>
     </>
