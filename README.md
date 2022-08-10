@@ -4,6 +4,7 @@
 <a href="https://alleycat.sammdot.ca"><img src="https://img.shields.io/website?url=https%3A%2F%2Falleycat.sammdot.ca" alt="Website"></a>
 <a href="https://github.com/sammdot/alleycat/releases/latest"><img src="https://img.shields.io/github/v/release/sammdot/alleycat" alt="GitHub release"></a>
 <a href="https://pypi.org/project/alleycat-link"><img src="https://img.shields.io/pypi/v/alleycat-link" alt="Python package"></a>
+<a href="https://alleycat.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/alleycat/badge/?version=latest" alt="Documentation"></a>
 <img src="https://img.shields.io/github/workflow/status/sammdot/alleycat/build" alt="Build status">
 <img src="https://img.shields.io/github/license/sammdot/alleycat" alt="License">
 </p>
