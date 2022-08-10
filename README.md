@@ -25,13 +25,19 @@ If you just want to try AlleyCAT without installing, a web version is also avail
 - Files can only be saved into your web browser's downloads folder
 - AlleyCAT will not be able to connect to the Plover instance running on your computer, for security reasons
 
+## Design
+
+AlleyCAT is a hybrid web-desktop application built with [Tauri](https://tauri.app), [React](https://reactjs.org), and [TipTap](https://tiptap.dev). The majority of the application's code is written in TypeScript, and a smaller portion of it in Rust and Python. The core of AlleyCAT is a React application, wrapped in Tauri in order to allow it to run on a desktop. The Tauri side also allows it to perform platform-specific operations such as saving files to the disk.
+
+![A diagram of all of AlleyCAT's components](https://raw.githubusercontent.com/sammdot/alleycat/main/images/diagram.svg)
+
+AlleyCAT can talk to Plover with [AlleyCAT Link](https://pypi.org/project/alleycat-link) (or Link for short), which is a Plover plugin that sends stroke and translation data over a local connection, either a Unix domain socket on macOS and Linux, or TCP port 2228 ("**A**lley**CAT**") on Windows. This lets AlleyCAT leverage Plover's existing ecosystem -- you can write into AlleyCAT with any machine Plover can support, in any system Plover can support, with your own dictionaries, and using any other plugins you may have installed. Link can be installed through `pip` or Plover's plugins manager.
+
 ## Development
 
-AlleyCAT is a hybrid web-desktop application built with [Tauri](https://tauri.app), [React](https://reactjs.org), [TipTap](https://tiptap.dev), and [TypeScript](https://www.typescriptlang.org). Building the desktop app from source requires Node v16+ and Rust v1.64+; the web version requires only Node. Ensure `yarn` and `cargo` are installed before proceeding.
+Building the desktop app from source requires Node v16+ and Rust v1.64+; the web version requires only Node. Ensure `yarn` (and `cargo` on desktop) are installed before proceeding.
 
-In order to connect AlleyCAT with Plover, you will also need a full Plover
-4.0.0-dev10+ installation with the [`alleycat-link` plugin](https://pypi.org/project/alleycat-link), included in this
-repository, or installed through `pip` or Plover's plugins manager.
+In order to connect AlleyCAT with Plover, you will also need a full Plover 4.0.0-dev10+ installation.
 
 ### Project Structure
 
