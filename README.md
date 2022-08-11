@@ -25,6 +25,10 @@ When you write into a CAT system with a steno writer, the steno notes are _immut
 
 While CAT software is primarily used by court reporters, some of these features could still be useful to students and hobbyists: for example, having all of your notes in one document linked to the original steno is great for identifying areas of improvement after a practice session.
 
+### Why "AlleyCAT"?
+
+She's a free-range CAT: "no owner, no home, no rules." &mdash; [@stenowitch](https://twitter.com/stenowitch), January 2022
+
 ## Installation
 
 Pre-built binaries for the latest stable version are available on the [releases page](https://github.com/sammdot/alleycat/releases/latest). Download the corresponding package for your platform: `.msi` for Windows, `.dmg` for macOS, and `.AppImage` for Linux.
