@@ -24,6 +24,7 @@ class LinkHandler:
   async def send(self, obj):
     if self._writer.is_closing():
       self._all_clients.remove(self)
+      return
     self._writer.write(json.dumps(obj).encode("utf-8"))
     self._writer.write(b"\r\n")
     await self._writer.drain()
