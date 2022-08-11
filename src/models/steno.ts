@@ -80,8 +80,20 @@ export function formatSteno(
 
   const { left, middle, right } = table.base
 
-  if (!str.startsWith("-")) {
-    for (let k of Array.from(left)) {
+  for (let k of Array.from(left)) {
+    if (str.startsWith(k)) {
+      str = str.slice(1)
+      keys += k
+    } else {
+      keys += " "
+    }
+  }
+
+  if (str.startsWith("-")) {
+    str = str.slice(1)
+    keys += new Array(table.base.middle.length).fill(" ").join("")
+  } else {
+    for (let k of Array.from(middle)) {
       if (str.startsWith(k)) {
         str = str.slice(1)
         keys += k
@@ -89,21 +101,6 @@ export function formatSteno(
         keys += " "
       }
     }
-
-    if (!str.startsWith("-")) {
-      for (let k of Array.from(middle)) {
-        if (str.startsWith(k)) {
-          str = str.slice(1)
-          keys += k
-        } else {
-          keys += " "
-        }
-      }
-    }
-  }
-
-  if (str.startsWith("-")) {
-    str = str.slice(1)
   }
 
   for (let k of Array.from(right)) {
