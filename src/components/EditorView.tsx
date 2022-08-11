@@ -1,6 +1,10 @@
 import { EditorContent } from "@tiptap/react"
 import "src/components/EditorView.css"
 
+if (process.env.ACAT_DEBUG) {
+  require("src/components/EditorView.debug.css")
+}
+
 type Props = {
   editor: any
 }

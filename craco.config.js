@@ -10,6 +10,8 @@ const osName =
 const platform = desktop ? osName : "web"
 const versionString = `alleycat-${platform} v${version}`
 
+const debug = process.env.NODE_ENV === "development" && !!process.env.ACAT_DEBUG
+
 module.exports = {
   webpack: {
     plugins: {
@@ -18,6 +20,7 @@ module.exports = {
           ACAT_VERSION: version,
           ACAT_DESKTOP: desktop,
           ACAT_PLATFORM: platform,
+          ACAT_DEBUG: debug,
         }),
         {
           apply(compiler) {
