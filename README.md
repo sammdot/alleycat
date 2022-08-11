@@ -24,7 +24,9 @@ You can also build a bleeding-edge version of AlleyCAT from the source code. See
 If you just want to try AlleyCAT without installing, a web version is also available at [alleycat.sammdot.ca](https://alleycat.sammdot.ca). There are couple of caveats to this:
 
 - Files can only be saved into your web browser's downloads folder
-- AlleyCAT will not be able to connect to the Plover instance running on your computer, for security reasons
+- AlleyCAT will not be able to connect to the Plover instance running on your computer, for security reasons [^1]
+
+[^1]: Remote websites running inside a browser environment are typically blocked from connecting to anything running locally. I had originally implemented this using a WebSocket, but that only works when the website is also local.
 
 ## Design
 
@@ -32,7 +34,10 @@ AlleyCAT is a hybrid web-desktop application built with [Tauri](https://tauri.ap
 
 ![A diagram of all of AlleyCAT's components](https://raw.githubusercontent.com/sammdot/alleycat/main/images/diagram.svg)
 
-AlleyCAT can talk to Plover with [AlleyCAT Link](https://pypi.org/project/alleycat-link) (or Link for short), which is a Plover plugin that sends stroke and translation data over a local connection, either a Unix domain socket on macOS and Linux, or TCP port 2228 ("**A**lley**CAT**") on Windows. This lets AlleyCAT leverage Plover's existing ecosystem -- you can write into AlleyCAT with any machine Plover can support, in any system Plover can support, with your own dictionaries, and using any other plugins you may have installed. Link can be installed through `pip` or Plover's plugins manager.
+AlleyCAT can talk to Plover with [AlleyCAT Link](https://pypi.org/project/alleycat-link) (or Link for short), which is a Plover plugin that sends stroke and translation data over a local connection, either a Unix domain socket on macOS and Linux, or TCP port 2228[^2] on Windows.[^3] This lets AlleyCAT leverage Plover's existing ecosystem -- you can write into AlleyCAT with any machine Plover can support, in any system Plover can support, with your own dictionaries, and using any other plugins you may have installed. Link can be installed through `pip` or Plover's plugins manager.
+
+[^2]: ACAT on a phone keypad :smile:
+[^3]: Windows does support named pipes, and more recent versions of Windows also support Unix domain sockets, but the tooling for working with both asynchronously (`asyncio` on the Python side, and Tokio on the Rust side) is not nearly as developed.
 
 ## Development
 
