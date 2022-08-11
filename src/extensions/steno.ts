@@ -5,7 +5,7 @@ type TranslationOptions = { HTMLAttributes: Record<string, any> }
 export const Translation = Node.create<TranslationOptions>({
   name: "translation",
   group: "inline",
-  content: "action+",
+  content: "stroke+ action+",
   inline: true,
   selectable: true,
   draggable: false,
@@ -26,7 +26,7 @@ type ActionOptions = { HTMLAttributes: Record<string, any> }
 export const Action = Node.create<ActionOptions>({
   name: "action",
   group: "inline",
-  content: "stroke+ (text | untranslate)?",
+  content: "(text | untranslate)?",
   inline: true,
   selectable: true,
   draggable: false,

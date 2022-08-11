@@ -9,6 +9,7 @@ export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
   const [connectionState, setConnectionState] = useState<ConnectionState>(
     ConnectionState.disconnected
   )
+  const [translationEnabled, setTranslationEnabled] = useState<boolean>(false)
 
   const connect = () => {
     invoke("start_link", {})
@@ -36,6 +37,10 @@ export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
             return
           }
 
+          if (!translationEnabled) {
+            return
+          }
+
           try {
             const data = JSON.parse(payload) as LinkData
             handler(data)
@@ -55,6 +60,7 @@ export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
         })
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handler])
 
   return {
@@ -62,5 +68,7 @@ export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
     connectionState,
     connect,
     disconnect,
+    translationEnabled,
+    setTranslationEnabled,
   }
 }

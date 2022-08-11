@@ -23,4 +23,6 @@ export type PloverLink = {
   connectionState: ConnectionState
   connect: () => void
   disconnect: () => void
+  translationEnabled: boolean
+  setTranslationEnabled: (enabled: boolean) => void
 }

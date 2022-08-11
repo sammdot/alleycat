@@ -94,5 +94,7 @@ export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
     connectionState: ConnectionState.disconnected,
     connect: () => {},
     disconnect: () => {},
+    translationEnabled: false,
+    setTranslationEnabled: (e) => {},
   }
 }

@@ -130,6 +130,7 @@ export function Editor({
     [editor, focused]
   )
   const plover = usePloverLink(ploverHandler)
+
   useEffect(() => {
     const { disconnect } = plover
     return () => {

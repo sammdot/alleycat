@@ -26,7 +26,6 @@ export const PloverLink = Extension.create({
       addTranslation:
         (data: LinkData) =>
         ({ editor, commands: c }: any) => {
-          console.log(data)
           let { timestamp, timecode, sent, outline, stroked: steno } = data
 
           if (!outline) {
@@ -35,14 +34,14 @@ export const PloverLink = Extension.create({
 
           let { steno: full_steno, translation } = outline
           let node: Content = { type: "translation", content: [] }
+          node.content!.push({
+            type: "stroke",
+            attrs: { steno, timestamp, timecode },
+          })
           for (let item of sent) {
             let act: Content = { type: "action", content: [] }
             if (item.type === "string") {
               let { string: text } = item
-              act.content!.push({
-                type: "stroke",
-                attrs: { steno, timestamp, timecode },
-              })
               if (translation) {
                 act.content!.push({
                   type: "text",
@@ -62,6 +61,7 @@ export const PloverLink = Extension.create({
             }
             node.content!.push(act)
           }
+
           c.focus("end")
           c.insertContent(node)
         },

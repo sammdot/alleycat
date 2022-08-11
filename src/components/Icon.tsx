@@ -12,6 +12,7 @@ import {
   faFolderOpen,
   faHighlighter,
   faItalic,
+  faPencil,
   faPenToSquare,
   faRotateLeft,
   faRotateRight,
@@ -36,6 +37,7 @@ export const RedoIcon = Icon(faRotateRight)
 export const ReviewIcon = Icon(faHighlighter)
 export const SaveIcon = Icon(faDownload)
 export const SettingsIcon = Icon(faSliders)
+export const TranslateIcon = Icon(faPencil)
 export const UnderlineIcon = Icon(faUnderline)
 export const UndoIcon = Icon(faRotateLeft)
 export const UploadIcon = Icon(faUpload)
