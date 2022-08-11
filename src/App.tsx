@@ -153,7 +153,6 @@ function App() {
             <Editor
               content={document.content}
               stenoTable={document.metadata.stenoTable}
-              stenoNotesInline={stenoNotesInline}
               saved={saved}
               setSaved={setSaved}
               loadDocument={loadDocument}
