@@ -15,6 +15,16 @@
 
 It is not intended to replace or compete with [Plover](https://github.com/openstenoproject/plover), the open-source stenography engine; instead, it connects to Plover to leverage its existing ecosystem, such as the ability to use several brands of hobbyist, student, and professional steno writers, and plugins contributed by the community.
 
+### What even is a CAT system?
+
+**TL;DR**: Think of it as like a word processor, but with steno integration.
+
+CAT software allows you to write documents, usually court transcripts, using stenography. Each steno stroke is stored in the document alongside the text it translates to. The CAT system also lets you modify the document's layout, fix spelling errors or mistranslations, create cover pages and indexes, and more.
+
+When you write into a CAT system with a steno writer, the steno notes are _immutably_ linked with the translations, so that even when you go back and edit the document, the original steno notes remain intact. This is especially important for court reporters, since the steno notes are considered the primary source of truth.
+
+While CAT software is primarily used by court reporters, some of these features could still be useful to students and hobbyists: for example, having all of your notes in one document linked to the original steno is great for identifying areas of improvement after a practice session.
+
 ## Installation
 
 Pre-built binaries for the latest stable version are available on the [releases page](https://github.com/sammdot/alleycat/releases/latest). Download the corresponding package for your platform: `.msi` for Windows, `.dmg` for macOS, and `.AppImage` for Linux.
