@@ -97,6 +97,13 @@ $ plover -s plover_plugins install -r requirements.txt
 where `plover` is the path to the main Plover binary (or `plover_console.exe`
 on Windows).
 
+On Linux, you will also need to install additional dependencies:
+
+```bash
+$ sudo apt-get update
+$ sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+```
+
 #### Development
 
 To start a development server for just the web version:
