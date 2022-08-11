@@ -1,6 +1,8 @@
-from collections import deque
 from datetime import datetime
 from plover import log
+from plover.formatting import Formatter
+from plover.steno import Stroke
+from plover.translation import escape_translation, Translator
 
 from alleycat_link.link import Link
 from alleycat_link.utils import (
@@ -12,11 +14,23 @@ from alleycat_link.utils import (
 )
 
 
+class AlleyCATTranslator(Translator):
+  def __init__(self, link):
+    super().__init__()
+    self._link = link
+
+  def translate_translation(self, t):
+    self._link._to_send["outline"] = {
+      "steno": STROKE_SEPARATOR.join(t.rtfcre),
+      "translation": t.english,
+    }
+    super().translate_translation(t)
+
+
 class AlleyCATLinkExtension:
   def __init__(self, engine):
     self._engine = engine
-    self._translations = deque(maxlen=MAX_TRANSLATIONS)
-    engine._alleycat_link = self
+    self._translator = AlleyCATTranslator(self)
 
   def start(self):
     log.info("Initializing AlleyCAT link")
@@ -53,6 +67,9 @@ class AlleyCATLinkExtension:
       if hasattr(self, f"_on_{hook}"):
         self._engine.hook_disconnect(hook, getattr(self, f"_on_{hook}"))
 
+  def _on_dictionaries_loaded(self, dicts):
+    self._translator.set_dictionary(dicts)
+
   def _on_translated(self, old, new):
     self._to_send["translated"] = {
       "from": [jsonify(action) for action in old],
@@ -69,37 +86,9 @@ class AlleyCATLinkExtension:
     self._to_send["sent"].append({"type": "key_combo", "key_combo": combo})
 
   def _on_stroked(self, stroke):
+    self._translator.translate(stroke)
     self._to_send["stroked"] = stroke.rtfcre
     self._to_send["is_correction"] = stroke.is_correction
-
-    if stroke.is_correction:
-      if self._translations:
-        self._translations.pop()
-
-      self._to_send["outline"] = {
-        "steno": stroke.rtfcre,
-        "translation": self._engine.lookup((stroke.rtfcre,)),
-      }
-    else:
-      next_translation = (
-        stroke.rtfcre,
-        len(self._to_send["translated"]["from"]),
-        len(self._to_send["translated"]["to"]),
-      )
-      self._translations.append(next_translation)
-
-      outline = last_outline(self._translations)
-      if outline:
-        try:
-          translation = self._engine.lookup(outline)
-        except KeyError:
-          translation = None
-        self._to_send["outline"] = {
-          "steno": STROKE_SEPARATOR.join(outline),
-          "translation": translation,
-        }
-      else:
-        self._to_send["outline"] = None
 
     now = datetime.now()
     self._to_send["timestamp"] = round(now.timestamp() * 100)

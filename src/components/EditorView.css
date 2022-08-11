@@ -14,6 +14,10 @@
   @apply text-gray-800 bg-brand-100 dark:text-gray-50 dark:bg-brand-400;
 }
 
+.ProseMirror acat-untran {
+  @apply text-red-400;
+}
+
 /* Paragraph styles */
 
 .ProseMirror p[acat-style="question"],

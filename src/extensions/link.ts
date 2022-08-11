@@ -1,5 +1,7 @@
 import { Extension } from "@tiptap/core"
 
+import { Content } from "src/models/document"
+import { splitText, toContent } from "src/models/input"
 import { LinkData } from "src/models/link"
 
 declare module "@tiptap/core" {
@@ -19,97 +21,49 @@ export const PloverLink = Extension.create({
         ({ editor, commands: c }: any) => {
           // TODO: The input was entered in AlleyCAT; find how much was entered
           // and wrap that in a translation object.
-          let { timestamp, translated, sent, stroked, is_correction } = data
-          let { from } = translated
-          if (from.length !== 0) {
-            // TODO
-            return true
-          }
-
-          if (is_correction) {
-            return true
-          }
-
-          let outputEnd = editor.state.selection.$head.pos
-
-          for (let item of sent) {
-            if (item.type === "string") {
-              let { string: text } = item
-
-              if (text.includes("\n")) {
-                // TODO
-                continue
-              }
-
-              let length = text.length
-              c.setTextSelection({
-                from: outputEnd - length,
-                to: outputEnd + 1,
-              })
-              c.insertContent([
-                {
-                  type: "translation",
-                  content: [
-                    { type: "stroke", attrs: { steno: stroked, timestamp } },
-                    { type: "text", text },
-                  ],
-                },
-              ])
-            } else if (item.type === "backspaces") {
-              // TODO
-              continue
-            } else if (item.type === "key_combo") {
-              // Ignore key combinations on purpose
-              continue
-            }
-          }
-
           return true
         },
       addTranslation:
         (data: LinkData) =>
-        ({ commands: c }: any) => {
-          // TODO: The input was entered outside AlleyCAT; create a translation
-          // object and add it to the document.
-          let { timestamp, translated, sent, stroked, is_correction } = data
-          let { from } = translated
-          if (from.length !== 0) {
-            // TODO
-            return true
+        ({ editor, commands: c }: any) => {
+          console.log(data)
+          let { timestamp, timecode, sent, outline, stroked: steno } = data
+
+          if (!outline) {
+            return
           }
 
-          if (is_correction) {
-            return true
-          }
-
+          let { steno: full_steno, translation } = outline
+          let node: Content = { type: "translation", content: [] }
           for (let item of sent) {
+            let act: Content = { type: "action", content: [] }
             if (item.type === "string") {
               let { string: text } = item
-
-              if (text.includes("\n")) {
-                // TODO
-                continue
-              }
-
-              c.focus("end")
-              c.insertContent([
-                {
-                  type: "translation",
+              act.content!.push({
+                type: "stroke",
+                attrs: { steno, timestamp, timecode },
+              })
+              if (translation) {
+                act.content!.push({
+                  type: "text",
+                  text,
+                })
+              } else {
+                act.content!.push({
+                  type: "untranslate",
                   content: [
-                    { type: "stroke", attrs: { steno: stroked, timestamp } },
-                    { type: "text", text },
+                    {
+                      type: "text",
+                      text,
+                    },
                   ],
-                },
-              ])
-            } else if (item.type === "backspaces") {
-              // TODO
-              continue
-            } else if (item.type === "key_combo") {
-              // Ignore key combinations on purpose
-              continue
+                })
+              }
             }
+            node.content!.push(act)
           }
-          return true
+          c.focus("end")
+          c.insertContent(node)
         },
     }
   },

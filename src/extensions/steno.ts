@@ -5,7 +5,7 @@ type TranslationOptions = { HTMLAttributes: Record<string, any> }
 export const Translation = Node.create<TranslationOptions>({
   name: "translation",
   group: "inline",
-  content: "stroke+ text",
+  content: "action+",
   inline: true,
   selectable: true,
   draggable: false,
@@ -18,6 +18,26 @@ export const Translation = Node.create<TranslationOptions>({
 
   renderHTML({ node, HTMLAttributes }: any) {
     return ["acat-tl", HTMLAttributes, 0]
+  },
+})
+
+type ActionOptions = { HTMLAttributes: Record<string, any> }
+
+export const Action = Node.create<ActionOptions>({
+  name: "action",
+  group: "inline",
+  content: "stroke+ (text | untranslate)?",
+  inline: true,
+  selectable: true,
+  draggable: false,
+  atom: true,
+
+  parseHTML() {
+    return [{ tag: "acat-act" }]
+  },
+
+  renderHTML({ node, HTMLAttributes }: any) {
+    return ["acat-act", HTMLAttributes, 0]
   },
 })
 
@@ -77,5 +97,27 @@ export const Stroke = Node.create<StrokeOptions>({
 
   renderHTML({ node, HTMLAttributes }: any) {
     return ["acat-strk", HTMLAttributes, 0]
+  },
+})
+
+type UntranslateOptions = { HTMLAttributes: Record<string, any> }
+
+export const Untranslate = Node.create<UntranslateOptions>({
+  name: "untranslate",
+  groups: "inline",
+  content: "text*",
+  marks: "",
+  inline: true,
+  selectable: true,
+  draggable: false,
+  atom: true,
+  locked: true,
+
+  parseHTML() {
+    return [{ tag: "acat-untran" }]
+  },
+
+  renderHTML({ node, HTMLAttributes }: any) {
+    return ["acat-untran", HTMLAttributes, 0]
   },
 })

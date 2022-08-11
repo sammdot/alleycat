@@ -23,7 +23,7 @@ import { StenoNotesView } from "src/components/StenoNotesView"
 import { InlineToolbar, MainToolbar } from "src/components/Toolbar"
 import { PloverLink } from "src/extensions/link"
 import { Paragraph } from "src/extensions/paragraph"
-import { Stroke, Translation } from "src/extensions/steno"
+import { Action, Stroke, Translation, Untranslate } from "src/extensions/steno"
 import { useNotes } from "src/hooks/notes"
 import { Content } from "src/models/document"
 import { LinkData } from "src/models/link"
@@ -73,7 +73,9 @@ export function Editor({
       Underline,
       Highlight,
       Stroke,
+      Action,
       Translation,
+      Untranslate,
       PloverLink,
     ],
     autofocus: false,
