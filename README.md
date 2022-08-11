@@ -92,15 +92,6 @@ Install all the dependencies, including TypeScript, React, and the Tauri CLI:
 $ yarn install
 ```
 
-and for the Plover plugin:
-
-```bash
-$ plover -s plover_plugins install -r requirements.txt
-```
-
-where `plover` is the path to the main Plover binary (or `plover_console.exe`
-on Windows).
-
 On Linux, you will also need to install additional dependencies:
 
 ```bash
@@ -130,7 +121,8 @@ To install the Plover plugin locally:
 $ plover -s plover_plugins install -e .
 ```
 
-then make sure to enable the `alleycat_link` extension in Plover, and allow network connections if needed.
+where `plover` is the path to the main Plover binary (or `plover_console.exe`
+on Windows), then make sure to enable the `alleycat_link` extension in Plover, and allow network connections if needed.
 
 #### Production
 
