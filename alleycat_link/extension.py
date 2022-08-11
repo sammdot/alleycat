@@ -55,18 +55,18 @@ class AlleyCATLinkExtension:
 
   def _on_translated(self, old, new):
     self._to_send["translated"] = {
-      "old": [jsonify(action) for action in old],
-      "new": [jsonify(action) for action in new],
+      "from": [jsonify(action) for action in old],
+      "to": [jsonify(action) for action in new],
     }
 
   def _on_send_string(self, string):
-    self._to_send["sent"].append({"string": string})
+    self._to_send["sent"].append({"type": "string", "string": string})
 
   def _on_send_backspaces(self, num):
-    self._to_send["sent"].append({"backspaces": num})
+    self._to_send["sent"].append({"type": "backspaces", "backspaces": num})
 
   def _on_send_key_combination(self, combo):
-    self._to_send["sent"].append({"key_combo": combo})
+    self._to_send["sent"].append({"type": "key_combo", "key_combo": combo})
 
   def _on_stroked(self, stroke):
     self._to_send["stroked"] = stroke.rtfcre
@@ -83,8 +83,8 @@ class AlleyCATLinkExtension:
     else:
       next_translation = (
         stroke.rtfcre,
-        len(self._to_send["translated"]["old"]),
-        len(self._to_send["translated"]["new"]),
+        len(self._to_send["translated"]["from"]),
+        len(self._to_send["translated"]["to"]),
       )
       self._translations.append(next_translation)
 

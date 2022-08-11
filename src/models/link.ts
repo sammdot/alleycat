@@ -1,7 +1,19 @@
-export type OutputItem =
-  | { string: string }
-  | { backspaces: number }
-  | { key_combo: string }
+interface StringOutput {
+  type: "string"
+  string: string
+}
+
+interface BackspaceOutput {
+  type: "backspaces"
+  backspaces: number
+}
+
+interface KeyComboOutput {
+  type: "key_combo"
+  key_combo: string
+}
+
+export type OutputItem = StringOutput | BackspaceOutput | KeyComboOutput
 
 export enum Case {
   cap_first_word = "cap_first_word",
@@ -40,8 +52,8 @@ export interface LinkData {
     translation: string | null
   } | null
   translated: {
-    old: TranslationAction[]
-    new: TranslationAction[]
+    from: TranslationAction[]
+    to: TranslationAction[]
   }
   sent: OutputItem[]
 }
