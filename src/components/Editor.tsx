@@ -90,6 +90,10 @@ export function Editor({
     },
   })
 
+  if (process.env.ACAT_DEVEL) {
+    ;(window as any).editor = editor
+  }
+
   useEffect(() => {
     if (!editor) {
       return
