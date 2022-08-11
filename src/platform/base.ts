@@ -18,6 +18,8 @@ export async function splitPath(
 
 export const windowDragAreaProps: any = {}
 
+export function useFocusChange(fn: (focused: boolean) => void) {}
+
 export function usePreventClose(
   preventFn: () => boolean,
   backToMainScreen: () => boolean

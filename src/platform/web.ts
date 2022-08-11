@@ -150,4 +150,4 @@ export async function setSetting<K extends keyof Settings>(
   window.localStorage.setItem(key, JSON.stringify(val))
 }
 
-export { usePloverLink } from "src/platform/base"
+export { useFocusChange, usePloverLink } from "src/platform/base"

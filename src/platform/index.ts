@@ -21,6 +21,7 @@ export const showError = platform.showError
 export const setTitle = platform.setTitle
 export const splitPath = platform.splitPath
 export const windowDragAreaProps = platform.windowDragAreaProps
+export const useFocusChange = platform.useFocusChange
 export const usePreventClose = platform.usePreventClose
 export const useFileDrop = platform.useFileDrop
 export const useOpenDialog = platform.useOpenDialog

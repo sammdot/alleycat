@@ -21,6 +21,7 @@ import { useEditor } from "@tiptap/react"
 import { EditorView } from "src/components/EditorView"
 import { StenoNotesView } from "src/components/StenoNotesView"
 import { InlineToolbar, MainToolbar } from "src/components/Toolbar"
+import { PloverLink } from "src/extensions/link"
 import { Paragraph } from "src/extensions/paragraph"
 import { Stroke, Translation } from "src/extensions/steno"
 import { useNotes } from "src/hooks/notes"
@@ -28,7 +29,7 @@ import { Content } from "src/models/document"
 import { LinkData } from "src/models/link"
 import { SettingsHooks } from "src/models/settings"
 import { StenoTable } from "src/models/steno"
-import { usePloverLink } from "src/platform"
+import { useFocusChange, usePloverLink } from "src/platform"
 
 type Props = {
   content: Content
@@ -49,15 +50,11 @@ export function Editor({
   loadDocument,
   settings,
 }: Props) {
+  const [focused, setFocused] = useState<boolean>(true)
   const [loaded, setLoaded] = useState<boolean>(false)
   const [mode, setMode] = useState<string>("edit")
   const { strokes, positions, selection, updateNotes, updateSelection } =
     useNotes()
-
-  const ploverHandler = useCallback((data: LinkData) => {
-    // TODO
-  }, [])
-  const plover = usePloverLink(ploverHandler)
 
   const {
     stenoNotesNumbers: [showNumbers],
@@ -77,6 +74,7 @@ export function Editor({
       Highlight,
       Stroke,
       Translation,
+      PloverLink,
     ],
     autofocus: false,
     enableInputRules: false,
@@ -111,6 +109,27 @@ export function Editor({
     saveDocument(editor.getJSON())
     setSaved(true)
   }, [editor, saveDocument, setSaved])
+
+  useFocusChange(setFocused)
+
+  const ploverHandler = useCallback(
+    (data: LinkData) => {
+      if (focused) {
+        editor?.commands.locateTranslation(data)
+      } else {
+        editor?.commands.addTranslation(data)
+      }
+    },
+    [editor, focused]
+  )
+  const plover = usePloverLink(ploverHandler)
+  useEffect(() => {
+    const { disconnect } = plover
+    return () => {
+      disconnect()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
