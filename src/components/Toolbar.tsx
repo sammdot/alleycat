@@ -206,10 +206,10 @@ export function MainToolbar({
         <ToggleItem name="edit" label="Edit">
           <EditIcon />
         </ToggleItem>
-        <ToggleItem name="review" label="Review">
+        <ToggleItem name="review" label="Review" disabled>
           <ReviewIcon />
         </ToggleItem>
-        <ToggleItem name="preview" label="Preview">
+        <ToggleItem name="preview" label="Preview" disabled>
           <PreviewIcon />
         </ToggleItem>
       </RadioToggleGroup>
