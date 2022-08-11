@@ -1,13 +1,13 @@
-import os.path
+import subprocess
 
 project = "AlleyCAT"
 copyright = "Sammi de Guzman"
 author = copyright
 
 release = (
-  open(os.path.join(os.path.dirname(os.path.dirname(__file__)), "_version.txt"))
-  .read()
+  subprocess.check_output(["git", "describe", "--tags"], encoding="utf-8")
   .strip()
+  .replace("v", "")
 )
 version = release
 
