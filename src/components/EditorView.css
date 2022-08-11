@@ -1,5 +1,5 @@
 .ProseMirror {
-  @apply w-full h-full p-4 outline-none ring-0 font-mono leading-loose break-words text-gray-600 bg-gray-50 dark:text-gray-200 dark:bg-gray-700;
+  @apply w-full h-full p-4 outline-none ring-0;
 }
 
 .ProseMirror p {
