@@ -34,6 +34,7 @@ import { useFocusChange, usePloverLink } from "src/platform"
 type Props = {
   content: Content
   stenoTable: StenoTable
+  stenoNotesInline: boolean
   saved: boolean
   setSaved: Dispatch<SetStateAction<boolean>>
   saveDocument: (content: Content) => void
@@ -44,6 +45,7 @@ type Props = {
 export function Editor({
   content,
   stenoTable,
+  stenoNotesInline,
   saved,
   setSaved,
   saveDocument,
@@ -163,7 +165,10 @@ export function Editor({
           <>
             {mode === "edit" ? (
               <>
-                <EditorView editor={editor} />
+                <EditorView
+                  editor={editor}
+                  stenoNotesInline={stenoNotesInline}
+                />
                 <StenoNotesView
                   editor={editor}
                   stenoTable={stenoTable}

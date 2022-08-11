@@ -127,6 +127,7 @@ export function SettingsMenu({ onMainScreen, settings }: SettingsMenuProps) {
     fontSize: [fontSize, setFontSize],
     theme: [theme, setTheme],
     stenoNotesNumbers: [stenoNotesNumbers, setStenoNotesNumbers],
+    stenoNotesInline: [stenoNotesInline, setStenoNotesInline],
   } = settings
   return (
     <DropdownMenu>
@@ -181,6 +182,25 @@ export function SettingsMenu({ onMainScreen, settings }: SettingsMenuProps) {
               <>
                 <Separator />
                 <SettingsGroup>
+                  <Setting name="Steno Notes Display">
+                    <Group
+                      value={JSON.stringify(stenoNotesInline)}
+                      onValueChange={(val) => {
+                        setStenoNotesInline(JSON.parse(val))
+                      }}
+                    >
+                      <Item
+                        text="Vertical only"
+                        aria-label="Vertical notes only"
+                        value="false"
+                      />
+                      <Item
+                        text="Show inline"
+                        aria-label="Show steno notes inline"
+                        value="true"
+                      />
+                    </Group>
+                  </Setting>
                   <Setting name="Number Key Display">
                     <Group
                       value={JSON.stringify(stenoNotesNumbers)}

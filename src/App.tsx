@@ -69,6 +69,7 @@ function App() {
     }
   })
 
+  const [stenoNotesInline, setStenoNotesInline] = useSetting("stenoNotesInline")
   const [stenoNotesNumbers, setStenoNotesNumbers] =
     useSetting("stenoNotesNumbers")
 
@@ -128,6 +129,7 @@ function App() {
   const settings: SettingsHooks = {
     fontSize: [fontSize, setFontSize],
     theme: [theme, setTheme],
+    stenoNotesInline: [stenoNotesInline, setStenoNotesInline],
     stenoNotesNumbers: [stenoNotesNumbers, setStenoNotesNumbers],
   }
 
@@ -151,6 +153,7 @@ function App() {
             <Editor
               content={document.content}
               stenoTable={document.metadata.stenoTable}
+              stenoNotesInline={stenoNotesInline}
               saved={saved}
               setSaved={setSaved}
               loadDocument={loadDocument}
