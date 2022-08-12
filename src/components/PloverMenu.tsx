@@ -60,7 +60,7 @@ export function PloverMenu({ plover }: Props) {
       <Trigger
         aria-label="Plover Link"
         title="Plover Link"
-        className={`flex items-center justify-center group text-sm dark:text-gray-50 hover:bg-brand-100 dark:hover:bg-brand-700 open:text-white open:bg-brand-400 dark:open:bg-brand-500 px-1 py-0.5 rounded grow-0 shrink-0 h-6 w-${
+        className={`flex items-center justify-center group text-sm dark:text-gray-50 hover:bg-brand-100 dark:hover:bg-brand-700 open:text-white open:bg-brand-400 dark:open:bg-brand-500 px-2 py-0.5 rounded grow-0 shrink-0 h-6 w-${
           connectionState === ConnectionState.connected ? 24 : 12
         }`}
       >
@@ -71,7 +71,7 @@ export function PloverMenu({ plover }: Props) {
         {connectionState === ConnectionState.connected && (
           <>
             <div
-              className={`ml-4 mr-2 h-2 w-2 rounded ${translateDotClassName} ring-2 ring-white`}
+              className={`ml-2 mr-2 h-2 w-2 rounded ${translateDotClassName} ring-2 ring-white`}
             />
             <TranslateIcon />
           </>
