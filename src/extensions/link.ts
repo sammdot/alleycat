@@ -1,7 +1,6 @@
 import { Extension } from "@tiptap/core"
 
 import { Content } from "src/models/document"
-import { splitText, toContent } from "src/models/input"
 import { LinkData } from "src/models/link"
 
 declare module "@tiptap/core" {
