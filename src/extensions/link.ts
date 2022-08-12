@@ -31,7 +31,7 @@ export const PloverLink = Extension.create({
             return
           }
 
-          let { steno: full_steno, translation } = outline
+          let { translation } = outline
           let node: Content = { type: "translation", content: [] }
           node.content!.push({
             type: "stroke",
