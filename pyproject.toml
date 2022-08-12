@@ -27,6 +27,9 @@ repository = "https://github.com/sammdot/alleycat"
 homepage = "https://alleycat.sammdot.ca"
 documentation = "https://alleycat.readthedocs.io"
 
+[tool.setuptools]
+packages = ["alleycat_link"]
+
 [tool.setuptools.dynamic]
 version = { file = "_version.txt" }
 
