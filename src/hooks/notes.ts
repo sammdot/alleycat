@@ -112,7 +112,7 @@ export function useNotes(): any {
           if (n.type.name !== "stroke") {
             return
           }
-          selected.push(n.attrs.timestamp)
+          selected.push(n.attrs.timestamp.toString())
         })
       })
 
