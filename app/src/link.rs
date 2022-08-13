@@ -6,6 +6,7 @@ use tauri::async_runtime::RwLock;
 use tokio::net::{TcpSocket, TcpStream};
 #[cfg(not(target_os = "windows"))]
 use tokio::net::UnixStream;
+use tokio::time::{Duration, sleep};
 
 use crate::events::LinkEvents;
 
@@ -71,10 +72,10 @@ impl Link {
       *wg = true;
     }
 
-    loop {
-      let mut buf = [0; 4096];
-      let mut val: Result<usize> = Ok(0);
+    let mut buf = [0; 4096];
+    let mut val: Result<usize> = Ok(0);
 
+    loop {
       {
         let rg = self.running.read().await;
         if !*rg {
@@ -99,6 +100,7 @@ impl Link {
           }
         },
         Err(ref e) if e.kind() == ErrorKind::WouldBlock => {
+          sleep(Duration::from_millis(200)).await;
           continue;
         },
         Err(_) => {
