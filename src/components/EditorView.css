@@ -18,13 +18,21 @@
   @apply text-red-400;
 }
 
-.show-inline-steno acat-tl {
-  @apply border border-red-400 rounded-md pr-1 mr-1;
+.show-inline-steno acat-tl:not(:has(acat-untran)) {
+  @apply relative border-t border-l border-red-400 mr-1;
+}
+
+.show-inline-steno acat-tl:has(acat-untran) acat-strk::after {
+  @apply hidden;
+}
+
+.show-inline-steno acat-strk {
+  @apply absolute top-[-1rem] left-[-1px] text-xs w-96;
 }
 
 .show-inline-steno acat-strk::after {
   content: attr(steno);
-  @apply bg-red-400 px-1 text-white;
+  @apply bg-red-400 px-0.5 text-white border border-red-400;
 }
 
 .show-inline-steno acat-strk + acat-strk::before {
@@ -33,11 +41,11 @@
 }
 
 .show-inline-steno acat-strk:first-of-type::after {
-  @apply rounded-l;
+  @apply rounded-tl;
 }
 
 .show-inline-steno acat-strk:last-of-type::after {
-  @apply rounded-r mr-1;
+  @apply rounded-tr;
 }
 
 /* Paragraph styles */
