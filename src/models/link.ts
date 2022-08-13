@@ -1,14 +1,14 @@
-interface StringOutput {
+export interface StringOutput {
   type: "string"
   string: string
 }
 
-interface BackspaceOutput {
+export interface BackspaceOutput {
   type: "backspaces"
   backspaces: number
 }
 
-interface KeyComboOutput {
+export interface KeyComboOutput {
   type: "key_combo"
   key_combo: string
 }

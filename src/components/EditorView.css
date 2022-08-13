@@ -18,6 +18,10 @@
   @apply text-red-400;
 }
 
+.show-inline-steno p {
+  line-height: 3rem;
+}
+
 .show-inline-steno acat-tl:not(:has(acat-untr)) {
   @apply relative border-t border-red-400 mr-[1px];
 }
@@ -33,7 +37,8 @@
 }
 
 .show-inline-steno acat-ol {
-  @apply absolute top-[-1.15rem] left-[-1px] bg-red-400 border border-red-400 px-0.5 text-xs text-white;
+  line-height: 1em;
+  @apply absolute top-[-1.1rem] left-[-1px] w-96;
 }
 
 .show-inline-steno acat-tl:has(acat-untr) acat-ol {
@@ -42,10 +47,12 @@
 
 .show-inline-steno acat-strk::after {
   content: attr(steno);
+  @apply bg-red-400 border border-red-400 px-0.5 text-xs text-white;
 }
 
 .show-inline-steno acat-strk + acat-strk::before {
   content: "/";
+  @apply bg-red-400 border border-red-400 px-0.5 text-xs text-white -mx-1;
 }
 
 /* Paragraph styles */

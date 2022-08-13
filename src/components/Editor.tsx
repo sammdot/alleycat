@@ -98,9 +98,6 @@ export function Editor({
         setSaved(deepEqual(content, editor.state.doc.toJSON()))
       }
     },
-    content: `
-<acat-out actions="3"><acat-tl><acat-ol><acat-strk    steno="OEP" time="190375" tcode></acat-strk><acat-strk steno="STOEUPB" time="190377" tcode></acat-strk><acat-strk steno="PROPBLG" time="190379" tcode></acat-strk></acat-ol>Open Steno Project</acat-tl></acat-out><acat-out actions="1">&nbsp;<acat-tl><acat-ol><acat-strk steno="TEFGT" time="190385" tcode></acat-strk></acat-ol>testing</acat-tl></acat-out><acat-out actions="1">&nbsp;<acat-tl><acat-ol><acat-strk steno="STKPR" time="190388" tcode></acat-strk></acat-ol><acat-untr>STKPR</acat-untr></acat-tl></acat-out>
-`,
   })
 
   if (process.env.ACAT_DEVEL) {
