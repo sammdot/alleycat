@@ -72,7 +72,7 @@ export function lastOutputsWithActions(
       continue
     }
 
-    out.push(nodes[i])
+    out.unshift(nodes[i])
     totalActions -= parseInt(node.attrs.actions)
     if (totalActions <= 0) {
       return out

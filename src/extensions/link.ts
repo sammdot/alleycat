@@ -121,32 +121,35 @@ export const PloverLink = Extension.create<{}>({
               })
             }
 
-            let isUntran = !outline?.translation
+            let tlContent: Content[] = [
+              {
+                type: "outline",
+                attrs: { orig: text },
+                content: [
+                  {
+                    type: "stroke",
+                    attrs: {
+                      steno,
+                      timestamp,
+                      timecode,
+                    },
+                  },
+                ],
+              },
+            ]
+
+            if (!outline?.translation) {
+              tlContent.push({
+                type: "untranslate",
+                content: [{ type: "text", text: steno }],
+              })
+            } else if (text.length !== 0) {
+              tlContent.push({ type: "text", text })
+            }
 
             content.push({
               type: "translation",
-              content: [
-                {
-                  type: "outline",
-                  attrs: { orig: text },
-                  content: [
-                    {
-                      type: "stroke",
-                      attrs: {
-                        steno,
-                        timestamp,
-                        timecode,
-                      },
-                    },
-                  ],
-                },
-                isUntran
-                  ? {
-                      type: "untranslate",
-                      content: [{ type: "text", text: steno }],
-                    }
-                  : { type: "text", text },
-              ],
+              content: tlContent,
             })
 
             if (endSpaces) {
@@ -218,7 +221,7 @@ export const PloverLink = Extension.create<{}>({
             }
 
             c.focus("end")
-          } else if (from.length <= to.length) {
+          } else {
             // Replacing one translation with another
             let lastOuts = lastOutputsWithActions(from.length, doc)
             if (lastOuts === null) {
@@ -306,8 +309,6 @@ export const PloverLink = Extension.create<{}>({
               content,
             })
             c.focus("end")
-          } else {
-            // TODO
           }
 
           return true
