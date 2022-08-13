@@ -27,12 +27,10 @@ export const PloverLink = Extension.create({
         key: new PluginKey("ploverLink"),
         props: {
           handleTextInput(view, from, to, text) {
-            console.log("text input", from, to, text)
             return false
           },
 
           handleKeyPress(view, e) {
-            console.log("key press", e)
             return false
           },
         },

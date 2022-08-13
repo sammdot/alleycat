@@ -13,6 +13,17 @@ export function allOutputs(node: Node): NodeInfo[] {
   return outputs
 }
 
+export function allNodesNamed(name: string, node: Node): NodeInfo[] {
+  let out: NodeInfo[] = []
+  node.content.descendants((n, pos) => {
+    if (n.type.name === name) {
+      out.push([n, node.resolve(pos), n.nodeSize])
+      return false
+    }
+  })
+  return out
+}
+
 export function hasChildNamed(name: string, node: Node): boolean {
   let hasChild = false
   node.content.descendants((n) => {
@@ -74,4 +85,24 @@ export function childrenNamed(name: string, node: Node): Node[] {
     nodes.push(n)
   })
   return nodes
+}
+
+export function textSelectionIn(
+  node: Node,
+  range: { from: number; to: number }
+): { from: number; to: number } {
+  let from: number | null = null,
+    to: number | null = null
+  node.content.nodesBetween(range.from, range.to, (n, pos) => {
+    if (n.type.name !== "text") {
+      return
+    }
+
+    let thisFrom = pos,
+      thisTo = pos + n.nodeSize
+
+    from = from === null ? thisFrom : thisFrom < from ? thisFrom : from
+    to = to === null ? thisTo : thisTo > to ? thisTo : to
+  })
+  return { from: from || 0, to: to || 0 }
 }

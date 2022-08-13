@@ -3,7 +3,7 @@ import { Selection, Transaction } from "prosemirror-state"
 import { useCallback, useState } from "react"
 import { Editor } from "@tiptap/core"
 
-import { replacedRanges } from "src/utils/transform"
+import { allNodesNamed, childrenNamed } from "src/utils/node"
 
 export type Stroke = {
   steno: string
@@ -11,7 +11,7 @@ export type Stroke = {
 }
 
 export type StrokeMap = { [key: string]: Stroke }
-export type PositionMap = { [key: string]: number }
+export type PositionMap = { [key: string]: { from: number; to: number } }
 
 export function getSelectedStrokes(editor: Editor): string[] | null {
   const { $from, $to } = editor.state.selection
@@ -53,47 +53,35 @@ export function useNotes(): any {
         return
       }
 
-      setPositions((prev) => {
-        let next: PositionMap = structuredClone(prev)
-        Array.from(Object.entries(next)).forEach(([timestamp, position]) => {
-          next[timestamp] = tr.mapping.map(position)
+      let translations: [
+        { from: number; to: number },
+        { steno: string; timestamp: number }[]
+      ][] = allNodesNamed("translation", doc).map(([n, { pos }, size]) => [
+        { from: pos, to: pos + size },
+        childrenNamed("stroke", n).map((s) => ({
+          steno: s.attrs.steno,
+          timestamp: s.attrs.timestamp,
+        })),
+      ])
+
+      setStrokes(() => {
+        let map: StrokeMap = {}
+        translations.forEach(([{ from, to }, strokes]) => {
+          strokes.forEach(({ steno, timestamp }) => {
+            map[timestamp.toString()] = { steno, timestamp }
+          })
         })
-        return next
+        return map
       })
 
-      replacedRanges(tr).forEach(({ from, to }) => {
-        let newStrokes: {
-          steno: string
-          timestamp: number
-          position: number
-        }[] = []
-
-        doc.nodesBetween(from, to, (node, pos) => {
-          if (node.type.name !== "stroke") {
-            return
-          }
-
-          newStrokes.push({
-            steno: node.attrs.steno,
-            timestamp: node.attrs.timestamp,
-            position: pos,
+      setPositions(() => {
+        let map: PositionMap = {}
+        translations.forEach(([{ from, to }, strokes]) => {
+          strokes.forEach(({ steno, timestamp }) => {
+            map[timestamp.toString()] = { from, to }
           })
         })
-
-        setStrokes((prev) => {
-          let next = structuredClone(prev)
-          newStrokes.forEach(({ steno, timestamp }) => {
-            next[timestamp] = { steno, timestamp }
-          })
-          return next
-        })
-        setPositions((prev) => {
-          let next = structuredClone(prev)
-          newStrokes.forEach(({ timestamp, position }) => {
-            next[timestamp] = position
-          })
-          return next
-        })
+        return map
       })
     },
     [setStrokes, setPositions]

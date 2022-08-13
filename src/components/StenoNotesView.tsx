@@ -3,6 +3,7 @@ import { Editor as TiptapEditor } from "@tiptap/core"
 
 import { StrokeMap, PositionMap } from "src/hooks/notes"
 import { formatSteno, StenoTable } from "src/models/steno"
+import { textSelectionIn } from "src/utils/node"
 
 type Props = {
   editor: TiptapEditor
@@ -26,14 +27,16 @@ export function StenoNotesView({
     [strokes]
   )
 
-  const highlightTranslationAt = (position: number) => {
-    let pos = editor.state.doc.resolve(position)
-    editor
-      .chain()
-      .focus()
-      .setTextSelection({ from: pos.before(), to: pos.after() })
-      .scrollIntoView()
-      .run()
+  const highlightTranslation = ({
+    from: origFrom,
+    to: origTo,
+  }: {
+    from: number
+    to: number
+  }) => {
+    let doc = editor.state.doc
+    let { from, to } = textSelectionIn(doc, { from: origFrom, to: origTo })
+    editor.chain().focus().setTextSelection({ from, to }).scrollIntoView().run()
   }
 
   return (
@@ -43,11 +46,11 @@ export function StenoNotesView({
           <div
             key={strk.timestamp.toString()}
             className="hover:bg-amber-100 active:bg-amber-200 dark:hover:bg-brand-800 dark:active:bg-brand-600 dark:text-white select-none rounded cursor-pointer"
-            acat-pos={positions[strk.timestamp]}
+            acat-pos={positions[strk.timestamp].from}
             data-state={
               selection.includes(strk.timestamp.toString()) ? "on" : undefined
             }
-            onClick={() => highlightTranslationAt(positions[strk.timestamp])}
+            onClick={() => highlightTranslation(positions[strk.timestamp])}
           >
             {formatSteno(strk.steno, stenoTable, showNumbers) || "<INVALID>"}
           </div>
