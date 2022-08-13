@@ -37,10 +37,6 @@ export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
             return
           }
 
-          if (!translationEnabled) {
-            return
-          }
-
           try {
             const data = JSON.parse(payload) as LinkData
             handler(data)

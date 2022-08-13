@@ -35,7 +35,7 @@ import { Content } from "src/models/document"
 import { LinkData } from "src/models/link"
 import { SettingsHooks } from "src/models/settings"
 import { StenoTable } from "src/models/steno"
-import { useFocusChange, usePloverLink } from "src/platform"
+import { usePloverLink } from "src/platform"
 
 type Props = {
   content: Content
@@ -56,7 +56,6 @@ export function Editor({
   loadDocument,
   settings,
 }: Props) {
-  const [focused, setFocused] = useState<boolean>(true)
   const [loaded, setLoaded] = useState<boolean>(false)
   const [mode, setMode] = useState<string>("edit")
   const { strokes, positions, selection, updateNotes, updateSelection } =
@@ -124,19 +123,18 @@ export function Editor({
     setSaved(true)
   }, [editor, saveDocument, setSaved])
 
-  useFocusChange(setFocused)
-
   const ploverHandler = useCallback(
     (data: LinkData) => {
-      if (focused) {
-        editor?.commands.locateTranslation(data)
-      } else {
-        editor?.commands.addTranslation(data)
-      }
+      editor?.commands.addTranslation(data)
     },
-    [editor, focused]
+    [editor]
   )
   const plover = usePloverLink(ploverHandler)
+  const { translationEnabled } = plover
+
+  useEffect(() => {
+    ;(window as any).translating = translationEnabled
+  }, [translationEnabled])
 
   useEffect(() => {
     const { disconnect } = plover

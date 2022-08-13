@@ -15,13 +15,12 @@ import {
 declare module "@tiptap/core" {
   interface Commands {
     ploverLink: {
-      locateTranslation: (data: LinkData) => boolean
       addTranslation: (data: LinkData) => boolean
     }
   }
 }
 
-export const PloverLink = Extension.create({
+export const PloverLink = Extension.create<{}>({
   name: "ploverLink",
 
   addProseMirrorPlugins() {
@@ -29,11 +28,25 @@ export const PloverLink = Extension.create({
       new Plugin({
         key: new PluginKey("ploverLink"),
         props: {
+          // TODO: Handle text input into nodes with steno
           handleTextInput(view, from, to, text) {
+            if ((window as any).translating) {
+              return true
+            }
             return false
           },
 
           handleKeyPress(view, e) {
+            if ((window as any).translating) {
+              return true
+            }
+            return false
+          },
+
+          handleKeyDown(view, e) {
+            if ((window as any).translating) {
+              return true
+            }
             return false
           },
         },
@@ -41,22 +54,15 @@ export const PloverLink = Extension.create({
     ]
   },
 
-  addKeyboardShortcuts() {
-    return {
-      Enter: () => this.editor.commands.createParagraphNear(),
-    }
-  },
-
   addCommands(): any {
     return {
-      locateTranslation:
-        (data: LinkData) =>
-        ({ editor, commands: c }: any) => {
-          return true
-        },
       addTranslation:
         (data: LinkData) =>
         ({ editor, commands: c }: any) => {
+          if (!(window as any).translating) {
+            return true
+          }
+
           let doc = editor.state.doc
           let {
             timestamp,

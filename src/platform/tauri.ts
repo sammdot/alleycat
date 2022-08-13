@@ -59,19 +59,6 @@ export async function splitPath(
 
 export const windowDragAreaProps = { "data-tauri-drag-region": true }
 
-export function useFocusChange(fn: (focused: boolean) => void) {
-  w.onFocusChanged = fn
-
-  useEffect(() => {
-    appWindow.listen("tauri://focus", (e) => {
-      w.onFocusChanged?.(true)
-    })
-    appWindow.listen("tauri://blur", (e) => {
-      w.onFocusChanged?.(false)
-    })
-  }, [])
-}
-
 export function usePreventClose(
   preventFn: () => boolean,
   backToMainScreen: () => boolean
