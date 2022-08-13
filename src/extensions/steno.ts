@@ -1,80 +1,91 @@
 import { Node } from "@tiptap/core"
 
-type TranslationOptions = { HTMLAttributes: Record<string, any> }
+type Options = { HTMLAttributes: Record<string, any> }
 
-export const Translation = Node.create<TranslationOptions>({
+export const Output = Node.create<Options>({
+  name: "output",
+  group: "inline",
+  content: "text* translation text*",
+  inline: true,
+  selectable: false,
+  draggable: false,
+
+  addAttributes() {
+    return {
+      actions: { default: null },
+    }
+  },
+
+  parseHTML() {
+    return [{ tag: "acat-out" }]
+  },
+
+  renderHTML({ HTMLAttributes }: any) {
+    return ["acat-out", HTMLAttributes, 0]
+  },
+})
+
+export const Translation = Node.create<Options>({
   name: "translation",
   group: "inline",
-  content: "stroke+ action+",
+  content: "outline text? untranslate?",
   inline: true,
-  selectable: true,
+  selectable: false,
   draggable: false,
-  atom: true,
-  locked: true,
+
+  addAttributes() {
+    return {
+      orig: { default: null },
+    }
+  },
 
   parseHTML() {
     return [{ tag: "acat-tl" }]
   },
 
-  renderHTML({ node, HTMLAttributes }: any) {
+  renderHTML({ HTMLAttributes }: any) {
     return ["acat-tl", HTMLAttributes, 0]
   },
 })
 
-type ActionOptions = { HTMLAttributes: Record<string, any> }
-
-export const Action = Node.create<ActionOptions>({
-  name: "action",
+export const Outline = Node.create<Options>({
+  name: "outline",
   group: "inline",
-  content: "(text | untranslate)?",
+  content: "stroke+",
+  marks: "",
   inline: true,
-  selectable: true,
+  selectable: false,
   draggable: false,
-  atom: true,
 
   parseHTML() {
-    return [{ tag: "acat-act" }]
+    return [{ tag: "acat-ol" }]
   },
 
-  renderHTML({ node, HTMLAttributes }: any) {
-    return ["acat-act", HTMLAttributes, 0]
+  renderHTML({ HTMLAttributes }: any) {
+    return ["acat-ol", HTMLAttributes, 0]
   },
 })
 
-type StrokeOptions = { HTMLAttributes: Record<string, any> }
-
-export const Stroke = Node.create<StrokeOptions>({
+export const Stroke = Node.create<Options>({
   name: "stroke",
   group: "inline",
   marks: "",
   inline: true,
-  selectable: true,
+  selectable: false,
   draggable: false,
   atom: true,
-  locked: true,
 
   addAttributes() {
     return {
-      steno: {
-        default: null,
-        parseHTML: (el) => el.getAttribute("steno"),
-        renderHTML: (attrs) => {
-          if (!attrs.steno) {
-            return {}
-          }
-
-          return { steno: attrs.steno }
-        },
-      },
+      steno: { default: null },
       timecode: {
         default: null,
-        parseHTML: (el) => el.getAttribute("time-code"),
+        parseHTML: (el) => el.getAttribute("tcode"),
         renderHTML: (attrs) => {
           if (!attrs.timecode) {
             return {}
           }
-
-          return { "time-code": attrs.timecode }
+          return { tcode: attrs.timecode }
         },
       },
       timestamp: {
@@ -84,7 +95,6 @@ export const Stroke = Node.create<StrokeOptions>({
           if (!attrs.timestamp) {
             return {}
           }
-
           return { time: attrs.timestamp }
         },
       },
@@ -95,14 +105,12 @@ export const Stroke = Node.create<StrokeOptions>({
     return [{ tag: "acat-strk" }]
   },
 
-  renderHTML({ node, HTMLAttributes }: any) {
+  renderHTML({ HTMLAttributes }: any) {
     return ["acat-strk", HTMLAttributes, 0]
   },
 })
 
-type UntranslateOptions = { HTMLAttributes: Record<string, any> }
-
-export const Untranslate = Node.create<UntranslateOptions>({
+export const Untranslate = Node.create<Options>({
   name: "untranslate",
   groups: "inline",
   content: "text*",
@@ -110,14 +118,12 @@ export const Untranslate = Node.create<UntranslateOptions>({
   inline: true,
   selectable: true,
   draggable: false,
-  atom: true,
-  locked: true,
 
   parseHTML() {
-    return [{ tag: "acat-untran" }]
+    return [{ tag: "acat-untr" }]
   },
 
-  renderHTML({ node, HTMLAttributes }: any) {
-    return ["acat-untran", HTMLAttributes, 0]
+  renderHTML({ HTMLAttributes }: any) {
+    return ["acat-untr", HTMLAttributes, 0]
   },
 })

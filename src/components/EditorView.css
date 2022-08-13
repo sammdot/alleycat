@@ -14,12 +14,12 @@
   @apply text-gray-800 bg-brand-100 dark:text-gray-50 dark:bg-brand-400;
 }
 
-.ProseMirror acat-untran {
+.ProseMirror acat-untr {
   @apply text-red-400;
 }
 
-.show-inline-steno acat-tl:not(:has(acat-untran)) {
-  @apply relative border-t border-red-400 mr-1;
+.show-inline-steno acat-tl:not(:has(acat-untr)) {
+  @apply relative border-t border-red-400 mr-[1px];
 }
 
 .show-inline-steno acat-tl::before {
@@ -32,22 +32,20 @@
   @apply absolute top-[-1px] right-[-1px] h-1/3 border-r border-red-400;
 }
 
-.show-inline-steno acat-tl:has(acat-untran) acat-strk::after {
-  @apply hidden;
+.show-inline-steno acat-ol {
+  @apply absolute top-[-1.15rem] left-[-1px] bg-red-400 border border-red-400 px-0.5 text-xs text-white;
 }
 
-.show-inline-steno acat-strk {
-  @apply absolute top-[-1rem] left-[-1px] text-xs w-96;
+.show-inline-steno acat-tl:has(acat-untr) acat-ol {
+  @apply hidden;
 }
 
 .show-inline-steno acat-strk::after {
   content: attr(steno);
-  @apply bg-red-400 px-0.5 text-white border border-red-400;
 }
 
 .show-inline-steno acat-strk + acat-strk::before {
   content: "/";
-  @apply bg-red-400 text-white -mr-0.5 -ml-0.5;
 }
 
 /* Paragraph styles */

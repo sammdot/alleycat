@@ -23,7 +23,13 @@ import { StenoNotesView } from "src/components/StenoNotesView"
 import { InlineToolbar, MainToolbar } from "src/components/Toolbar"
 import { PloverLink } from "src/extensions/link"
 import { Paragraph } from "src/extensions/paragraph"
-import { Action, Stroke, Translation, Untranslate } from "src/extensions/steno"
+import {
+  Outline,
+  Output,
+  Stroke,
+  Translation,
+  Untranslate,
+} from "src/extensions/steno"
 import { useNotes } from "src/hooks/notes"
 import { Content } from "src/models/document"
 import { LinkData } from "src/models/link"
@@ -73,9 +79,10 @@ export function Editor({
       Italic,
       Underline,
       Highlight,
-      Stroke,
-      Action,
+      Output,
       Translation,
+      Outline,
+      Stroke,
       Untranslate,
       PloverLink,
     ],
@@ -91,6 +98,9 @@ export function Editor({
         setSaved(deepEqual(content, editor.state.doc.toJSON()))
       }
     },
+    content: `
+<acat-out actions="3"><acat-tl><acat-ol><acat-strk    steno="OEP" time="190375" tcode></acat-strk><acat-strk steno="STOEUPB" time="190377" tcode></acat-strk><acat-strk steno="PROPBLG" time="190379" tcode></acat-strk></acat-ol>Open Steno Project</acat-tl></acat-out><acat-out actions="1">&nbsp;<acat-tl><acat-ol><acat-strk steno="TEFGT" time="190385" tcode></acat-strk></acat-ol>testing</acat-tl></acat-out><acat-out actions="1">&nbsp;<acat-tl><acat-ol><acat-strk steno="STKPR" time="190388" tcode></acat-strk></acat-ol><acat-untr>STKPR</acat-untr></acat-tl></acat-out>
+`,
   })
 
   if (process.env.ACAT_DEVEL) {
