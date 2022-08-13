@@ -110,7 +110,7 @@ export function Slider({
 
 export function SettingsPanel({ children }: { children: ReactNode }) {
   return (
-    <div className="bg-white dark:bg-gray-700 pt-1 pb-2 m-4 mt-1 w-80 space-y-2.5 rounded-xl shadow-lg border dark:border-gray-400">
+    <div className="bg-white dark:bg-gray-700 pt-1 pb-2 m-4 mt-1 w-80 space-y-2.5 rounded-xl shadow-lg border dark:border-gray-400 select-none">
       {children}
     </div>
   )
