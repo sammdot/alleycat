@@ -23,17 +23,17 @@
 }
 
 .show-inline-steno acat-tl:not(:has(acat-untr)) {
-  @apply relative border-t border-red-400 mr-[1px];
+  @apply relative border-t border-red-400 dark:border-red-600 mr-[1px];
 }
 
 .show-inline-steno acat-tl::before {
   content: "";
-  @apply absolute top-[-1px] left-[-1px] h-1/3 border-l border-red-400;
+  @apply absolute top-[-1px] left-[-1px] h-1/3 border-l border-red-400 dark:border-red-600;
 }
 
 .show-inline-steno acat-tl::after {
   content: "";
-  @apply absolute top-[-1px] right-[-1px] h-1/3 border-r border-red-400;
+  @apply absolute top-[-1px] right-[-1px] h-1/3 border-r border-red-400 dark:border-red-600;
 }
 
 .show-inline-steno acat-ol {
@@ -47,12 +47,12 @@
 
 .show-inline-steno acat-strk::after {
   content: attr(steno);
-  @apply bg-red-400 border border-red-400 px-0.5 text-xs text-white;
+  @apply bg-red-400 dark:bg-red-600 border border-red-400 dark:border-red-600 px-0.5 text-xs text-white;
 }
 
 .show-inline-steno acat-strk + acat-strk::before {
   content: "/";
-  @apply bg-red-400 border border-red-400 px-0.5 text-xs text-white -mx-1;
+  @apply bg-red-400 dark:bg-red-600 border border-red-400 dark:border-red-600 px-0.5 text-xs text-white -mx-1;
 }
 
 /* Paragraph styles */
