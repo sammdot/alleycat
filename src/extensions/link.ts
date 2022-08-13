@@ -6,7 +6,10 @@ import { LinkData } from "src/models/link"
 import {
   childrenNamed,
   lastNonEmptyOutput,
+  lastOutput,
   lastOutputsWithActions,
+  secondLastOutput,
+  textSelectionIn,
 } from "src/utils/node"
 
 declare module "@tiptap/core" {
@@ -66,6 +69,26 @@ export const PloverLink = Extension.create({
 
           if (from.length === 0 && to.length !== 0) {
             // Insert only
+
+            if (to[0].prev_replace) {
+              // Orthographic affix involves a spelling change
+              let backspaces = sent
+                .map((i) => (i.type === "backspaces" ? i.backspaces : 0))
+                .reduce((p, a) => p + a, 0)
+
+              let lastOut = lastOutput(doc)
+              if (lastOut !== null) {
+                let [, { pos }, size] = lastOut
+                let { to } = textSelectionIn(doc, {
+                  from: pos,
+                  to: pos + size,
+                })
+                c.focus()
+                c.setTextSelection({ from: to - backspaces, to })
+                c.deleteSelection()
+              }
+            }
+
             let text = sent
               .map((i) => (i.type === "string" ? i.string : null))
               .filter((i) => i !== null)
@@ -166,6 +189,28 @@ export const PloverLink = Extension.create({
                 },
               ],
             })
+
+            if (from[0].prev_replace) {
+              // Previous orthographic affix changed the spelling, revert it
+              let text = sent
+                .map((i) => (i.type === "string" ? i.string : null))
+                .filter((i) => i !== null)
+                .join("")
+
+              let out = secondLastOutput(doc)
+              if (!out) {
+                return true
+              }
+
+              let [, { pos }, size] = out
+              let { to } = textSelectionIn(doc, {
+                from: pos,
+                to: pos + size,
+              })
+              c.setTextSelection({ from: to, to })
+              c.insertContent(text)
+            }
+
             c.focus("end")
           } else if (from.length <= to.length) {
             // Replacing one translation with another

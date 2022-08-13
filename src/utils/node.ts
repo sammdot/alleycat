@@ -35,6 +35,11 @@ export function hasChildNamed(name: string, node: Node): boolean {
   return hasChild
 }
 
+export function secondLastOutput(node: Node): NodeInfo | null {
+  let out = allOutputs(node)
+  return out[out.length - 2]
+}
+
 export function lastOutput(node: Node): NodeInfo | null {
   let out = allOutputs(node)
   return out[out.length - 1]
