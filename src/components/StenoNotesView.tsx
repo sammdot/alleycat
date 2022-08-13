@@ -30,7 +30,9 @@ export function StenoNotesView({
   let ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    ref.current?.scrollIntoView()
+    if (selection.length === 0) {
+      ref.current?.scrollIntoView()
+    }
   })
 
   const highlightTranslation = ({
