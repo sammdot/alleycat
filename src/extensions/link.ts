@@ -168,6 +168,7 @@ export const PloverLink = Extension.create({
                 },
               ],
             })
+            c.focus("end")
           } else if (from.length <= to.length) {
             // Replacing one translation with another
             let lastOuts = lastOutputsWithActions(from.length, doc)
@@ -245,14 +246,19 @@ export const PloverLink = Extension.create({
 
             c.insertContent({
               type: "output",
-              actions:
-                lastOuts
-                  .map(([n]) => n.attrs.actions || 0)
-                  .reduce((p, a) => p + a, 0) -
-                from.length +
-                to.length,
+              attrs: {
+                actions:
+                  lastOuts
+                    .map(([n]) => n.attrs.actions || 0)
+                    .reduce((p, a) => p + a, 0) -
+                  from.length +
+                  to.length,
+              },
               content,
             })
+            c.focus("end")
+          } else {
+            // TODO
           }
 
           return true
