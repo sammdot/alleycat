@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { Editor as TiptapEditor } from "@tiptap/core"
 
 import { StrokeMap, PositionMap } from "src/hooks/notes"
@@ -26,6 +26,12 @@ export function StenoNotesView({
     () => Array.from(Object.values(strokes)).sort((strk) => strk.timestamp),
     [strokes]
   )
+
+  let ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    ref.current?.scrollIntoView()
+  })
 
   const highlightTranslation = ({
     from: origFrom,
@@ -56,6 +62,7 @@ export function StenoNotesView({
           </div>
         )
       })}
+      <div ref={ref} className="h-0"></div>
     </div>
   )
 }
