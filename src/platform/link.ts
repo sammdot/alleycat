@@ -26,9 +26,11 @@ export function usePloverLink(handler: (data: LinkData) => void): PloverLink {
           setConnectionState(ConnectionState.connecting)
         }),
         await listen<void>("acat://connected", (e) => {
+          setTranslationEnabled(false)
           setConnectionState(ConnectionState.connected)
         }),
         await listen<void>("acat://disconnected", (e) => {
+          setTranslationEnabled(false)
           setConnectionState(ConnectionState.disconnected)
         }),
         await listen<any>("acat://stroked", (e) => {
