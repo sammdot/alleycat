@@ -22,6 +22,14 @@
   line-height: 3rem;
 }
 
+.show-inline-steno p[acat-style="question"] acat-ol,
+.show-inline-steno p[acat-style="answer"] acat-ol,
+.show-inline-steno p[acat-style="colloquy"] acat-ol,
+.show-inline-steno p[acat-style="paren"] acat-ol,
+.show-inline-steno p[acat-style="quoted"] acat-ol {
+  @apply indent-0;
+}
+
 .show-inline-steno acat-tl:not(:has(acat-untr)) {
   @apply relative border-t border-red-400 dark:border-red-600 mr-[1px];
 }
@@ -47,7 +55,7 @@
 
 .show-inline-steno acat-strk::after {
   content: attr(steno);
-  @apply bg-red-400 dark:bg-red-600 border border-red-400 dark:border-red-600 px-0.5 text-xs text-white;
+  @apply bg-red-400 dark:bg-red-600 border border-red-400 dark:border-red-600 px-0.5 text-xs text-white font-normal not-italic;
 }
 
 .show-inline-steno acat-strk + acat-strk::before {
