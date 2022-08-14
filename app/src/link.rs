@@ -28,7 +28,7 @@ impl Link {
     app.did_start_connecting();
 
     #[cfg(target_os = "windows")]
-    let strm = TcpSocket::new_v4().connect(ADDRESS.parse().unwrap()).await;
+    let strm = TcpSocket::new_v4().unwrap().connect(ADDRESS.parse().unwrap()).await;
     #[cfg(not(target_os = "windows"))]
     let strm = UnixStream::connect(PATH).await;
 
