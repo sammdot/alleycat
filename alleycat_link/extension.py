@@ -35,6 +35,7 @@ class AlleyCATLinkExtension:
   def start(self):
     log.info("Initializing AlleyCAT link")
     self._link = Link()
+    self._link.start()
     self._connect_hooks()
     self._reset()
 
@@ -52,10 +53,7 @@ class AlleyCATLinkExtension:
   def stop(self):
     self._disconnect_hooks()
     log.info("Cleaning up AlleyCAT link")
-    del self._link
-
-  def reconnect(self):
-    self._link.reconnect()
+    self._link.close()
 
   def _connect_hooks(self):
     for hook in self._engine.HOOKS:
