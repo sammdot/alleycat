@@ -13,13 +13,23 @@ import threading
 TCP_ADDRESS = ("127.0.0.1", 2228)
 UNIX_ADDRESS = "/tmp/alleycat-link.sock"
 
+try:
 
-class TCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
-  allow_reuse_address = True
+  class LinkServer(socketserver.ThreadingMixIn, socketserver.UnixStreamServer):
+    allow_reuse_address = True
 
+    def __init__(self, handler):
+      if os.path.exists(UNIX_ADDRESS):
+        os.remove(UNIX_ADDRESS)
+      super().__init__(UNIX_ADDRESS, handler)
 
-class UnixServer(socketserver.ThreadingMixIn, socketserver.UnixStreamServer):
-  allow_reuse_address = True
+except AttributeError:
+
+  class LinkServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    allow_reuse_address = True
+
+    def __init__(self, handler):
+      super().__init__(TCP_ADDRESS, handler)
 
 
 class Handler(socketserver.StreamRequestHandler):
@@ -29,7 +39,7 @@ class Handler(socketserver.StreamRequestHandler):
       host, port = self.client_address
       return f"{host}:{port}"
     else:
-      return UNIX_ADDRESS
+      return self.server.addr
 
   def handle(self):
     log.info(f"Connected to AlleyCAT on {self.addr}")
@@ -57,19 +67,15 @@ class Handler(socketserver.StreamRequestHandler):
 
 class Link:
   def __init__(self):
-    if sys.platform == "win32":
-      self._server = TCPServer(TCP_ADDRESS, Handler)
-    else:
-      if os.path.exists(UNIX_ADDRESS):
-        os.remove(UNIX_ADDRESS)
-      self._server = UnixServer(UNIX_ADDRESS, Handler)
+    self._server = LinkServer(Handler)
     self._queue = queue.Queue()
     self._server.queue = self._queue
     self._thread = None
 
   @property
   def addr(self):
-    return self._server.server_address
+    host, port = self._server.server_address
+    return f"{host}:{port}"
 
   def start(self):
     if self._thread:
