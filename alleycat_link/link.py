@@ -43,12 +43,14 @@ class Handler(socketserver.StreamRequestHandler):
 
   def handle(self):
     log.info(f"Connected to AlleyCAT on {self.addr}")
+    self.server.has_client = True
     self.finished = threading.Event()
     thread = threading.Thread(target=self._loop)
     thread.start()
     while line := self.rfile.readline():
       pass
     log.info(f"AlleyCAT on {self.addr} disconnected")
+    self.server.has_client = False
     self.finished.set()
     self.server.queue.join()
     thread.join()
@@ -70,6 +72,7 @@ class Link:
     self._server = LinkServer(Handler)
     self._queue = queue.Queue()
     self._server.queue = self._queue
+    self._server.has_client = False
     self._thread = None
 
   @property
@@ -94,4 +97,5 @@ class Link:
     self._thread = None
 
   def send(self, obj):
-    self._queue.put(obj)
+    if self._server.has_client:
+      self._queue.put(obj)
